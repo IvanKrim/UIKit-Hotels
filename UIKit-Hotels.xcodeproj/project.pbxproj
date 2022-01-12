@@ -58,12 +58,7 @@
 		206F38C3278F1E7600227437 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				206F38C1278F1E5D00227437 /* UIStackView + Extension.swift */,
-				206F38C5278F1EC500227437 /* UIButton + Extension.swift */,
-				206F38C7278F1EC500227437 /* UIColor + Extension.swift */,
-				206F38C8278F1EC500227437 /* UIFont + Extension.swift */,
-				206F38C6278F1EC500227437 /* UIImageView + Extension.swift */,
-				206F38C4278F1EC500227437 /* UILabel + Extension.swift */,
+				209B4F09278F5E510091EC89 /* UIKit */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -74,6 +69,29 @@
 				206F38CE278F1F1900227437 /* NetworkManager.swift */,
 			);
 			path = Services;
+			sourceTree = "<group>";
+		};
+		209B4F09278F5E510091EC89 /* UIKit */ = {
+			isa = PBXGroup;
+			children = (
+				206F38C1278F1E5D00227437 /* UIStackView + Extension.swift */,
+				206F38C5278F1EC500227437 /* UIButton + Extension.swift */,
+				206F38C7278F1EC500227437 /* UIColor + Extension.swift */,
+				206F38C8278F1EC500227437 /* UIFont + Extension.swift */,
+				206F38C6278F1EC500227437 /* UIImageView + Extension.swift */,
+				206F38C4278F1EC500227437 /* UILabel + Extension.swift */,
+			);
+			path = UIKit;
+			sourceTree = "<group>";
+		};
+		209B4F0A278F5EB60091EC89 /* SupportingFiles */ = {
+			isa = PBXGroup;
+			children = (
+				20C16861278F1A970059CCF3 /* AppDelegate.swift */,
+				20C16863278F1A970059CCF3 /* SceneDelegate.swift */,
+				20C1686F278F1A990059CCF3 /* Info.plist */,
+			);
+			path = SupportingFiles;
 			sourceTree = "<group>";
 		};
 		20C16855278F1A970059CCF3 = {
@@ -95,15 +113,13 @@
 		20C16860278F1A970059CCF3 /* UIKit-Hotels */ = {
 			isa = PBXGroup;
 			children = (
-				20C16861278F1A970059CCF3 /* AppDelegate.swift */,
-				20C16863278F1A970059CCF3 /* SceneDelegate.swift */,
+				209B4F0A278F5EB60091EC89 /* SupportingFiles */,
 				20C1687B278F1BF00059CCF3 /* Model */,
 				20C1687C278F1C040059CCF3 /* Modules */,
 				206F38D0278F1F8F00227437 /* Services */,
 				206F38C3278F1E7600227437 /* Extensions */,
 				20C1686A278F1A990059CCF3 /* Assets.xcassets */,
 				20C1686C278F1A990059CCF3 /* LaunchScreen.storyboard */,
-				20C1686F278F1A990059CCF3 /* Info.plist */,
 			);
 			path = "UIKit-Hotels";
 			sourceTree = "<group>";
@@ -351,7 +367,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = L3S8MU2XD5;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "UIKit-Hotels/Info.plist";
+				INFOPLIST_FILE = "UIKit-Hotels/SupportingFiles/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
@@ -380,7 +396,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = L3S8MU2XD5;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "UIKit-Hotels/Info.plist";
+				INFOPLIST_FILE = "UIKit-Hotels/SupportingFiles/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
