@@ -2,7 +2,7 @@
 //  AppDelegate.swift
 //  UIKit-Hotels
 //
-//  Created by Kalabishka Ivan on 12.01.2022.
+//  Created by Kalabishka Ivan on 06.01.2022.
 //
 
 import UIKit

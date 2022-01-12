@@ -2,7 +2,7 @@
 //  UIStackView + Extension.swift
 //  UIKit-Hotels
 //
-//  Created by Kalabishka Ivan on 12.01.2022.
+//  Created by Kalabishka Ivan on 10.01.2022.
 //
 
 import UIKit
