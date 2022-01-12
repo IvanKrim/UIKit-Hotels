@@ -23,7 +23,7 @@ struct Hotel: Decodable {
 
 typealias Hotels = [Hotel]
 
-enum ApiStrings: String {
+enum ApiLinks: String {
     case generalApi = "https://raw.githubusercontent.com/iMofas/ios-android-test/master/0777.json"
 }
 
