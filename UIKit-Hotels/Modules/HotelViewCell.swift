@@ -21,18 +21,12 @@ class HotelViewCell: UITableViewCell {
         return view
     }()
     
-    private var distanceIconImage: UIImageView = {
-        let imageView = UIImageView()
-        //        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.image = UIImage(systemName: "mappin.circle")
-        imageView.contentMode = .scaleAspectFit
-        
-        return imageView
-    }()
-    
+    private var distanceIconImage = UIImageView(image: UIImage.distanseIcon(), tintColor: .magenta)
     private var hotelNameLabel = UILabel(style: .titleText(), numberOfLines: 2)
     private var hotelStarsLabel = UILabel(text: "⭐️⭐️⭐️⭐️⭐️")
     private var distanceToCenter = UILabel(text: "5км до центра", textColor: .gray)
+    
+    private var emptyStar = UIImageView(image: UIImage.emptyStarIcon(), tintColor: .starsYellow())
     
     //    var hotelsImage = UIImageView(image: UIImage(named: "Hotel"), contentMode: .scaleAspectFill)
     
@@ -45,7 +39,7 @@ class HotelViewCell: UITableViewCell {
     required init?(coder: NSCoder) {
         fatalError("init?(coder: has not been implemented")
     }
-   
+    
     public func setupContent(with hotel: Hotel) {
         hotelNameLabel.text = hotel.name
         hotelStarsLabel.text = starsConverter(input: hotel.stars)
@@ -69,15 +63,14 @@ extension HotelViewCell {
             spacing: 3)
         
         let informationStackView = UIStackView(
-            arrangedSubviews: [hotelNameLabel, hotelStarsLabel, distanseStackView],
+            arrangedSubviews: [hotelNameLabel, hotelStarsLabel, emptyStar, distanseStackView],
             axis: .vertical,
             spacing: 14)
         
+        avatarBackground.translatesAutoresizingMaskIntoConstraints = false
         distanseStackView.translatesAutoresizingMaskIntoConstraints = false
         informationStackView.translatesAutoresizingMaskIntoConstraints = false
         informationStackView.alignment = .leading
-        
-        avatarBackground.translatesAutoresizingMaskIntoConstraints = false
         
         contentView.addSubview(avatarBackground)
         contentView.addSubview(informationStackView)

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		203B076F27915F0E005C8AFB /* UIImage + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 203B076E27915F0E005C8AFB /* UIImage + Extension.swift */; };
 		206F38C2278F1E5D00227437 /* UIStackView + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 206F38C1278F1E5D00227437 /* UIStackView + Extension.swift */; };
 		206F38C9278F1EC500227437 /* UILabel + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 206F38C4278F1EC500227437 /* UILabel + Extension.swift */; };
 		206F38CA278F1EC500227437 /* UIButton + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 206F38C5278F1EC500227437 /* UIButton + Extension.swift */; };
@@ -25,6 +26,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		203B076E27915F0E005C8AFB /* UIImage + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage + Extension.swift"; sourceTree = "<group>"; };
 		206F38C1278F1E5D00227437 /* UIStackView + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView + Extension.swift"; sourceTree = "<group>"; };
 		206F38C4278F1EC500227437 /* UILabel + Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UILabel + Extension.swift"; sourceTree = "<group>"; };
 		206F38C5278F1EC500227437 /* UIButton + Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIButton + Extension.swift"; sourceTree = "<group>"; };
@@ -80,6 +82,7 @@
 				206F38C8278F1EC500227437 /* UIFont + Extension.swift */,
 				206F38C6278F1EC500227437 /* UIImageView + Extension.swift */,
 				206F38C4278F1EC500227437 /* UILabel + Extension.swift */,
+				203B076E27915F0E005C8AFB /* UIImage + Extension.swift */,
 			);
 			path = UIKit;
 			sourceTree = "<group>";
@@ -220,6 +223,7 @@
 				20C16862278F1A970059CCF3 /* AppDelegate.swift in Sources */,
 				209B4F08278F5C100091EC89 /* DetailInformationViewController.swift in Sources */,
 				206F38CA278F1EC500227437 /* UIButton + Extension.swift in Sources */,
+				203B076F27915F0E005C8AFB /* UIImage + Extension.swift in Sources */,
 				206F38CB278F1EC500227437 /* UIImageView + Extension.swift in Sources */,
 				20C16876278F1AFB0059CCF3 /* Hotel.swift in Sources */,
 				209B4F06278F5B510091EC89 /* HotelViewCell.swift in Sources */,

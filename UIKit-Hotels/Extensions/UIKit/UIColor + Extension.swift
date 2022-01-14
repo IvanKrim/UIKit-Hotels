@@ -20,4 +20,8 @@ extension UIColor {
     static func textFielLight() -> UIColor {
         return #colorLiteral(red: 0.9019607843, green: 0.9019607843, blue: 0.9019607843, alpha: 1)
     }
+    
+    static func starsYellow() -> UIColor {
+        return #colorLiteral(red: 0.9529411793, green: 0.6862745285, blue: 0.1333333403, alpha: 1)
+    }
 }

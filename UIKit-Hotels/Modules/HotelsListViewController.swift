@@ -64,7 +64,7 @@ extension HotelsListViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "CellID", for: indexPath) as? HotelViewCell {
-//            cell.setupContent(data: hotels)
+//            cell.setupContent(data: hotels)ч
             cell.setupContent(with: hotels[indexPath.row])
             return cell
         } else {

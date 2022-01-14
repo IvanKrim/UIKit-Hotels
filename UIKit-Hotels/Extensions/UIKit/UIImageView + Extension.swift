@@ -8,10 +8,17 @@
 import UIKit
 
 extension UIImageView {
-
-    convenience init(image: UIImage?, contentMode: UIView.ContentMode) {
+    
+    convenience init(image: UIImage?, tintColor: UIColor) {
         self.init()
+        
+        self.translatesAutoresizingMaskIntoConstraints = false
         self.image = image
-        self.contentMode = contentMode
+        self.tintColor = tintColor
+        self.contentMode = .scaleAspectFit
+        
+        self.layer.borderColor = UIColor.black.cgColor
+        self.layer.borderWidth = 1
     }
 }
+
