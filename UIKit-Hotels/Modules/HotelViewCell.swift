@@ -7,10 +7,6 @@
 
 import UIKit
 
-//protocol CellConfiguration {
-//
-//}
-
 class HotelViewCell: UITableViewCell {
     
     // MARK: - Properties
@@ -21,52 +17,74 @@ class HotelViewCell: UITableViewCell {
         return view
     }()
     
-    private var distanceIconImage = UIImageView(image: UIImage.distanseIcon(), tintColor: .magenta)
+    private var distanceIconImage = UIImageView(image: UIImage.distanseIcon(), tintColor: .textGray())
     private var hotelNameLabel = UILabel(style: .titleText(), numberOfLines: 2)
-    private var hotelStarsLabel = UILabel(text: "⭐️⭐️⭐️⭐️⭐️")
-    private var distanceToCenter = UILabel(text: "5км до центра", textColor: .gray)
-    
-    private var emptyStar = UIImageView(image: UIImage.emptyStarIcon(), tintColor: .starsYellow())
-    
-    //    var hotelsImage = UIImageView(image: UIImage(named: "Hotel"), contentMode: .scaleAspectFill)
+    private let distanceToCenterLabel = UILabel(text: "5км до центра", textColor: .gray)
     
     // MARK: - Lifecycle
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        setupConstraints()
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init?(coder: has not been implemented")
-    }
+//    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+//        super.init(style: style, reuseIdentifier: reuseIdentifier)
+//
+//    }
+//
+//    required init?(coder: NSCoder) {
+//        fatalError("init?(coder: has not been implemented")
+//    }
     
     public func setupContent(with hotel: Hotel) {
         hotelNameLabel.text = hotel.name
-        hotelStarsLabel.text = starsConverter(input: hotel.stars)
-        distanceToCenter.text = "\(hotel.distance) м до центра"
+        distanceToCenterLabel.text = "\(hotel.distance) м до центра"
+        
+        setupConstraints(with: hotel.stars)
+    }
+}
+// MARK: - Setup Stars Array UIImageView
+extension HotelViewCell {
+    private func starIcon(image: UIImage) -> UIImageView {
+        let icon = UIImageView(image: image, tintColor: .starsYellow())
+        
+        return icon
     }
     
-    private func starsConverter(input: Double) -> String {
-        let star = "⭐️"
-        let stars = String(repeating: star, count: Int(input))
+    private func starsConverter(input: Double) -> [UIImageView] {
+        let starsMaximum = 5
+        var starsArray: [UIImageView] = []
         
-        return stars
+        for _ in 0..<Int(input) {
+            starsArray.append(starIcon(image: UIImage.filledStarIcon()))
+        }
+        
+        while starsArray.count !=  starsMaximum {
+            starsArray.append(starIcon(image: UIImage.emptyStarIcon()))
+        }
+        //            let emptyStars = Array(repeating: emptyStar(), count: starsMaximum - starsArray.count)
+        //            starsArray += emptyStars
+        return starsArray
     }
 }
 
 // MARK: - Setup Constraints
 extension HotelViewCell {
-    private func setupConstraints() {
+    private func setupConstraints(with stars: Double) {
+        
+        let starsArray = starsConverter(input: stars)
+        
+        let starsStackView = UIStackView(
+            arrangedSubviews: starsArray,
+            axis: .horizontal,
+            spacing: 0)
+        
         let distanseStackView = UIStackView(
-            arrangedSubviews: [distanceIconImage ,distanceToCenter],
+            arrangedSubviews: [distanceIconImage ,distanceToCenterLabel],
             axis: .horizontal,
             spacing: 3)
         
         let informationStackView = UIStackView(
-            arrangedSubviews: [hotelNameLabel, hotelStarsLabel, emptyStar, distanseStackView],
+            arrangedSubviews: [hotelNameLabel, starsStackView, distanseStackView],
             axis: .vertical,
             spacing: 14)
         
+        starsStackView.translatesAutoresizingMaskIntoConstraints = false
         avatarBackground.translatesAutoresizingMaskIntoConstraints = false
         distanseStackView.translatesAutoresizingMaskIntoConstraints = false
         informationStackView.translatesAutoresizingMaskIntoConstraints = false

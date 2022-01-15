@@ -9,15 +9,15 @@ import UIKit
 
 extension UIImage {
     
-    static func emptyStarIcon() -> UIImage? {
+    static func emptyStarIcon() -> UIImage! {
         return UIImage.init(systemName: "star")
     }
     
-    static func filledStarIcon() -> UIImage? {
+    static func filledStarIcon() -> UIImage! {
         return UIImage.init(systemName: "star.fill")
     }
     
-    static func distanseIcon() -> UIImage? {
+    static func distanseIcon() -> UIImage! {
         return UIImage.init(systemName: "mappin.circle")
     }
     

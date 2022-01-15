@@ -5,8 +5,6 @@
 //  Created by Kalabishka Ivan on 06.01.2022.
 //
 
-import Foundation
-
 import UIKit
 
 class HotelsListViewController: UIViewController {
@@ -37,9 +35,7 @@ class HotelsListViewController: UIViewController {
             switch result {
             case .success(let hotels):
                 self.hotels = hotels
-                //                print("Это hotel в switch \(hotels)")
                 self.tableView.reloadData()
-                //                print("а это hotels \(self.hotels)")
             case .failure(let error):
                 DispatchQueue.main.async {
                     self.showAlert(title: "\(error.localizedDescription)", message: "Ок")
@@ -52,6 +48,7 @@ class HotelsListViewController: UIViewController {
         self.tableView.delegate = self
         self.tableView.dataSource = self
         self.tableView.register(HotelViewCell.self, forCellReuseIdentifier: "CellID")
+        
         tableView.rowHeight = view.frame.height / 4
     }
 }
@@ -64,8 +61,9 @@ extension HotelsListViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "CellID", for: indexPath) as? HotelViewCell {
-//            cell.setupContent(data: hotels)ч
+            
             cell.setupContent(with: hotels[indexPath.row])
+            
             return cell
         } else {
             return UITableViewCell()
@@ -77,6 +75,7 @@ extension HotelsListViewController: UITableViewDataSource {
 extension HotelsListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let detailInformationVC = DetailInformationViewController()
+        
         navigationController?.pushViewController(detailInformationVC, animated: true)
     }
 }

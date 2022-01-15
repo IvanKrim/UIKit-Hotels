@@ -17,8 +17,8 @@ extension UIImageView {
         self.tintColor = tintColor
         self.contentMode = .scaleAspectFit
         
-        self.layer.borderColor = UIColor.black.cgColor
-        self.layer.borderWidth = 1
+//        self.layer.borderColor = UIColor.black.cgColor
+//        self.layer.borderWidth = 1
     }
 }
 
