@@ -13,17 +13,18 @@ struct Hotel: Decodable {
     let address: String
     let stars: Double
     let distance: Double
+    let image: String?
     let suitesAvailability: String
+    let lat: Double?
+    let lon: Double?
     
     enum CodingKeys: String, CodingKey {
-        case id, name, address, stars, distance
+        case id, name, address, stars, distance, image
         case suitesAvailability = "suites_availability"
+        case lat, lon
     }
 }
 
 typealias Hotels = [Hotel]
 
-enum ApiLinks: String {
-    case generalApi = "https://raw.githubusercontent.com/iMofas/ios-android-test/master/0777.json"
-}
 

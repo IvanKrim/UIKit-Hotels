@@ -31,7 +31,7 @@ class HotelsListViewController: UIViewController {
     }
     
     private func fetchData() {
-        NetworkManager.shared.fetchData(from: ApiLinks.generalApi.rawValue) { result in
+        NetworkManager.shared.fetchHotels(from: ApiManager.shared.defaultLink()) { result in
             switch result {
             case .success(let hotels):
                 self.hotels = hotels
@@ -74,7 +74,10 @@ extension HotelsListViewController: UITableViewDataSource {
 // MARK: - UITableViewDelegate
 extension HotelsListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        let hotel = hotels[indexPath.row]
         let detailInformationVC = DetailInformationViewController()
+        detailInformationVC.hotel = hotel
         
         navigationController?.pushViewController(detailInformationVC, animated: true)
     }
@@ -133,8 +136,6 @@ extension HotelsListViewController {
         return activityIndicator
     }
 }
-
-
 
 // MARK: - SwiftUI previews
 import SwiftUI

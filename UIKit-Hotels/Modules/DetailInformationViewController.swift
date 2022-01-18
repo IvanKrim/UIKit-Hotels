@@ -15,37 +15,80 @@ class DetailInformationViewController: UIViewController {
         return view
     }()
     
-    private let hotelNameLabel = UILabel(text: "Best Western President Hotel at Times Square", style: .titleText(), numberOfLines: 0)
-    private let hotelStarsLabel = UILabel(text: "⭐️⭐️⭐️")
-    private let hotelAddres = UILabel(text: "250 West 77th Street, Manhattan", textColor: .textGray())
-    private let suites = UILabel(text: "Available rooms:", style: .subheadingText())
+    private let hotelNameLabel = UILabel(style: .titleText(), numberOfLines: 0)
+    private let hotelStarsLabel = UILabel()
+    private let hotelAddres = UILabel(textColor: .textGray())
+    private let suites = UILabel(style: .subheadingText())
     
-    private let suitesAvailability = UILabel(text: "1, 44, 21, 87, 99, 34", textColor: .textGreen())
+    private let suitesAvailability = UILabel(textColor: .textGreen())
+    
+    var hotel: Hotel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         navigationController?.navigationBar.prefersLargeTitles = false
-        navigationItem.title = "Best Western President Hotel at Times Square"
-//        title = "Best Western President Hotel at Times Square"
-        
         view.backgroundColor = .white
+
+        setupContent(whit: hotel)
+    }
+    
+    private func setupContent(whit hotel: Hotel) {
+        navigationItem.title = hotel.name
+        hotelNameLabel.text = hotel.name
+        hotelAddres.text = hotel.address
+        suitesAvailability.text = hotel.suitesAvailability
         
-        setupConstraints()
+        setupConstraints(with: hotel.stars)
+    }
+}
+
+// MARK: - Setup Stars Array UIImageView
+extension DetailInformationViewController {
+    private func starIcon(image: UIImage) -> UIImageView {
+        let icon = UIImageView(image: image, tintColor: .starsYellow())
+
+        return icon
+    }
+    
+    private func starsConverter(input: Double) -> [UIImageView] {
+        let starsMaximum = 5
+        let emptyView = UIImageView()
+        emptyView.setContentHuggingPriority(UILayoutPriority(rawValue: 1), for: .horizontal)
+       
+        var starsArray: [UIImageView] = []
+        
+        for _ in 0..<Int(input) {
+            starsArray.append(starIcon(image: UIImage.filledStarIcon()))
+        }
+        
+        while starsArray.count !=  starsMaximum {
+            starsArray.append(starIcon(image: UIImage.emptyStarIcon()))
+        }
+        
+        starsArray.append(emptyView)
+        
+        return starsArray
     }
 }
 
 // MARK: - Setup Constraints
 extension DetailInformationViewController {
     
-    private func setupConstraints() {
+    private func setupConstraints(with stars: Double) {
+        let starsArray = starsConverter(input: stars)
+        
+        let starsStackView = UIStackView(
+            arrangedSubviews: starsArray,
+            axis: .horizontal,
+            spacing: 0)
+ 
         let availableRoomsStackView = UIStackView(
             arrangedSubviews: [suites, suitesAvailability],
             axis: .vertical,
             spacing: 6)
         
         let stackView = UIStackView(
-            arrangedSubviews: [hotelNameLabel, hotelStarsLabel, hotelAddres, availableRoomsStackView],
+            arrangedSubviews: [hotelNameLabel, starsStackView, hotelAddres, availableRoomsStackView],
             axis: .vertical,
             spacing: 14)
         
@@ -69,7 +112,6 @@ extension DetailInformationViewController {
         ])
     }
 }
-
 
 // MARK: - SwiftUI
 import SwiftUI

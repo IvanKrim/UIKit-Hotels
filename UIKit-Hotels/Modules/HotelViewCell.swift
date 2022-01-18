@@ -10,11 +10,19 @@ import UIKit
 class HotelViewCell: UITableViewCell {
     
     // MARK: - Properties
-    // временно заглушка для картинок
-    private let avatarBackground: UIView = {
-        let view = UIView()
-        view.backgroundColor = .red
-        return view
+    ////     временно заглушка для картинок
+    //    private let avatarBackground: UIView = {
+    //        let view = UIView()
+    //        view.backgroundColor = .red
+    //        return view
+    //    }()
+    //
+    private let avatarBackground: UIImageView = {
+        let image = UIImageView()
+        image.image = UIImage(systemName: "house")
+        
+        
+        return image
     }()
     
     private var distanceIconImage = UIImageView(image: UIImage.distanseIcon(), tintColor: .textGray())
@@ -22,20 +30,31 @@ class HotelViewCell: UITableViewCell {
     private let distanceToCenterLabel = UILabel(text: "5км до центра", textColor: .gray)
     
     // MARK: - Lifecycle
-//    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-//        super.init(style: style, reuseIdentifier: reuseIdentifier)
-//
-//    }
-//
-//    required init?(coder: NSCoder) {
-//        fatalError("init?(coder: has not been implemented")
-//    }
+    //    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+    //        super.init(style: style, reuseIdentifier: reuseIdentifier)
+    //
+    //    }
+    //
+    //    required init?(coder: NSCoder) {
+    //        fatalError("init?(coder: has not been implemented")
+    //    }
     
     public func setupContent(with hotel: Hotel) {
         hotelNameLabel.text = hotel.name
         distanceToCenterLabel.text = "\(hotel.distance) м до центра"
         
         setupConstraints(with: hotel.stars)
+        
+        NetworkManager.shared.fetchHotel(
+            from: ApiManager.shared.linkGenerator(link: "\(hotel.id)")) { result in
+                switch result {
+                case .success(let hotelData):
+                    print("Это hotelData \(hotelData.image)")
+                    
+                case .failure(let error):
+                    print(error)
+                }
+            }
     }
 }
 // MARK: - Setup Stars Array UIImageView
@@ -57,8 +76,7 @@ extension HotelViewCell {
         while starsArray.count !=  starsMaximum {
             starsArray.append(starIcon(image: UIImage.emptyStarIcon()))
         }
-        //            let emptyStars = Array(repeating: emptyStar(), count: starsMaximum - starsArray.count)
-        //            starsArray += emptyStars
+        
         return starsArray
     }
 }
@@ -101,11 +119,11 @@ extension HotelViewCell {
         ])
         
         NSLayoutConstraint.activate([
-            informationStackView.bottomAnchor.constraint(lessThanOrEqualTo: contentView.bottomAnchor, constant: -3),
+            informationStackView.topAnchor.constraint(greaterThanOrEqualTo: contentView.topAnchor, constant: 3),
             informationStackView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             informationStackView.leadingAnchor.constraint(equalTo: avatarBackground.trailingAnchor, constant: 3),
             informationStackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            informationStackView.topAnchor.constraint(greaterThanOrEqualTo: contentView.topAnchor, constant: 3)
+            informationStackView.bottomAnchor.constraint(lessThanOrEqualTo: contentView.bottomAnchor, constant: -3)
         ])
     }
 }
