@@ -6,56 +6,44 @@
 //
 
 import UIKit
+import Kingfisher
 
 class HotelViewCell: UITableViewCell {
     
     // MARK: - Properties
     ////     временно заглушка для картинок
-    //    private let avatarBackground: UIView = {
-    //        let view = UIView()
-    //        view.backgroundColor = .red
-    //        return view
-    //    }()
-    //
     private let avatarBackground: UIImageView = {
-        let image = UIImageView()
-        image.image = UIImage(systemName: "house")
-        
+        var image = UIImageView()
+        image.image         = UIImage(systemName: "house")
+        image.contentMode   = .scaleAspectFill
+        image.clipsToBounds = true
         
         return image
     }()
+    
+    let imageUrl = "https://raw.githubusercontent.com/iMofas/ios-android-test/master/1.jpg"
     
     private var distanceIconImage = UIImageView(image: UIImage.distanseIcon(), tintColor: .textGray())
     private var hotelNameLabel = UILabel(style: .titleText(), numberOfLines: 2)
     private let distanceToCenterLabel = UILabel(text: "5км до центра", textColor: .gray)
     
     // MARK: - Lifecycle
-    //    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-    //        super.init(style: style, reuseIdentifier: reuseIdentifier)
-    //
-    //    }
-    //
-    //    required init?(coder: NSCoder) {
-    //        fatalError("init?(coder: has not been implemented")
-    //    }
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init?(coder: has not been implemented")
+    }
     
     public func setupContent(with hotel: Hotel) {
         hotelNameLabel.text = hotel.name
         distanceToCenterLabel.text = "\(hotel.distance) м до центра"
-        
+
         setupConstraints(with: hotel.stars)
-        
-        NetworkManager.shared.fetchHotel(
-            from: ApiManager.shared.linkGenerator(link: "\(hotel.id)")) { result in
-                switch result {
-                case .success(let hotelData):
-                    print("Это hotelData \(hotelData.image)")
-                    
-                case .failure(let error):
-                    print(error)
-                }
-            }
+        setupImage(with: imageUrl)
     }
+    
 }
 // MARK: - Setup Stars Array UIImageView
 extension HotelViewCell {
@@ -76,8 +64,39 @@ extension HotelViewCell {
         while starsArray.count !=  starsMaximum {
             starsArray.append(starIcon(image: UIImage.emptyStarIcon()))
         }
-        
         return starsArray
+    }
+}
+
+// MARK: - Image Manager
+extension HotelViewCell {
+    func setupImage(with imageURL: String) {
+        guard let downloadURL = URL(string: imageURL) else { return }
+        
+        let resource    = ImageResource(downloadURL: downloadURL)
+        let placeholder = UIImage(systemName: "star")
+        let processor   = RoundCornerImageProcessor(cornerRadius: 100) // настривать размеры нужно тут
+        
+        print(avatarBackground.frame.size) // тут размеры 0
+        
+        self.avatarBackground.kf.indicatorType = .activity
+        self.avatarBackground.kf.setImage(
+            with: resource,
+            placeholder: placeholder,
+            options: [.processor(processor)]) { result in
+                self.completionHandler(result)
+            }
+    }
+    
+    func completionHandler(_ result: Result<RetrieveImageResult, KingfisherError> ) {
+        switch result {
+        case .success(let retrieveImageResult):
+            let image = retrieveImageResult.image
+            
+        case .failure(let error):
+            print(error)
+        }
+        print(avatarBackground.frame.size) // тут корректные
     }
 }
 
@@ -102,10 +121,10 @@ extension HotelViewCell {
             axis: .vertical,
             spacing: 14)
         
-        starsStackView.translatesAutoresizingMaskIntoConstraints = false
-        avatarBackground.translatesAutoresizingMaskIntoConstraints = false
-        distanseStackView.translatesAutoresizingMaskIntoConstraints = false
-        informationStackView.translatesAutoresizingMaskIntoConstraints = false
+        starsStackView.translatesAutoresizingMaskIntoConstraints        = false
+        avatarBackground.translatesAutoresizingMaskIntoConstraints      = false
+        distanseStackView.translatesAutoresizingMaskIntoConstraints     = false
+        informationStackView.translatesAutoresizingMaskIntoConstraints  = false
         informationStackView.alignment = .leading
         
         contentView.addSubview(avatarBackground)
