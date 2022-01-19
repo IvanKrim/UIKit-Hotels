@@ -51,4 +51,13 @@ class NetworkManager {
             }
         } .resume()
     }
+    
+//    func fetchImageData(from jpg: String) {
+//        let imageLink = "https://raw.githubusercontent.com/iMofas/ios-android-test/master/\(jpg)"
+//        
+//        guard let url = URL(string: imageLink) else { return }
+//        
+//        URLSession.shared.
+//        
+//    }
 }

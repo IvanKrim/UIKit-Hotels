@@ -13,7 +13,7 @@ class HotelsListViewController: UIViewController {
     private var activityIndicator = UIActivityIndicatorView() // Сделать
     
     private let button = UIButton(
-        title: "Sorted", titleColor: .white,
+        title: "Sort", titleColor: .white,
         backgroundColor: .systemGray,
         isShadow: false
     )

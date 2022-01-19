@@ -18,6 +18,10 @@ struct Hotel: Decodable {
     let lat: Double?
     let lon: Double?
     
+    var suitesArray: [String] {
+        suitesAvailability.components(separatedBy: ":")
+    }
+    
     enum CodingKeys: String, CodingKey {
         case id, name, address, stars, distance, image
         case suitesAvailability = "suites_availability"
