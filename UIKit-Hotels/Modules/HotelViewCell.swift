@@ -14,7 +14,6 @@ class HotelViewCell: UITableViewCell {
     ////     временно заглушка для картинок
     private let avatarBackground: UIImageView = {
         var image = UIImageView()
-        image.image         = UIImage(systemName: "house")
         image.contentMode   = .scaleAspectFill
         image.clipsToBounds = true
         
@@ -26,6 +25,8 @@ class HotelViewCell: UITableViewCell {
     private var distanceIconImage = UIImageView(image: UIImage.distanseIcon(), tintColor: .textGray())
     private var hotelNameLabel = UILabel(style: .titleText(), numberOfLines: 2)
     private let distanceToCenterLabel = UILabel(text: "5км до центра", textColor: .gray)
+    
+    var networkService: NetworkManager?
     
     // MARK: - Lifecycle
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -39,11 +40,21 @@ class HotelViewCell: UITableViewCell {
     public func setupContent(with hotel: Hotel) {
         hotelNameLabel.text = hotel.name
         distanceToCenterLabel.text = "\(hotel.distance) м до центра"
-
+        
         setupConstraints(with: hotel.stars)
-        setupImage(with: imageUrl)
+        
+//        NetworkManager.shared.request(from: .id(hotel.id)) { (result: Result<Hotel, Error>) in
+//            switch result {
+//
+//            case .success(let hotel):
+//                guard let imageID = hotel.image else { return }
+//                self.setupImage(with: .image(imageID))
+//
+//            case .failure(let error):
+//                print(error.localizedDescription)
+//            }
+//        }
     }
-    
 }
 // MARK: - Setup Stars Array UIImageView
 extension HotelViewCell {
@@ -68,13 +79,19 @@ extension HotelViewCell {
     }
 }
 
-// MARK: - Image Manager
 extension HotelViewCell {
-    func setupImage(with imageURL: String) {
-        guard let downloadURL = URL(string: imageURL) else { return }
+    public func getDetailInformation() {
+        
+    }
+}
+
+// MARK: - Kingfisher Image Manager
+extension HotelViewCell {
+    private func setupImage(with imageURL: Endpoint) {
+        guard let downloadURL = imageURL.linkGenerator(path: imageURL) else { return }
         
         let resource    = ImageResource(downloadURL: downloadURL)
-        let placeholder = UIImage(systemName: "star")
+        let placeholder = UIImage(systemName: "house")
         let processor   = RoundCornerImageProcessor(cornerRadius: 100) // настривать размеры нужно тут
         
         print(avatarBackground.frame.size) // тут размеры 0
@@ -88,7 +105,7 @@ extension HotelViewCell {
             }
     }
     
-    func completionHandler(_ result: Result<RetrieveImageResult, KingfisherError> ) {
+    private func completionHandler(_ result: Result<RetrieveImageResult, KingfisherError> ) {
         switch result {
         case .success(let retrieveImageResult):
             let image = retrieveImageResult.image

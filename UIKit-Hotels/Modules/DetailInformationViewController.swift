@@ -39,6 +39,7 @@ class DetailInformationViewController: UIViewController {
         suitesAvailability.text = hotel.suitesAvailability
         
         setupConstraints(with: hotel.stars)
+        
     }
 }
 

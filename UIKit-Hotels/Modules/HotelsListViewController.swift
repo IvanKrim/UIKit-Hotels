@@ -18,6 +18,8 @@ class HotelsListViewController: UIViewController {
         isShadow: false
     )
     
+    var networkService: NetworkManager?
+    
     var hotels = Hotels()
     
     override func viewDidLoad() {
@@ -31,18 +33,31 @@ class HotelsListViewController: UIViewController {
     }
     
     private func fetchData() {
-        NetworkManager.shared.fetchHotels(from: ApiManager.shared.defaultLink()) { result in
-            switch result {
-            case .success(let hotels):
-                self.hotels = hotels
-                self.tableView.reloadData()
-            case .failure(let error):
-                DispatchQueue.main.async {
-                    self.showAlert(title: "\(error.localizedDescription)", message: "Ок")
+        let urlstring = "https://raw.githubusercontent.com/iMofas/ios-android-test/master/0777.json"
+        networkService?
+            .request(from: urlstring, completion: { (result: Result<Hotels, Error>) in
+                switch result {
+                    
+                case .success(let hotels):
+                    self.hotels = hotels
+                    self.tableView.reloadData()
+                case .failure(let error):
+                    print(error.localizedDescription)
                 }
-            }
-        }
+            })
     }
+    
+    //        NetworkManager.shared.request(from: .baseURL) { (result: Result<Hotels, Error>) in
+    //            switch result {
+    //            case .success(let hotels):
+    //                self.hotels = hotels
+    //                self.tableView.reloadData()
+    //            case .failure(let error):
+    //                DispatchQueue.main.async {
+    //                    self.showAlert(title: "\(error.localizedDescription)", message: "Ок")
+    //                }
+    //            }
+    //        }
     
     private func setupTableView() {
         self.tableView.delegate = self
@@ -63,6 +78,8 @@ extension HotelsListViewController: UITableViewDataSource {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "CellID", for: indexPath) as? HotelViewCell {
             
             cell.setupContent(with: hotels[indexPath.row])
+            
+            print(hotels[indexPath.row].id)
             
             return cell
         } else {

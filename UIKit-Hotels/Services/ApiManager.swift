@@ -7,16 +7,29 @@
 
 import Foundation
 
-class ApiManager {
-    static let shared = ApiManager()
+
+enum Endpoint {
+    case baseURL
+    case image (String)
+    case id (Int)
     
-    private init() {}
+    var baseURL: URL{ URL(string: "https://raw.githubusercontent.com/iMofas/ios-android-test/master/")!}
     
-    func linkGenerator(link: String) -> String {
-        "https://raw.githubusercontent.com/iMofas/ios-android-test/master/\(link).json"
+    func path() -> String {
+        switch self {
+        case .baseURL:
+            return "0777.json"
+        case let .image(imageID):
+            return "\(imageID)"
+        case let .id(id):
+            return "\(id).json"
+        }
     }
     
-    func defaultLink() -> String {
-        "https://raw.githubusercontent.com/iMofas/ios-android-test/master/0777.json"
+    func linkGenerator(path: Self) -> URL? {
+        let link = baseURL.appendingPathComponent(self.path())
+   
+        return link
     }
+    
 }

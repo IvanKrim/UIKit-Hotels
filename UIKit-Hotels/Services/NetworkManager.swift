@@ -7,24 +7,54 @@
 
 import Foundation
 
-class NetworkManager {
-    static let shared = NetworkManager()
+
+protocol NetworkServiceSingleHotelProtocol {
+    func getHotelInformation(from path: Endpoint, completion: @escaping (Result<Hotel, Error>) -> Void)
+}
+
+class NetworkManager: NetworkServiceSingleHotelProtocol {
+    func getHotelInformation(from path: Endpoint, completion: @escaping (Result<Hotel, Error>) -> Void) {
+        let urlString = "https://raw.githubusercontent.com/iMofas/ios-android-test/master/0777.json"
+        request(from: urlString) { completion($0)}
+    }
     
-    private init() {}
-    
-    func fetchHotels(from url: String, completion: @escaping(Result<Hotels, Error>) -> Void) {
-        guard let url = URL(string: url) else { return }
+    public func getHotelsInformation(completion: @escaping (Result<Hotels, Error>) -> Void) {
+        let urlString = "https://raw.githubusercontent.com/iMofas/ios-android-test/master/0777.json"
         
+        request(from: urlString) { (result: Result<Hotels, Error>) in
+            switch result {
+                
+            case .success(let hotels):
+                completion(.success(hotels))
+            case .failure(let error):
+                print(error.localizedDescription)
+                completion(.failure(error))
+            }
+        }
+    }
+    
+    func request <T:Decodable>(from url: String, completion: @escaping(Result<T, Error>)-> Void) {
+        
+        
+        
+        guard let url = URL(string: url) else { return }
         URLSession.shared.dataTask(with: url) { data, _, error in
             guard let data = data else {
-                print(error?.localizedDescription ?? "No description error")
+                if let error = error {
+                    DispatchQueue.main.async {
+                        completion(.failure(NetworkError.serverError(error: error)))
+                    }
+                    return
+                }
+                DispatchQueue.main.async {
+                    completion(.failure(NetworkError.noConnectionError))
+                }
                 return
             }
-            
             do {
-                let hotels = try JSONDecoder().decode(Hotels.self, from: data)
+                let result = try JSONDecoder().decode(T.self, from: data)
                 DispatchQueue.main.async {
-                    completion(.success(hotels))
+                    completion(.success(result))
                 }
             } catch let error {
                 completion(.failure(error))
@@ -32,32 +62,24 @@ class NetworkManager {
         } .resume()
     }
     
-    func fetchHotel(from url: String, completion: @escaping(Result<Hotel, Error>) -> Void) {
-        guard let url = URL(string: url) else { return }
-        
-        URLSession.shared.dataTask(with: url) { data, _, error in
-            guard let data = data else {
-                print(error?.localizedDescription ?? "No description error")
-                return
-            }
-            
-            do {
-                let hotel = try JSONDecoder().decode(Hotel.self, from: data)
-                DispatchQueue.main.async {
-                    completion(.success(hotel))
-                }
-            } catch let error {
-                completion(.failure(error))
-            }
-        } .resume()
-    }
-    
-//    func fetchImageData(from jpg: String) {
-//        let imageLink = "https://raw.githubusercontent.com/iMofas/ios-android-test/master/\(jpg)"
+//    func fetchHotels(from puth: Endpoint, completion: @escaping(Result<Hotels, Error>) -> Void) {
+//        guard let url = puth.linkGenerator(path: puth) else { return }
 //        
-//        guard let url = URL(string: imageLink) else { return }
-//        
-//        URLSession.shared.
-//        
+//        URLSession.shared.dataTask(with: url) { data, _, error in
+//            guard let data = data else {
+//                print(error?.localizedDescription ?? "No description error")
+//                return
+//            }
+//            
+//            do {
+//                let hotels = try JSONDecoder().decode(Hotels.self, from: data)
+//                DispatchQueue.main.async {
+//                    completion(.success(hotels))
+//                }
+//            } catch let error {
+//                completion(.failure(error))
+//            }
+//        } .resume()
 //    }
 }
+
