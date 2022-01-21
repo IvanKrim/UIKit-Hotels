@@ -26,7 +26,6 @@ class HotelViewCell: UITableViewCell {
     private var hotelNameLabel = UILabel(style: .titleText(), numberOfLines: 2)
     private let distanceToCenterLabel = UILabel(text: "5км до центра", textColor: .gray)
     
-    var networkService: NetworkManager?
     
     // MARK: - Lifecycle
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {

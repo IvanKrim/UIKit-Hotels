@@ -18,9 +18,8 @@ class HotelsListViewController: UIViewController {
         isShadow: false
     )
     
-    var networkService: NetworkManager?
-    
-    var hotels = Hotels()
+    private let networkService = NetworkService()
+    var hotels: Hotels = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,31 +32,21 @@ class HotelsListViewController: UIViewController {
     }
     
     private func fetchData() {
-        let urlstring = "https://raw.githubusercontent.com/iMofas/ios-android-test/master/0777.json"
-        networkService?
-            .request(from: urlstring, completion: { (result: Result<Hotels, Error>) in
-                switch result {
-                    
-                case .success(let hotels):
-                    self.hotels = hotels
-                    self.tableView.reloadData()
-                case .failure(let error):
-                    print(error.localizedDescription)
-                }
-            })
+        networkService.getHotelsInformation(completion: { result in
+            switch result {
+                
+            case .success(let data):
+                self.hotels = data
+                self.tableView.reloadData()
+            case .failure(let error):
+                self
+                    .showAlert(
+                    title: "Error",
+                    message: "\(error.localizedDescription). \n Please contact support"
+                )
+            }
+        })
     }
-    
-    //        NetworkManager.shared.request(from: .baseURL) { (result: Result<Hotels, Error>) in
-    //            switch result {
-    //            case .success(let hotels):
-    //                self.hotels = hotels
-    //                self.tableView.reloadData()
-    //            case .failure(let error):
-    //                DispatchQueue.main.async {
-    //                    self.showAlert(title: "\(error.localizedDescription)", message: "Ок")
-    //                }
-    //            }
-    //        }
     
     private func setupTableView() {
         self.tableView.delegate = self
