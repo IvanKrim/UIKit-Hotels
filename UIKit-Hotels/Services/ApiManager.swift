@@ -13,9 +13,9 @@ enum Endpoint {
     case image (String)
     case id (Int)
     
-    var baseURL: URL{ URL(string: "https://raw.githubusercontent.com/iMofas/ios-android-test/master/")!}
+    private var baseURL: URL{ URL(string: "https://raw.githubusercontent.com/iMofas/ios-android-test/master/")!}
     
-    func path() -> String {
+    private func path() -> String {
         switch self {
         case .baseURL:
             return "0777.json"
@@ -31,5 +31,4 @@ enum Endpoint {
    
         return link
     }
-    
 }

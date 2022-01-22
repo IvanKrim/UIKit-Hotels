@@ -11,7 +11,6 @@ import Kingfisher
 class HotelViewCell: UITableViewCell {
     
     // MARK: - Properties
-    ////     временно заглушка для картинок
     private let avatarBackground: UIImageView = {
         var image = UIImageView()
         image.contentMode   = .scaleAspectFill
@@ -20,7 +19,11 @@ class HotelViewCell: UITableViewCell {
         return image
     }()
     
-    let imageUrl = "https://raw.githubusercontent.com/iMofas/ios-android-test/master/1.jpg"
+//
+//    private var uiImageAva = UIImage(systemName: "stars")
+//    private let uiImageViewAva = UIImageView()
+    
+    private let networkService: NetworkServiceSingleHotelProtocol = NetworkService()
     
     private var distanceIconImage = UIImageView(image: UIImage.distanseIcon(), tintColor: .textGray())
     private var hotelNameLabel = UILabel(style: .titleText(), numberOfLines: 2)
@@ -36,26 +39,17 @@ class HotelViewCell: UITableViewCell {
         fatalError("init?(coder: has not been implemented")
     }
     
+    // MARK: - Public Methods
     public func setupContent(with hotel: Hotel) {
         hotelNameLabel.text = hotel.name
         distanceToCenterLabel.text = "\(hotel.distance) м до центра"
         
         setupConstraints(with: hotel.stars)
-        
-//        NetworkManager.shared.request(from: .id(hotel.id)) { (result: Result<Hotel, Error>) in
-//            switch result {
-//
-//            case .success(let hotel):
-//                guard let imageID = hotel.image else { return }
-//                self.setupImage(with: .image(imageID))
-//
-//            case .failure(let error):
-//                print(error.localizedDescription)
-//            }
-//        }
+        fetchImage(with: hotel.id)
     }
 }
-// MARK: - Setup Stars Array UIImageView
+
+// MARK: - Setup Stars Array
 extension HotelViewCell {
     private func starIcon(image: UIImage) -> UIImageView {
         let icon = UIImageView(image: image, tintColor: .starsYellow())
@@ -78,23 +72,16 @@ extension HotelViewCell {
     }
 }
 
-extension HotelViewCell {
-    public func getDetailInformation() {
-        
-    }
-}
-
 // MARK: - Kingfisher Image Manager
 extension HotelViewCell {
     private func setupImage(with imageURL: Endpoint) {
+        
         guard let downloadURL = imageURL.linkGenerator(path: imageURL) else { return }
         
         let resource    = ImageResource(downloadURL: downloadURL)
         let placeholder = UIImage(systemName: "house")
-        let processor   = RoundCornerImageProcessor(cornerRadius: 100) // настривать размеры нужно тут
-        
-        print(avatarBackground.frame.size) // тут размеры 0
-        
+        let processor   = RoundCornerImageProcessor(cornerRadius: 100)
+    
         self.avatarBackground.kf.indicatorType = .activity
         self.avatarBackground.kf.setImage(
             with: resource,
@@ -112,7 +99,20 @@ extension HotelViewCell {
         case .failure(let error):
             print(error)
         }
-        print(avatarBackground.frame.size) // тут корректные
+    }
+    
+    // MARK: Fetch Image Method
+    private func fetchImage(with hotelID: Int) {
+        networkService.getHotelInformation(with: hotelID) { result in
+            switch result {
+                
+            case .success(let hotel):
+                guard let imageID = hotel.image else { return }
+                self.setupImage(with: .image(imageID))
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
     }
 }
 
@@ -121,6 +121,12 @@ extension HotelViewCell {
     private func setupConstraints(with stars: Double) {
         
         let starsArray = starsConverter(input: stars)
+        
+        avatarBackground.frame.size.width = self.frame.width / 3
+//        avatarBackground.layer.frame.size.width = contentView.frame.width / 3
+        print("avatarBackground.frame.size.width \(avatarBackground.frame.size.width)")
+        print("This is self.frame.width / 3 \(self.frame.width / 3)")
+        avatarBackground.layer.bounds.size.width = self.frame.width / 3
         
         let starsStackView = UIStackView(
             arrangedSubviews: starsArray,
@@ -137,6 +143,11 @@ extension HotelViewCell {
             axis: .vertical,
             spacing: 14)
         
+//        let generalStackView = UIStackView(
+//            arrangedSubviews: [avatarBackground, informationStackView],
+//            axis: .horizontal,
+//            spacing: 6)
+        
         starsStackView.translatesAutoresizingMaskIntoConstraints        = false
         avatarBackground.translatesAutoresizingMaskIntoConstraints      = false
         distanseStackView.translatesAutoresizingMaskIntoConstraints     = false
@@ -146,13 +157,24 @@ extension HotelViewCell {
         contentView.addSubview(avatarBackground)
         contentView.addSubview(informationStackView)
         
-        NSLayoutConstraint.activate([
-            avatarBackground.topAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.topAnchor, constant: 3),
-            avatarBackground.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 6),
-            avatarBackground.widthAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 3 / 5 ),
-            avatarBackground.bottomAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.bottomAnchor, constant: -3)
-        ])
+//        generalStackView.translatesAutoresizingMaskIntoConstraints = false
+//        contentView.addSubview(generalStackView)
         
+//        NSLayoutConstraint.activate([
+//            generalStackView.topAnchor.constraint(equalTo: self.topAnchor, constant: 3),
+//            generalStackView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 6),
+//            generalStackView.trailingAnchor.constraint(lessThanOrEqualTo: self.trailingAnchor, constant: 6),
+//            generalStackView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -3)
+//
+//        ])
+        
+        NSLayoutConstraint.activate([
+            avatarBackground.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: 3),
+            avatarBackground.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 6),
+            avatarBackground.widthAnchor.constraint(equalTo: self.heightAnchor, multiplier: 3 / 5 ),
+            avatarBackground.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor, constant: -3)
+        ])
+
         NSLayoutConstraint.activate([
             informationStackView.topAnchor.constraint(greaterThanOrEqualTo: contentView.topAnchor, constant: 3),
             informationStackView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),

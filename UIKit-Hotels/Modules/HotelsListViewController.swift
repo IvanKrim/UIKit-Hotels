@@ -18,7 +18,7 @@ class HotelsListViewController: UIViewController {
         isShadow: false
     )
     
-    private let networkService = NetworkService()
+    private let networkService: NetworkServiceSingleHotelProtocol = NetworkService()
     var hotels: Hotels = []
     
     override func viewDidLoad() {
@@ -41,9 +41,9 @@ class HotelsListViewController: UIViewController {
             case .failure(let error):
                 self
                     .showAlert(
-                    title: "Error",
-                    message: "\(error.localizedDescription). \n Please contact support"
-                )
+                        title: "Error",
+                        message: "\(error.localizedDescription). \n Please contact support"
+                    )
             }
         })
     }
@@ -65,10 +65,7 @@ extension HotelsListViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "CellID", for: indexPath) as? HotelViewCell {
-            
             cell.setupContent(with: hotels[indexPath.row])
-            
-            print(hotels[indexPath.row].id)
             
             return cell
         } else {

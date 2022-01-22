@@ -10,14 +10,31 @@ import Foundation
 
 protocol NetworkServiceSingleHotelProtocol {
     func getHotelsInformation(completion: @escaping (Result<Hotels, Error>) -> Void)
+    
+    func getHotelInformation(with id: Int, completion: @escaping (Result<Hotel, Error>) -> Void)
 }
 
+//extension NetworkServiceSingleHotelProtocol {
+//    func getHotelInformation(completion: @escaping (Result<Hotel, Error>) -> Void) {
+//
+//    }
+//}
+
 class NetworkService: NetworkServiceSingleHotelProtocol {
-    
-    func getHotelsInformation(completion: @escaping (Result<Hotels, Error>) -> Void) {
-        let urlstring = "https://raw.githubusercontent.com/iMofas/ios-android-test/master/0777.json"
         
-        request(puth: urlstring) { (result: Result<Hotels, Error>) in
+    func getHotelsInformation(completion: @escaping (Result<Hotels, Error>) -> Void) {
+        request(puth: .baseURL) { (result: Result<Hotels, Error>) in
+            switch result {
+            case .success(let data):
+                completion(.success(data))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
+    
+    func getHotelInformation(with id: Int, completion: @escaping (Result<Hotel, Error>) -> Void) {
+        request(puth: .id(id)) { (result: Result<Hotel, Error>) in
             switch result {
             case .success(let data):
                 completion(.success(data))
@@ -28,10 +45,10 @@ class NetworkService: NetworkServiceSingleHotelProtocol {
     }
     
     private func request <T:Decodable>(
-        puth url: String,
+        puth url: Endpoint,
         completion: @escaping(Result<T, Error>)-> Void) {
             
-            guard let url = URL(string: url) else { return }
+            guard let url = url.linkGenerator(path: url) else { return }
             
             URLSession.shared.dataTask(with: url) { data, _, error in
                 guard let data = data else {
