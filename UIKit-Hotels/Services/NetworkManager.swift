@@ -14,16 +14,10 @@ protocol NetworkServiceSingleHotelProtocol {
     func getHotelInformation(with id: Int, completion: @escaping (Result<Hotel, Error>) -> Void)
 }
 
-//extension NetworkServiceSingleHotelProtocol {
-//    func getHotelInformation(completion: @escaping (Result<Hotel, Error>) -> Void) {
-//
-//    }
-//}
-
 class NetworkService: NetworkServiceSingleHotelProtocol {
         
     func getHotelsInformation(completion: @escaping (Result<Hotels, Error>) -> Void) {
-        request(puth: .baseURL) { (result: Result<Hotels, Error>) in
+        request(path: .baseURL) { (result: Result<Hotels, Error>) in
             switch result {
             case .success(let data):
                 completion(.success(data))
@@ -34,7 +28,7 @@ class NetworkService: NetworkServiceSingleHotelProtocol {
     }
     
     func getHotelInformation(with id: Int, completion: @escaping (Result<Hotel, Error>) -> Void) {
-        request(puth: .id(id)) { (result: Result<Hotel, Error>) in
+        request(path: .id(id)) { (result: Result<Hotel, Error>) in
             switch result {
             case .success(let data):
                 completion(.success(data))
@@ -45,7 +39,7 @@ class NetworkService: NetworkServiceSingleHotelProtocol {
     }
     
     private func request <T:Decodable>(
-        puth url: Endpoint,
+        path url: Endpoint,
         completion: @escaping(Result<T, Error>)-> Void) {
             
             guard let url = url.linkGenerator(path: url) else { return }

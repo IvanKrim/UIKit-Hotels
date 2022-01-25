@@ -12,14 +12,7 @@ class DetailInformationViewController: UIViewController {
     
     private let networkService: NetworkServiceSingleHotelProtocol = NetworkService()
     
-    private let mapButton: CustomButton = {
-        let button = CustomButton(title: "Watch On Map", backgroundColor: .textGreen())
-        button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
-        
-        return button
-    }()
-    
-    private let avatarBackground: UIImageView = {
+    private let hotelImageView: UIImageView = {
         var image = UIImageView()
         image.contentMode   = .scaleAspectFill
         image.clipsToBounds = true
@@ -33,14 +26,39 @@ class DetailInformationViewController: UIViewController {
     
     private let suitesAvailability = UILabel(textColor: .textGreen())
     
-    var hotel: Hotel!
+    private let mapButton: CustomButton = {
+        let button = CustomButton(title: "Watch On Map", backgroundColor: .textGreen())
+        button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
+        
+        return button
+    }()
+
+    private var hotel: Hotel?
+    var hotelID: Int?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.prefersLargeTitles = false
         view.backgroundColor = .white
-
-        setupContent(whith: hotel)
+        
+        fetchData(with: hotelID)
+    }
+        
+    func fetchData(with hotelID: Int?) {
+        guard let id = hotelID else { return }
+        
+        networkService.getHotelInformation(with: id) { result in
+            switch result {
+            case .success(let hotel):
+                guard let imageString = hotel.image else { return }
+                
+                self.setupContent(whith: hotel)
+                self.setupImage(with: .image(imageString))
+                self.hotel = hotel
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
     }
     
     private func setupContent(whith hotel: Hotel) {
@@ -50,14 +68,13 @@ class DetailInformationViewController: UIViewController {
         suitesAvailability.text = hotel.suitesAvailability
         
         setupConstraints(with: hotel.stars)
-        fetchImage(with: hotel.id)
     }
     
-    @objc private func buttonTapped(longitude: Double, latitude: Double) {
+    @objc private func buttonTapped() {
         let mapScreenVC = MapScreenViewController()
-    
-        mapScreenVC.longitude = longitude
-        mapScreenVC.latitude = latitude
+        mapScreenVC.hotel = hotel
+        
+//        present(mapScreenVC, animated: true)
         navigationController?.pushViewController(mapScreenVC, animated: true)
     }
 }
@@ -67,7 +84,6 @@ extension DetailInformationViewController {
     private func starIcon(image: UIImage) -> UIImageView {
         let icon = UIImageView(image: image, tintColor: .starsYellow())
         icon.translatesAutoresizingMaskIntoConstraints = false
-//        icon.contentMode = .scaleToFill
     
         return icon
     }
@@ -101,14 +117,13 @@ extension DetailInformationViewController {
 // MARK: - Kingfisher Image Manager
 extension DetailInformationViewController {
     private func setupImage(with imageURL: Endpoint) {
-        self.avatarBackground.kf.indicatorType = .activity
-        
+//        self.hotelImageView.kf.indicatorType = .activity
         guard let downloadURL = imageURL.linkGenerator(path: imageURL) else { return }
         let resource    = ImageResource(downloadURL: downloadURL)
         let placeholder = UIImage(systemName: "house")
         let processor   = RoundCornerImageProcessor(cornerRadius: 5)
 
-        self.avatarBackground.kf.setImage(
+        self.hotelImageView.kf.setImage(
             with: resource,
             placeholder: placeholder,
             options: [.processor(processor)]) { result in
@@ -162,27 +177,26 @@ extension DetailInformationViewController {
             axis: .vertical,
             spacing: 14)
         
-        avatarBackground.translatesAutoresizingMaskIntoConstraints  = false
+        hotelImageView.translatesAutoresizingMaskIntoConstraints  = false
         stackView.translatesAutoresizingMaskIntoConstraints         = false
         mapButton.translatesAutoresizingMaskIntoConstraints         = false
         
-        view.addSubview(avatarBackground)
+        view.addSubview(hotelImageView)
         view.addSubview(stackView)
-//        view.addSubview(mapButton)
         
         NSLayoutConstraint.activate([
             mapButton.heightAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.1)
         ])
         
         NSLayoutConstraint.activate([
-            avatarBackground.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            avatarBackground.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            avatarBackground.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            avatarBackground.heightAnchor.constraint(equalTo: view.widthAnchor, multiplier: 3 / 4)
+            hotelImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            hotelImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            hotelImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            hotelImageView.heightAnchor.constraint(equalTo: view.widthAnchor, multiplier: 3 / 4)
         ])
         
         NSLayoutConstraint.activate([
-            stackView.topAnchor.constraint(equalTo: avatarBackground.bottomAnchor, constant: 20),
+            stackView.topAnchor.constraint(equalTo: hotelImageView.bottomAnchor, constant: 20),
             stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
         ])

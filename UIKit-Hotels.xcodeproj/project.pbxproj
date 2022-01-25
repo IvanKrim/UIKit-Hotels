@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		202665C627A04FA9009DB94A /* SortHotelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 202665C527A04FA9009DB94A /* SortHotelViewController.swift */; };
 		203B076F27915F0E005C8AFB /* UIImage + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 203B076E27915F0E005C8AFB /* UIImage + Extension.swift */; };
 		20658EB32796BBC700184FD1 /* ApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20658EB22796BBC700184FD1 /* ApiManager.swift */; };
 		206F38C2278F1E5D00227437 /* UIStackView + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 206F38C1278F1E5D00227437 /* UIStackView + Extension.swift */; };
@@ -31,6 +32,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		202665C527A04FA9009DB94A /* SortHotelViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortHotelViewController.swift; sourceTree = "<group>"; };
 		203B076E27915F0E005C8AFB /* UIImage + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage + Extension.swift"; sourceTree = "<group>"; };
 		20658EB22796BBC700184FD1 /* ApiManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiManager.swift; sourceTree = "<group>"; };
 		206F38C1278F1E5D00227437 /* UIStackView + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView + Extension.swift"; sourceTree = "<group>"; };
@@ -158,6 +160,7 @@
 			children = (
 				20C16879278F1BE90059CCF3 /* HotelsListViewController.swift */,
 				209B4F05278F5B510091EC89 /* HotelViewCell.swift */,
+				202665C527A04FA9009DB94A /* SortHotelViewController.swift */,
 				209B4F07278F5C100091EC89 /* DetailInformationViewController.swift */,
 				20D9750D279F135700B18939 /* MapScreenViewController.swift */,
 			);
@@ -320,6 +323,7 @@
 				209B4F06278F5B510091EC89 /* HotelViewCell.swift in Sources */,
 				206F38C2278F1E5D00227437 /* UIStackView + Extension.swift in Sources */,
 				20C16864278F1A970059CCF3 /* SceneDelegate.swift in Sources */,
+				202665C627A04FA9009DB94A /* SortHotelViewController.swift in Sources */,
 				20D9750E279F135700B18939 /* MapScreenViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

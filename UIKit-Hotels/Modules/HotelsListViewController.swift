@@ -12,11 +12,14 @@ class HotelsListViewController: UIViewController {
     private let tableView = UITableView(frame: .zero, style: .plain)
     private var activityIndicator = UIActivityIndicatorView() // Сделать
     
-    private let button = UIButton(
-        title: "Sort", titleColor: .white,
-        backgroundColor: .systemGray,
-        isShadow: false
-    )
+    private let sortButton: UIButton = {
+        let button = UIButton(title: "Sort", titleColor: .white,
+                              backgroundColor: .systemGray,
+                              isShadow: false)
+        button.addTarget(self, action: #selector(sortButtonTapped), for: .touchUpInside)
+        
+        return button
+    }()
     
     private let networkService: NetworkServiceSingleHotelProtocol = NetworkService()
     var hotels: Hotels = []
@@ -31,7 +34,18 @@ class HotelsListViewController: UIViewController {
         fetchData()
     }
     
-    private func fetchData() {
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        print("Это \(viewWillAppear), \(hotels)")
+        
+    }
+    
+    @objc private func sortButtonTapped() {
+        present(SortHotelViewController(), animated: true)
+    }
+    
+    func fetchData() {
         networkService.getHotelsInformation(completion: { result in
             switch result {
                 
@@ -81,16 +95,17 @@ extension HotelsListViewController: UITableViewDelegate {
         let hotel = hotels[indexPath.row]
         
         let detailInformationVC = DetailInformationViewController()
-        detailInformationVC.hotel = hotel
+        detailInformationVC.hotelID = hotel.id
         navigationController?.pushViewController(detailInformationVC, animated: true)
     }
 }
 
 // MARK: - Setup Constraints
 extension HotelsListViewController {
+    
     private func setupConstraints() {
         let buttonStackView = UIStackView(
-            arrangedSubviews: [button],
+            arrangedSubviews: [sortButton],
             axis: .horizontal,
             spacing: 0)
         
@@ -140,22 +155,22 @@ extension HotelsListViewController {
     }
 }
 
-// MARK: - SwiftUI previews
-import SwiftUI
-
-struct HotelVCProvider: PreviewProvider {
-    static var previews: some View {
-        ContainerView().edgesIgnoringSafeArea(.all)
-    }
-    
-    struct ContainerView: UIViewControllerRepresentable {
-        let viewController = HotelsListViewController()
-        
-        func makeUIViewController(context: Context) -> some UIViewController {
-            return viewController
-        }
-        
-        func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
-        }
-    }
-}
+//// MARK: - SwiftUI previews
+//import SwiftUI
+//
+//struct HotelVCProvider: PreviewProvider {
+//    static var previews: some View {
+//        ContainerView().edgesIgnoringSafeArea(.all)
+//    }
+//    
+//    struct ContainerView: UIViewControllerRepresentable {
+//        let viewController = HotelsListViewController()
+//        
+//        func makeUIViewController(context: Context) -> some UIViewController {
+//            return viewController
+//        }
+//        
+//        func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
+//        }
+//    }
+//}

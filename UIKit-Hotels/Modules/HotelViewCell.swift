@@ -11,7 +11,7 @@ import Kingfisher
 class HotelViewCell: UITableViewCell {
     
     // MARK: - Properties
-    private let avatarBackground: UIImageView = {
+    private let hotelImageView: UIImageView = {
         var image = UIImageView()
         image.contentMode   = .scaleAspectFill
         image.clipsToBounds = true
@@ -24,14 +24,11 @@ class HotelViewCell: UITableViewCell {
     private let distanceIconImage = UIImageView(image: UIImage.distanseIcon(), tintColor: .textGray())
     
     private var hotelNameLabel = UILabel(style: .titleText(), numberOfLines: 2)
-    private let distanceToCenterLabel = UILabel(text: "5км до центра", textColor: .gray)
-    
+    private let distanceToCenterLabel = UILabel(textColor: .gray)
     
     // MARK: - Lifecycle
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
-        
     }
     
     required init?(coder: NSCoder) {
@@ -53,7 +50,6 @@ extension HotelViewCell {
     private func starIcon(image: UIImage) -> UIImageView {
         let icon = UIImageView(image: image, tintColor: .starsYellow())
         icon.translatesAutoresizingMaskIntoConstraints = false
-//        icon.contentMode = .scaleToFill
     
         return icon
     }
@@ -86,19 +82,17 @@ extension HotelViewCell {
 
 // MARK: - Kingfisher Image Manager
 extension HotelViewCell {
+    
     private func setupImage(with imageURL: Endpoint) {
-        self.avatarBackground.kf.indicatorType = .activity
+        self.hotelImageView.kf.indicatorType = .activity
         
         guard let downloadURL = imageURL.linkGenerator(path: imageURL) else { return }
+        
         let resource    = ImageResource(downloadURL: downloadURL)
-        
-        
         let placeholder = UIImage(systemName: "house")
-
-        
         let processor   = RoundCornerImageProcessor(cornerRadius: 5)
 
-        self.avatarBackground.kf.setImage(
+        self.hotelImageView.kf.setImage(
             with: resource,
             placeholder: placeholder,
             options: [.processor(processor)]) { result in
@@ -140,7 +134,7 @@ extension HotelViewCell {
         emptyImageView.setContentHuggingPriority(UILayoutPriority(rawValue: 1), for: .vertical)
         
         let imageStackView = UIStackView(
-            arrangedSubviews: [avatarBackground],
+            arrangedSubviews: [hotelImageView],
             axis: .horizontal,
             spacing: 0)
         
