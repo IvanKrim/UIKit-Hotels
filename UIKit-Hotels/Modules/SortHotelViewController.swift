@@ -9,9 +9,14 @@ import UIKit
 
 class SortHotelViewController: UIViewController {
     
+    
     private let sortedRoomsButton: UIButton = {
-        let button = UIButton(title: "Number of empty rooms ", titleColor: .white, backgroundColor: .gray)
-        
+        let button = UIButton()
+//        self.init(type: .system)
+        button.setTitle("Number of empty rooms ", for: .normal)
+        button.tintColor = .white
+        button.backgroundColor = .gray
+        button .setImage(UIImage(systemName: "circle"), for: .normal)
         button.addTarget(self, action: #selector(sortedRoomsButtonTapped), for: .touchUpInside)
         
         return button
@@ -24,6 +29,8 @@ class SortHotelViewController: UIViewController {
         return button
     }()
     
+    weak var hotelListViewController: HotelsListViewController!
+
     var hotels: Hotels = []
     
     override func viewDidLoad() {
@@ -35,25 +42,19 @@ class SortHotelViewController: UIViewController {
     }
     
     @objc private func sortedRoomsButtonTapped() {
-        dismiss(animated: true) {
-            let hotelListController = HotelsListViewController()
-            self.hotels.sort {
-                $1.suitesArray.count < $0.suitesArray.count
-            }
-            hotelListController.sortedData = true
-            hotelListController.viewDidAppear(true)
+        hotelListViewController.hotels.sort {
+            $1.suitesArray.count < $0.suitesArray.count
         }
+        hotelListViewController.tableView.reloadData()
+        dismiss(animated: true)
     }
     
     @objc private func sortedDistanceButtonTapped() {
-        dismiss(animated: true) {
-            let hotelListController = HotelsListViewController()
-            self.hotels.sort {
-                $0.distance < $1.distance
-            }
-            hotelListController.sortedData = true
-            hotelListController.viewDidAppear(true)
+        hotelListViewController.hotels.sort {
+            $0.distance < $1.distance
         }
+        hotelListViewController.tableView.reloadData()
+        dismiss(animated: true)
     }
 }
 

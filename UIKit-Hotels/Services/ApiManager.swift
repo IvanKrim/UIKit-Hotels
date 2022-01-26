@@ -20,7 +20,12 @@ enum Endpoint {
         case .baseURL:
             return "0777.json"
         case let .image(imageID):
-            return "\(imageID)"
+            if imageID == "null" {
+                return "nil"
+            } else {
+                return "\(imageID)"
+            }
+            
         case let .id(id):
             return "\(id).json"
         }

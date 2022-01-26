@@ -11,20 +11,20 @@ import Kingfisher
 class HotelViewCell: UITableViewCell {
     
     // MARK: - Properties
-//    private let hotelImageView: UIImageView = {
-//        var image = UIImageView()
-//        image.contentMode   = .scaleAspectFill
-//        image.clipsToBounds = true
-//
-//        return image
-//    }()
-    
-    let hotelImageView: UIView = {
-       var view = UIView()
-        view.backgroundColor = .red
-        
-        return view
+    private let hotelImageView: UIImageView = {
+        var image = UIImageView()
+        image.contentMode   = .scaleAspectFill
+        image.clipsToBounds = true
+
+        return image
     }()
+    
+//    let hotelImageView: UIView = {
+//       var view = UIView()
+//        view.backgroundColor = .red
+//
+//        return view
+//    }()
     
     private let networkService: NetworkServiceSingleHotelProtocol = NetworkService()
     
@@ -48,7 +48,7 @@ class HotelViewCell: UITableViewCell {
         distanceToCenterLabel.text = "\(hotel.distance) м до центра"
         
         setupConstraints(with: hotel.stars)
-//        fetchImage(with: hotel.id)
+        fetchImage(with: hotel.id)
     }
 }
 
@@ -88,67 +88,70 @@ extension HotelViewCell {
 }
 
 // MARK: - Kingfisher Image Manager
-//extension HotelViewCell {
-//
-//    private func setupImage(with imageURL: Endpoint) {
-//        self.hotelImageView.kf.indicatorType = .activity
-//
-//        guard let downloadURL = imageURL.linkGenerator(path: imageURL) else { return }
-//
-//        let resource    = ImageResource(downloadURL: downloadURL)
-//        let placeholder = UIImage(systemName: "house")
-//        let processor   = RoundCornerImageProcessor(cornerRadius: 5)
-//
-//        self.hotelImageView.kf.setImage(
-//            with: resource,
-//            placeholder: placeholder,
-//            options: [.processor(processor)]) { result in
-//                self.completionHandler(result)
-//            }
-//    }
-//
-//    private func completionHandler(_ result: Result<RetrieveImageResult, KingfisherError> ) {
-//        switch result {
-//        case .success(let retrieveImageResult):
-//            let image = retrieveImageResult.image
-//
-//        case .failure(let error):
-//            print(error)
-//        }
-//    }
-//
-//    // MARK: Fetch Image Method
-//    private func fetchImage(with hotelID: Int) {
-//        networkService.getHotelInformation(with: hotelID) { result in
-//            switch result {
-//
-//            case .success(let hotel):
-//                guard let imageID = hotel.image else { return }
-//                self.setupImage(with: .image(imageID))
-//            case .failure(let error):
-//                print(error.localizedDescription)
-//            }
-//        }
-//    }
-//}
+extension HotelViewCell {
+
+    private func setupImage(with imageURL: Endpoint) {
+       
+        self.hotelImageView.kf.indicatorType = .activity
+        
+        guard let downloadURL = imageURL.linkGenerator(path: imageURL) else { return }
+        print("это downloadURL\(downloadURL) \n")
+        let resource    = ImageResource(downloadURL: downloadURL)
+        let placeholder = UIImage(systemName: "house")
+        let processor   = RoundCornerImageProcessor(cornerRadius: 5)
+
+        self.hotelImageView.kf.setImage(
+            with: resource,
+            placeholder: placeholder,
+            options: [.processor(processor)]) { result in
+                self.completionHandler(result)
+            }
+    }
+
+    private func completionHandler(_ result: Result<RetrieveImageResult, KingfisherError> ) {
+        switch result {
+        case .success(let retrieveImageResult):
+            let image = retrieveImageResult.image
+
+        case .failure(let error):
+            print(error)
+        }
+    }
+
+    // MARK: Fetch Image Method
+    private func fetchImage(with hotelID: Int) {
+        networkService.getHotelInformation(with: hotelID) { result in
+            switch result {
+
+            case .success(let hotel):
+                guard let imageID = hotel.image else { return }
+                self.setupImage(with: .image(imageID))
+
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+    }
+}
 
 // MARK: - Setup Constraints
 extension HotelViewCell {
     private func setupConstraints(with stars: Double) {
-        let starsArray = starsConverter(input: stars)
+//        let starsArray = starsConverter(input: stars)
         
         let emptyImageView = UIImageView()
         emptyImageView.setContentHuggingPriority(UILayoutPriority(rawValue: 1), for: .vertical)
         
-        let imageStackView = UIStackView(
-            arrangedSubviews: [hotelImageView],
-            axis: .horizontal,
-            spacing: 0)
+        hotelImageView.translatesAutoresizingMaskIntoConstraints = false
+//        let imageStackView = UIStackView(
+//            arrangedSubviews: [hotelImageView],
+//            axis: .horizontal,
+//            spacing: 0)
         
-        let starsStackView = UIStackView(
-            arrangedSubviews: starsArray,
-            axis: .horizontal,
-            spacing: 0)
+//        let starsStackView = UIStackView(
+//            arrangedSubviews: starsArray,
+//            axis: .horizontal,
+//            spacing: 0)
         
         let distanseStackView = UIStackView(
             arrangedSubviews: [distanceIconImage ,distanceToCenterLabel],
@@ -156,36 +159,41 @@ extension HotelViewCell {
             spacing: 3)
         
         let informationStackView = UIStackView(
-            arrangedSubviews: [hotelNameLabel, starsStackView, distanseStackView, emptyImageView],
+            arrangedSubviews: [hotelNameLabel, distanseStackView, emptyImageView],
             axis: .vertical,
             spacing: 0)
-        informationStackView.alignment = .leading
-//                informationStackView.distribution = .equalSpacing
-//        informationStackView.distribution = .equalSpacing
-//        informationStackView.distribution = .fillProportionally
-        informationStackView.distribution = .fillEqually
-//        informationStackView.distribution = .equalCentering
-//        informationStackView.distribution = .fill
+
+//
+//        let generalStack = UIStackView(
+//            arrangedSubviews: [imageStackView, informationStackView],
+//            axis: .horizontal,
+//            spacing: 6)
+//
+//        generalStack.translatesAutoresizingMaskIntoConstraints = false
+        informationStackView.translatesAutoresizingMaskIntoConstraints = false
         
-        let generalStack = UIStackView(
-            arrangedSubviews: [imageStackView, informationStackView],
-            axis: .horizontal,
-            spacing: 6)
         
-        generalStack.translatesAutoresizingMaskIntoConstraints = false
-        distanseStackView.translatesAutoresizingMaskIntoConstraints = false
-        self.addSubview(generalStack)
+                    
+        self.addSubview(hotelImageView)
+        self.addSubview(informationStackView)
+        
+//        NSLayoutConstraint.activate([
+//            imageStackView.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 0.3),
+//            imageStackView.heightAnchor.constraint(equalToConstant: self.frame.height)
+//        ])
         
         NSLayoutConstraint.activate([
-            imageStackView.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 0.3),
-            imageStackView.heightAnchor.constraint(equalToConstant: self.frame.height)
+            hotelImageView.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 0.3),
+            hotelImageView.topAnchor.constraint(equalTo: self.topAnchor, constant: 4),
+            hotelImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 6),
+            hotelImageView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -4),
         ])
-    
+        
         NSLayoutConstraint.activate([
-            generalStack.topAnchor.constraint(equalTo: self.topAnchor, constant: 4),
-            generalStack.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 8),
-            generalStack.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -8),
-            generalStack.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -4)
+            informationStackView.topAnchor.constraint(equalTo: self.topAnchor, constant: 4),
+            informationStackView.leadingAnchor.constraint(equalTo: self.hotelImageView.trailingAnchor, constant: 8),
+            informationStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -8),
+            informationStackView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -4)
             
         ])
     }
