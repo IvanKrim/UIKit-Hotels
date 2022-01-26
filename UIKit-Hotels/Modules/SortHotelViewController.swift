@@ -11,6 +11,7 @@ class SortHotelViewController: UIViewController {
     
     private let sortedRoomsButton: UIButton = {
         let button = UIButton(title: "Number of empty rooms ", titleColor: .white, backgroundColor: .gray)
+        
         button.addTarget(self, action: #selector(sortedRoomsButtonTapped), for: .touchUpInside)
         
         return button
