@@ -9,65 +9,49 @@ import UIKit
 
 class SortHotelViewController: UIViewController {
     
-    private let networkService: NetworkServiceSingleHotelProtocol = NetworkService()
-    
-    let sortedRoomsButton: UIButton = {
+    private let sortedRoomsButton: UIButton = {
         let button = UIButton(title: "Number of empty rooms ", titleColor: .white, backgroundColor: .gray)
         button.addTarget(self, action: #selector(sortedRoomsButtonTapped), for: .touchUpInside)
         
         return button
     }()
     
-    let sortedDistanceButton: UIButton = {
+    private let sortedDistanceButton: UIButton = {
         let button = UIButton(title: "Distance from city centre", titleColor: .white, backgroundColor: .gray)
-        
         button.addTarget(self, action: #selector(sortedDistanceButtonTapped), for: .touchUpInside)
         
         return button
     }()
     
+    var hotels: Hotels = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        
+        title = "Sorted by"
+
         setupConstraints()
     }
     
-    @objc func sortedRoomsButtonTapped() {
+    @objc private func sortedRoomsButtonTapped() {
         dismiss(animated: true) {
             let hotelListController = HotelsListViewController()
-            self.networkService.getHotelsInformation(completion: { result in
-                switch result {
-                    
-                case .success(var data):
-                    data.sort {
-                        $1.suitesArray.count < $0.suitesArray.count
-                    }
-                    hotelListController.hotels = data
-                    hotelListController.viewWillAppear(true)
-                case .failure(let error):
-                    print(error.localizedDescription)
-                }
-            })
+            self.hotels.sort {
+                $1.suitesArray.count < $0.suitesArray.count
+            }
+            hotelListController.sortedData = true
+            hotelListController.viewDidAppear(true)
         }
     }
     
-    @objc func sortedDistanceButtonTapped() {
+    @objc private func sortedDistanceButtonTapped() {
         dismiss(animated: true) {
             let hotelListController = HotelsListViewController()
-            self.networkService.getHotelsInformation(completion: { result in
-                switch result {
-                    
-                case .success(var data):
-                    data.sort {
-                        $0.distance < $1.distance
-                    }
-                    hotelListController.hotels = data
-                    
-                case .failure(let error):
-                    print(error.localizedDescription)
-                }
-            })
+            self.hotels.sort {
+                $0.distance < $1.distance
+            }
+            hotelListController.sortedData = true
+            hotelListController.viewDidAppear(true)
         }
     }
 }

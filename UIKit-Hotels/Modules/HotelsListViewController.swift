@@ -9,6 +9,20 @@ import UIKit
 
 class HotelsListViewController: UIViewController {
     
+    let simpHotels: Hotels = [
+        
+        Hotel(id: 13100, name: "Best Western President Hotel at Times Square", address: "234 West 48th Street", stars: 3.0, distance: 13.1, image: nil, suitesAvailability: "1", lat: nil, lon: nil),
+        Hotel(id: 13370, name: "Midtown Lodging", address: "250 East 50th Street", stars: 2.0, distance: 13.1, image: nil, suitesAvailability: "1:", lat: nil, lon: nil),
+        Hotel(id: 80899, name: "Americana Inn", address: "69 West 38th Street", stars: 2.0, distance: 99.9, image: nil, suitesAvailability: "5:8:32:54", lat: nil, lon: nil),
+        Hotel(id: 40611, name: "Belleclaire Hotel", address: "250 West 77th Street, Manhattan", stars: 3.0, distance: 100.0, image: nil, suitesAvailability: "1:44:21:87:99:34", lat: nil, lon: nil),
+        Hotel(id: 85862, name: "Dream", address: "210 W. 55 STREET, NEW YORK NY 10019, UNITED STATES", stars: 4.0, distance: 554.4, image: nil, suitesAvailability: "42:33:22", lat: nil, lon: nil),
+        Hotel(id: 313499, name: "Dream Downtown", address: "355 West 16th Street", stars: 0.0, distance: 716.06, image: nil, suitesAvailability: "2:87:24:65:26:119:202:6", lat: nil, lon: nil),
+        Hotel(id: 22470, name: "Days Hotel Broadway at 94th Street", address: "215 West 94th Street", stars: 1.0, distance: 999.9, image: nil, suitesAvailability: "15:48:115:72:81", lat: nil, lon: nil)
+    ]
+    
+    var sortedData = false
+    
+    
     private let tableView = UITableView(frame: .zero, style: .plain)
     private var activityIndicator = UIActivityIndicatorView() // Сделать
     
@@ -22,33 +36,45 @@ class HotelsListViewController: UIViewController {
     }()
     
     private let networkService: NetworkServiceSingleHotelProtocol = NetworkService()
+    
     var hotels: Hotels = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Test App"
         view.backgroundColor = .white
+        //        fetchData()
         
         setupTableView()
         setupConstraints()
-        fetchData()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        print("Это \(viewWillAppear), \(hotels)")
-        
     }
     
     @objc private func sortButtonTapped() {
-        present(SortHotelViewController(), animated: true)
+        let sortedVC = SortHotelViewController()
+        present(sortedVC, animated: true)
     }
     
-    func fetchData() {
+    override func viewDidAppear(_ animated: Bool) {
+        updateContent()
+    }
+    
+    // MARK: - UPDATE CONTENT AFTER SORT
+    private func updateContent() {
+        if !sortedData {
+            //            hotels = hottels
+            //            tableView.reloadData()
+            fetchData()
+            print("Блок false сработал")
+        } else {
+            hotels = simpHotels
+            tableView.reloadData()
+            print("Блок true сработал")
+        }
+    }
+    
+    private func fetchData() {
         networkService.getHotelsInformation(completion: { result in
             switch result {
-                
             case .success(let data):
                 self.hotels = data
                 self.tableView.reloadData()

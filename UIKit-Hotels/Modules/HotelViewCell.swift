@@ -11,12 +11,19 @@ import Kingfisher
 class HotelViewCell: UITableViewCell {
     
     // MARK: - Properties
-    private let hotelImageView: UIImageView = {
-        var image = UIImageView()
-        image.contentMode   = .scaleAspectFill
-        image.clipsToBounds = true
+//    private let hotelImageView: UIImageView = {
+//        var image = UIImageView()
+//        image.contentMode   = .scaleAspectFill
+//        image.clipsToBounds = true
+//
+//        return image
+//    }()
+    
+    let hotelImageView: UIView = {
+       var view = UIView()
+        view.backgroundColor = .red
         
-        return image
+        return view
     }()
     
     private let networkService: NetworkServiceSingleHotelProtocol = NetworkService()
@@ -41,7 +48,7 @@ class HotelViewCell: UITableViewCell {
         distanceToCenterLabel.text = "\(hotel.distance) м до центра"
         
         setupConstraints(with: hotel.stars)
-        fetchImage(with: hotel.id)
+//        fetchImage(with: hotel.id)
     }
 }
 
@@ -81,49 +88,49 @@ extension HotelViewCell {
 }
 
 // MARK: - Kingfisher Image Manager
-extension HotelViewCell {
-    
-    private func setupImage(with imageURL: Endpoint) {
-        self.hotelImageView.kf.indicatorType = .activity
-        
-        guard let downloadURL = imageURL.linkGenerator(path: imageURL) else { return }
-        
-        let resource    = ImageResource(downloadURL: downloadURL)
-        let placeholder = UIImage(systemName: "house")
-        let processor   = RoundCornerImageProcessor(cornerRadius: 5)
-
-        self.hotelImageView.kf.setImage(
-            with: resource,
-            placeholder: placeholder,
-            options: [.processor(processor)]) { result in
-                self.completionHandler(result)
-            }
-    }
-    
-    private func completionHandler(_ result: Result<RetrieveImageResult, KingfisherError> ) {
-        switch result {
-        case .success(let retrieveImageResult):
-            let image = retrieveImageResult.image
-            
-        case .failure(let error):
-            print(error)
-        }
-    }
-    
-    // MARK: Fetch Image Method
-    private func fetchImage(with hotelID: Int) {
-        networkService.getHotelInformation(with: hotelID) { result in
-            switch result {
-                
-            case .success(let hotel):
-                guard let imageID = hotel.image else { return }
-                self.setupImage(with: .image(imageID))
-            case .failure(let error):
-                print(error.localizedDescription)
-            }
-        }
-    }
-}
+//extension HotelViewCell {
+//
+//    private func setupImage(with imageURL: Endpoint) {
+//        self.hotelImageView.kf.indicatorType = .activity
+//
+//        guard let downloadURL = imageURL.linkGenerator(path: imageURL) else { return }
+//
+//        let resource    = ImageResource(downloadURL: downloadURL)
+//        let placeholder = UIImage(systemName: "house")
+//        let processor   = RoundCornerImageProcessor(cornerRadius: 5)
+//
+//        self.hotelImageView.kf.setImage(
+//            with: resource,
+//            placeholder: placeholder,
+//            options: [.processor(processor)]) { result in
+//                self.completionHandler(result)
+//            }
+//    }
+//
+//    private func completionHandler(_ result: Result<RetrieveImageResult, KingfisherError> ) {
+//        switch result {
+//        case .success(let retrieveImageResult):
+//            let image = retrieveImageResult.image
+//
+//        case .failure(let error):
+//            print(error)
+//        }
+//    }
+//
+//    // MARK: Fetch Image Method
+//    private func fetchImage(with hotelID: Int) {
+//        networkService.getHotelInformation(with: hotelID) { result in
+//            switch result {
+//
+//            case .success(let hotel):
+//                guard let imageID = hotel.image else { return }
+//                self.setupImage(with: .image(imageID))
+//            case .failure(let error):
+//                print(error.localizedDescription)
+//            }
+//        }
+//    }
+//}
 
 // MARK: - Setup Constraints
 extension HotelViewCell {
