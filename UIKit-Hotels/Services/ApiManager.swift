@@ -20,12 +20,7 @@ enum Endpoint {
         case .baseURL:
             return "0777.json"
         case let .image(imageID):
-            if imageID == "null" {
-                return "nil"
-            } else {
-                return "\(imageID)"
-            }
-            
+            return "\(imageID)"
         case let .id(id):
             return "\(id).json"
         }
@@ -33,7 +28,7 @@ enum Endpoint {
     
     func linkGenerator(path: Self) -> URL? {
         let link = baseURL.appendingPathComponent(self.path())
-   
+        
         return link
     }
 }

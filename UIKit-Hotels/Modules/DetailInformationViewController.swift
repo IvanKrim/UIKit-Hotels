@@ -16,15 +16,15 @@ class DetailInformationViewController: UIViewController {
         var image = UIImageView()
         image.contentMode   = .scaleAspectFill
         image.clipsToBounds = true
+        
         return image
     }()
     
-    private let hotelNameLabel = UILabel(style: .titleText(), numberOfLines: 0)
-    private let hotelStarsLabel = UILabel()
-    private let hotelAddres = UILabel(textColor: .textGray())
-    private let suites = UILabel(style: .subheadingText())
-    
-    private let suitesAvailability = UILabel(textColor: .textGreen())
+    private let hotelNameLabel      = UILabel(style: .titleText(), numberOfLines: 0)
+    private let hotelStarsLabel     = UILabel()
+    private let hotelAddres         = UILabel(textColor: .textGray())
+    private let suites              = UILabel(style: .subheadingText())
+    private let suitesAvailability  = UILabel(textColor: .textGreen())
     
     private let mapButton: CustomButton = {
         let button = CustomButton(title: "Watch On Map", backgroundColor: .textGreen())
@@ -32,7 +32,7 @@ class DetailInformationViewController: UIViewController {
         
         return button
     }()
-
+    
     private var hotel: Hotel?
     var hotelID: Int?
     
@@ -43,39 +43,45 @@ class DetailInformationViewController: UIViewController {
         
         fetchData(with: hotelID)
     }
-        
-    func fetchData(with hotelID: Int?) {
-        guard let id = hotelID else { return }
-        
-        networkService.getHotelInformation(with: id) { result in
-            switch result {
-            case .success(let hotel):
-                guard let imageString = hotel.image else { return }
-                
-                self.setupContent(whith: hotel)
-                self.setupImage(with: .image(imageString))
-                self.hotel = hotel
-            case .failure(let error):
-                print(error.localizedDescription)
-            }
-        }
-    }
     
     private func setupContent(whith hotel: Hotel) {
+        setupConstraints(with: hotel.stars)
+        
         navigationItem.title = hotel.name
         hotelNameLabel.text = hotel.name
         hotelAddres.text = hotel.address
         suitesAvailability.text = hotel.suitesAvailability
-        
-        setupConstraints(with: hotel.stars)
     }
     
     @objc private func buttonTapped() {
         let mapScreenVC = MapScreenViewController()
         mapScreenVC.hotel = hotel
         
-//        present(mapScreenVC, animated: true)
         navigationController?.pushViewController(mapScreenVC, animated: true)
+    }
+}
+
+// MARK: - Fetch Data
+extension DetailInformationViewController {
+    func fetchData(with hotelID: Int?) {
+        guard let id = hotelID else { return }
+        
+        networkService.getHotelInformation(with: id) { result in
+            switch result {
+            case .success(let hotel):
+                self.hotel = hotel
+                self.setupContent(whith: hotel)
+                
+                guard let imageURL = hotel.imageHandler else { return }
+                
+                ImageManager.shared.setupImage(
+                    from: .image(imageURL),
+                    image: self.hotelImageView
+                )
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
     }
 }
 
@@ -84,10 +90,10 @@ extension DetailInformationViewController {
     private func starIcon(image: UIImage) -> UIImageView {
         let icon = UIImageView(image: image, tintColor: .starsYellow())
         icon.translatesAutoresizingMaskIntoConstraints = false
-    
+        
         return icon
     }
-
+    
     private func starsConverter(input: Double) -> [UIImageView] {
         let starsMaximum = 5
         let emptyView: UIImageView = {
@@ -109,50 +115,8 @@ extension DetailInformationViewController {
             starsArray.append(starIcon(image: UIImage.emptyStarIcon()))
         }
         starsArray.append(emptyView)
-    
+        
         return starsArray
-    }
-}
-
-// MARK: - Kingfisher Image Manager
-extension DetailInformationViewController {
-    private func setupImage(with imageURL: Endpoint) {
-//        self.hotelImageView.kf.indicatorType = .activity
-        guard let downloadURL = imageURL.linkGenerator(path: imageURL) else { return }
-        let resource    = ImageResource(downloadURL: downloadURL)
-        let placeholder = UIImage(systemName: "house")
-        let processor   = RoundCornerImageProcessor(cornerRadius: 5)
-
-        self.hotelImageView.kf.setImage(
-            with: resource,
-            placeholder: placeholder,
-            options: [.processor(processor)]) { result in
-                self.completionHandler(result)
-            }
-    }
-    
-    private func completionHandler(_ result: Result<RetrieveImageResult, KingfisherError> ) {
-        switch result {
-        case .success(let retrieveImageResult):
-            let image = retrieveImageResult.image
-            
-        case .failure(let error):
-            print(error)
-        }
-    }
-    
-    // MARK: Fetch Image Method
-    private func fetchImage(with hotelID: Int) {
-        networkService.getHotelInformation(with: hotelID) { result in
-            switch result {
-                
-            case .success(let hotel):
-                guard let imageID = hotel.image else { return }
-                self.setupImage(with: .image(imageID))
-            case .failure(let error):
-                print(error.localizedDescription)
-            }
-        }
     }
 }
 
@@ -166,7 +130,7 @@ extension DetailInformationViewController {
             arrangedSubviews: starsArray,
             axis: .horizontal,
             spacing: 0)
- 
+        
         let availableRoomsStackView = UIStackView(
             arrangedSubviews: [suites, suitesAvailability],
             axis: .vertical,
@@ -177,7 +141,7 @@ extension DetailInformationViewController {
             axis: .vertical,
             spacing: 14)
         
-        hotelImageView.translatesAutoresizingMaskIntoConstraints  = false
+        hotelImageView.translatesAutoresizingMaskIntoConstraints    = false
         stackView.translatesAutoresizingMaskIntoConstraints         = false
         mapButton.translatesAutoresizingMaskIntoConstraints         = false
         

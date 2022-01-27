@@ -13,10 +13,14 @@ struct Hotel: Decodable {
     let address: String
     let stars: Double
     let distance: Double
-    let image: String?
+    private let image: String?
     let suitesAvailability: String
     let lat: Double?
     let lon: Double?
+    
+    var imageHandler: String? {
+        image == nil ? "" : image
+    }
     
     var suitesArray: [String] {
         suitesAvailability.components(separatedBy: ":")
