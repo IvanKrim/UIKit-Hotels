@@ -11,7 +11,7 @@ import Kingfisher
 class HotelViewCell: UITableViewCell {
     
     // MARK: - Properties
-    private let hotelImageView: UIImageView = {
+    private var hotelImageView: UIImageView = {
         var image = UIImageView()
         image.contentMode   = .scaleAspectFill
         image.clipsToBounds = true
@@ -79,7 +79,6 @@ extension HotelViewCell {
         return starsArray
     }
 }
-
 
 extension HotelViewCell {
     private func fetchImage(with hotelID: Int) {
