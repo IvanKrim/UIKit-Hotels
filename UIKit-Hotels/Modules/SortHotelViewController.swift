@@ -12,11 +12,9 @@ class SortHotelViewController: UIViewController {
     
     private let sortedRoomsButton: UIButton = {
         let button = UIButton()
-//        self.init(type: .system)
         button.setTitle("Number of empty rooms ", for: .normal)
         button.tintColor = .white
         button.backgroundColor = .gray
-        button .setImage(UIImage(systemName: "circle"), for: .normal)
         button.addTarget(self, action: #selector(sortedRoomsButtonTapped), for: .touchUpInside)
         
         return button
@@ -37,7 +35,7 @@ class SortHotelViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
         title = "Sorted by"
-
+        
         setupConstraints()
     }
     
@@ -60,6 +58,8 @@ class SortHotelViewController: UIViewController {
 
 extension SortHotelViewController {
     private func setupConstraints() {
+        
+        
         
         let stackView = UIStackView(
             arrangedSubviews: [sortedRoomsButton,sortedDistanceButton],

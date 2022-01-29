@@ -74,7 +74,7 @@ extension DetailInformationViewController {
                 
                 guard let imageURL = hotel.imageHandler else { return }
                 
-                ImageManager.shared.setupImage(
+                ImageManager.shared.fetchImage(
                     from: .image(imageURL),
                     image: self.hotelImageView
                 )
