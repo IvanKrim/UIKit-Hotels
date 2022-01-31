@@ -24,7 +24,7 @@ class HotelViewCell: UITableViewCell {
     private let distanceIconImage = UIImageView(image: UIImage.distanseIcon(), tintColor: .textGray())
     private let distanceToCenterLabel = UILabel(textColor: .gray)
     private let availableSuitesLabel = UILabel(style: .bodyTextBold(), textColor: .textGreen())
-
+    
     // MARK: - Lifecycle
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -39,7 +39,7 @@ class HotelViewCell: UITableViewCell {
         hotelNameLabel.text = hotel.name
         distanceToCenterLabel.text = "\(hotel.distance) meters to the center"
         availableSuitesLabel.text = "Available rooms: \(hotel.suitesArray.count)"
-
+        
         setupConstraints(with: hotel.stars)
         fetchImage(with: hotel.id)
     }
@@ -88,12 +88,10 @@ extension HotelViewCell {
                 
             case .success(let hotel):
                 guard let imageURL = hotel.imageHandler else { return }
-                
                 ImageManager.shared.fetchImage(
                     from: .image(imageURL),
                     image: self.hotelImageView
                 )
-               
             case .failure(let error):
                 print(error.localizedDescription)
             }
@@ -104,6 +102,7 @@ extension HotelViewCell {
 // MARK: - Setup Constraints
 extension HotelViewCell {
     private func setupConstraints(with stars: Double) {
+        
         let starsArray = starsConverter(input: stars)
         
         let emptyImageView = UIImageView()
@@ -120,28 +119,29 @@ extension HotelViewCell {
             spacing: 3)
         
         let generalStackView = UIStackView(
-            arrangedSubviews: [hotelNameLabel,availableSuitesLabel, starsStackView, distanseStackView],
+            arrangedSubviews: [hotelNameLabel, starsStackView, availableSuitesLabel, distanseStackView],
             axis: .vertical,
-            spacing: 10)
+            spacing: 20)
         
         hotelImageView.translatesAutoresizingMaskIntoConstraints = false
+
         generalStackView.translatesAutoresizingMaskIntoConstraints = false
         
         self.addSubview(hotelImageView)
         self.addSubview(generalStackView)
-    
+        
         NSLayoutConstraint.activate([
             hotelImageView.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 0.3),
             hotelImageView.topAnchor.constraint(equalTo: self.topAnchor, constant: 4),
             hotelImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 6),
             hotelImageView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -4),
         ])
-
+        
         NSLayoutConstraint.activate([
             generalStackView.topAnchor.constraint(equalTo: self.topAnchor, constant: 4),
             generalStackView.leadingAnchor.constraint(equalTo: self.hotelImageView.trailingAnchor, constant: 8),
             generalStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -8),
-            generalStackView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -4)
+            generalStackView.bottomAnchor.constraint(lessThanOrEqualTo: self.bottomAnchor, constant: -50)
         ])
     }
 }

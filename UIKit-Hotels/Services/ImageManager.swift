@@ -5,8 +5,8 @@
 //  Created by Kalabishka Ivan on 27.01.2022.
 //
 
-import Kingfisher
 import UIKit
+import Kingfisher
 
 class ImageManager {
     

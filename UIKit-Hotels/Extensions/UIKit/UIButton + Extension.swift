@@ -7,9 +7,8 @@
 
 import UIKit
 
-// convenient initialization
 extension UIButton {
-    // кастомный инициализатор
+    
     convenience init(
         title: String,
         titleColor: UIColor,

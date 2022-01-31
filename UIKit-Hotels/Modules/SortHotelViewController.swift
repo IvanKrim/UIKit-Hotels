@@ -9,13 +9,9 @@ import UIKit
 
 class SortHotelViewController: UIViewController {
     
-    
     private let sortedRoomsButton: UIButton = {
-        let button = UIButton()
-        button.setTitle("Number of empty rooms ", for: .normal)
-        button.tintColor = .white
-        button.backgroundColor = .gray
-        button.addTarget(self, action: #selector(sortedRoomsButtonTapped), for: .touchUpInside)
+        let button = UIButton(title: "Number of empty rooms", titleColor: .white, backgroundColor: .gray)
+        button.addTarget(self, action: #selector(sortedDistanceButtonTapped), for: .touchUpInside)
         
         return button
     }()
@@ -28,15 +24,14 @@ class SortHotelViewController: UIViewController {
     }()
     
     weak var hotelListViewController: HotelsListViewController!
-
+    
     var hotels: Hotels = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
-        title = "Sorted by"
         
         setupConstraints()
+        view.backgroundColor = .white
     }
     
     @objc private func sortedRoomsButtonTapped() {
@@ -58,9 +53,7 @@ class SortHotelViewController: UIViewController {
 
 extension SortHotelViewController {
     private func setupConstraints() {
-        
-        
-        
+    
         let stackView = UIStackView(
             arrangedSubviews: [sortedRoomsButton,sortedDistanceButton],
             axis: .vertical,

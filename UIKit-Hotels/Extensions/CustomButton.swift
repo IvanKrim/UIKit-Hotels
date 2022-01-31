@@ -12,11 +12,7 @@ class CustomButton: UIButton {
         super.init(frame: frame)
     }
     
-    init(
-        title: String,
-        backgroundColor: UIColor,
-        font: UIFont? = .bodyText()
-    ){
+    init(title: String, backgroundColor: UIColor, font: UIFont? = .bodyText()) {
         super.init(frame: .zero)
         self.backgroundColor = backgroundColor
         setTitle(title, for: .normal)

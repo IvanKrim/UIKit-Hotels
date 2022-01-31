@@ -8,7 +8,6 @@
 import UIKit
 
 extension UIImage {
-    
     static func emptyStarIcon() -> UIImage! {
         return UIImage.init(systemName: "star")
     }

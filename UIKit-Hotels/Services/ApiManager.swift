@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 enum Endpoint {
     case baseURL
     case image (String)

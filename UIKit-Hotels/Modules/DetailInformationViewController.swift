@@ -38,6 +38,7 @@ class DetailInformationViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         navigationController?.navigationBar.prefersLargeTitles = false
         view.backgroundColor = .white
         
@@ -115,6 +116,7 @@ extension DetailInformationViewController {
             starsArray.append(starIcon(image: UIImage.emptyStarIcon()))
         }
         starsArray.append(emptyView)
+        
         
         return starsArray
     }

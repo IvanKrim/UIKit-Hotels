@@ -17,13 +17,12 @@ extension UIImageView {
         self.image = image
         self.tintColor = tintColor
         self.contentMode = .scaleAspectFit
-        
-        self.layer.borderColor = UIColor.black.cgColor
-        self.layer.borderWidth = 1
-        
-        
     }
 }
+
+
+
+
 
 
 

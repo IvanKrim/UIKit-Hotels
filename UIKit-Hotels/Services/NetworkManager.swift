@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 protocol NetworkServiceSingleHotelProtocol {
     func getHotelsInformation(completion: @escaping (Result<Hotels, Error>) -> Void)
     
