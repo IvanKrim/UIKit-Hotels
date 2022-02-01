@@ -13,10 +13,10 @@ class HotelsListViewController: UIViewController {
     private var activityIndicator = UIActivityIndicatorView() // Сделать
     
     private let sortButton: UIButton = {
-        let button = UIButton(title: "Sort", titleColor: .white,
-                              backgroundColor: .systemGray,
-                              isShadow: false)
+        let button = UIButton(title: "Sort", titleColor: .blueTextSet(), backgroundColor: .clear)
         button.addTarget(self, action: #selector(sortButtonTapped), for: .touchUpInside)
+        button.layer.borderWidth = 0.5
+        button.layer.borderColor = UIColor.blueTextSet().cgColor
         
         return button
     }()
@@ -28,8 +28,9 @@ class HotelsListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Test App"
-        view.backgroundColor = .white
+        title = "Hotel App"
+        
+        view.backgroundColor = .appBackgroundSet()
         
         setupTableView()
         setupConstraints()
@@ -47,8 +48,9 @@ class HotelsListViewController: UIViewController {
         self.tableView.delegate = self
         self.tableView.dataSource = self
         self.tableView.register(HotelViewCell.self, forCellReuseIdentifier: "CellID")
-        
+        tableView.separatorStyle = .none
         tableView.rowHeight = view.frame.height / 3
+        tableView.backgroundColor = .clear
     }
     
     @objc private func sortButtonTapped() {
@@ -122,8 +124,8 @@ extension HotelsListViewController {
         
         NSLayoutConstraint.activate([
             buttonStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            buttonStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
-            buttonStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0)
+            buttonStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 1),
+            buttonStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: -1)
         ])
         
         NSLayoutConstraint.activate([

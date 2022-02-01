@@ -19,8 +19,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let firstViewController = HotelsListViewController()
         
         let navigationController = UINavigationController(rootViewController: firstViewController)
-        //        navigationController.navigationBar.prefersLargeTitles = true
-        navigationController.navigationItem.largeTitleDisplayMode = .automatic
+        navigationController.navigationBar.prefersLargeTitles = true
+        navigationController.navigationBar.tintColor = .generalTextSet()
+        navigationController.navigationBar.topItem?.backButtonTitle = "Back"
         
         window = UIWindow(frame: windowScene.coordinateSpace.bounds)
         window?.windowScene = windowScene

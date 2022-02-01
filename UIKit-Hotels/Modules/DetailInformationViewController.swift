@@ -24,10 +24,10 @@ class DetailInformationViewController: UIViewController {
     private let hotelStarsLabel     = UILabel()
     private let hotelAddres         = UILabel(textColor: .textGray())
     private let suites              = UILabel(style: .subheadingText())
-    private let suitesAvailability  = UILabel(textColor: .textGreen())
+    private let suitesAvailability  = UILabel(textColor: .blueTextSet())
     
     private let mapButton: CustomButton = {
-        let button = CustomButton(title: "Watch On Map", backgroundColor: .textGreen())
+        let button = CustomButton(title: "Watch On Map", backgroundColor: .buttonColorSet())
         button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
         
         return button
@@ -40,7 +40,7 @@ class DetailInformationViewController: UIViewController {
         super.viewDidLoad()
         
         navigationController?.navigationBar.prefersLargeTitles = false
-        view.backgroundColor = .white
+        view.backgroundColor = .systemBackground
         
         fetchData(with: hotelID)
     }
@@ -86,47 +86,13 @@ extension DetailInformationViewController {
     }
 }
 
-// MARK: - Setup Stars Array
-extension DetailInformationViewController {
-    private func starIcon(image: UIImage) -> UIImageView {
-        let icon = UIImageView(image: image, tintColor: .starsYellow())
-        icon.translatesAutoresizingMaskIntoConstraints = false
-        
-        return icon
-    }
-    
-    private func starsConverter(input: Double) -> [UIImageView] {
-        let starsMaximum = 5
-        let emptyView: UIImageView = {
-            let imageView = UIImageView()
-            imageView.setContentHuggingPriority(
-                UILayoutPriority(rawValue: 1),
-                for: .horizontal)
-            
-            return imageView
-        }()
-        
-        var starsArray: [UIImageView] = []
-        
-        for _ in 0..<Int(input) {
-            starsArray.append(starIcon(image: UIImage.filledStarIcon()))
-        }
-        
-        while starsArray.count !=  starsMaximum {
-            starsArray.append(starIcon(image: UIImage.emptyStarIcon()))
-        }
-        starsArray.append(emptyView)
-        
-        
-        return starsArray
-    }
-}
-
 // MARK: - Setup Constraints
 extension DetailInformationViewController {
     
     private func setupConstraints(with stars: Double) {
-        let starsArray = starsConverter(input: stars)
+        
+        
+        let starsArray = StarsIcon.shared.starsConverter(input: stars)
         
         let starsStackView = UIStackView(
             arrangedSubviews: starsArray,

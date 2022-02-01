@@ -15,19 +15,20 @@ class HotelViewCell: UITableViewCell {
         var image = UIImageView()
         image.contentMode   = .scaleAspectFill
         image.clipsToBounds = true
-        image.layer.cornerRadius = 10
         return image
     }()
     
     private let networkService: NetworkServiceSingleHotelProtocol = NetworkService()
-    private let hotelNameLabel = UILabel(style: .titleText(), numberOfLines: 2)
+    private let hotelNameLabel = UILabel(style: .titleText(),textColor: .generalTextSet(), numberOfLines: 2)
     private let distanceIconImage = UIImageView(image: UIImage.distanseIcon(), tintColor: .textGray())
-    private let distanceToCenterLabel = UILabel(textColor: .gray)
-    private let availableSuitesLabel = UILabel(style: .bodyTextBold(), textColor: .textGreen())
+    private let distanceToCenterLabel = UILabel(textColor: .gray, numberOfLines: 2)
+    private let availableSuitesLabel = UILabel(style: .bodyTextBold(), textColor: .blueTextSet())
     
     // MARK: - Lifecycle
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        self.backgroundColor = UIColor.clear
+
     }
     
     required init?(coder: NSCoder) {
@@ -42,41 +43,6 @@ class HotelViewCell: UITableViewCell {
         
         setupConstraints(with: hotel.stars)
         fetchImage(with: hotel.id)
-    }
-}
-
-// MARK: - Setup Stars Array
-extension HotelViewCell {
-    private func starIcon(image: UIImage) -> UIImageView {
-        let icon = UIImageView(image: image, tintColor: .starsYellow())
-        icon.translatesAutoresizingMaskIntoConstraints = false
-        
-        return icon
-    }
-    
-    private func starsConverter(input: Double) -> [UIImageView] {
-        let starsMaximum = 5
-        let emptyView: UIImageView = {
-            let imageView = UIImageView()
-            imageView.setContentHuggingPriority(
-                UILayoutPriority(rawValue: 1),
-                for: .horizontal)
-            
-            return imageView
-        }()
-        
-        var starsArray: [UIImageView] = []
-        
-        for _ in 0..<Int(input) {
-            starsArray.append(starIcon(image: UIImage.filledStarIcon()))
-        }
-        
-        while starsArray.count !=  starsMaximum {
-            starsArray.append(starIcon(image: UIImage.emptyStarIcon()))
-        }
-        starsArray.append(emptyView)
-        
-        return starsArray
     }
 }
 
@@ -103,7 +69,20 @@ extension HotelViewCell {
 extension HotelViewCell {
     private func setupConstraints(with stars: Double) {
         
-        let starsArray = starsConverter(input: stars)
+        let view: UIView = {
+            let view = UIView()
+            view.translatesAutoresizingMaskIntoConstraints = false
+            view.backgroundColor = UIColor(named: "cellBackground")
+            view.layer.cornerRadius = 2
+            view.layer.shadowColor = UIColor.black.cgColor
+            view.layer.shadowRadius = 5
+            view.layer.shadowOpacity = 0.1
+            view.layer.shadowOffset = CGSize(width: 2, height: 2)
+            
+            return view
+        }()
+       
+        let starsArray = StarsIcon.shared.starsConverter(input: stars)
         
         let emptyImageView = UIImageView()
         emptyImageView.setContentHuggingPriority(UILayoutPriority(rawValue: 1), for: .vertical)
@@ -124,24 +103,30 @@ extension HotelViewCell {
             spacing: 20)
         
         hotelImageView.translatesAutoresizingMaskIntoConstraints = false
-
         generalStackView.translatesAutoresizingMaskIntoConstraints = false
         
-        self.addSubview(hotelImageView)
-        self.addSubview(generalStackView)
+        addSubview(view)
+        view.addSubviews([hotelImageView, generalStackView])
         
         NSLayoutConstraint.activate([
-            hotelImageView.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 0.3),
-            hotelImageView.topAnchor.constraint(equalTo: self.topAnchor, constant: 4),
-            hotelImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 6),
-            hotelImageView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -4),
+            view.topAnchor.constraint(equalTo: self.topAnchor, constant: 6),
+            view.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 5),
+            view.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -5),
+            view.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -6)
         ])
         
         NSLayoutConstraint.activate([
-            generalStackView.topAnchor.constraint(equalTo: self.topAnchor, constant: 4),
-            generalStackView.leadingAnchor.constraint(equalTo: self.hotelImageView.trailingAnchor, constant: 8),
-            generalStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -8),
-            generalStackView.bottomAnchor.constraint(lessThanOrEqualTo: self.bottomAnchor, constant: -50)
+            hotelImageView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.3),
+            hotelImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0),
+            hotelImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
+            hotelImageView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0),
+        ])
+        
+        NSLayoutConstraint.activate([
+            generalStackView.topAnchor.constraint(equalTo: view.topAnchor, constant: 4),
+            generalStackView.leadingAnchor.constraint(equalTo: hotelImageView.trailingAnchor, constant: 8),
+            generalStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
+            generalStackView.bottomAnchor.constraint(lessThanOrEqualTo: view.bottomAnchor, constant: -4)
         ])
     }
 }

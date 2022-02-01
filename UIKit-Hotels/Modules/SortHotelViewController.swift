@@ -10,14 +10,14 @@ import UIKit
 class SortHotelViewController: UIViewController {
     
     private let sortedRoomsButton: UIButton = {
-        let button = UIButton(title: "Number of empty rooms", titleColor: .white, backgroundColor: .gray)
+        let button = UIButton(title: "Number of empty rooms", titleColor: .white, backgroundColor: .buttonColorSet())
         button.addTarget(self, action: #selector(sortedDistanceButtonTapped), for: .touchUpInside)
         
         return button
     }()
     
     private let sortedDistanceButton: UIButton = {
-        let button = UIButton(title: "Distance from city centre", titleColor: .white, backgroundColor: .gray)
+        let button = UIButton(title: "Distance from city centre", titleColor: .white, backgroundColor: .buttonColorSet())
         button.addTarget(self, action: #selector(sortedDistanceButtonTapped), for: .touchUpInside)
         
         return button
@@ -31,7 +31,7 @@ class SortHotelViewController: UIViewController {
         super.viewDidLoad()
         
         setupConstraints()
-        view.backgroundColor = .white
+        view.backgroundColor = .systemBackground
     }
     
     @objc private func sortedRoomsButtonTapped() {
