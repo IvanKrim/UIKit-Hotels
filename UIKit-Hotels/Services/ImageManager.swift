@@ -14,12 +14,27 @@ class ImageManager {
     
     private init() {}
     
-    func fetchImage(from imageURL: Endpoint, image: UIImageView)  {
-        guard let downloadURL = imageURL.linkGenerator(path: imageURL) else { return }
+    func fetchCropedImage(from imageURL: Endpoint) -> UIImageView  {
+        let imageView = UIImageView()
+        let downloadURL = imageURL.linkGenerator(path: imageURL)
         let placeholder = UIImage(systemName: "photo.fill")
         
-        image.kf.setImage( with: downloadURL, placeholder: placeholder)
+        imageView.kf.setImage(
+            with: downloadURL,
+            placeholder: placeholder) { result in
+                switch result {
+                    
+                case .success(let imageData):
+                    let croppedImage = imageData.image.kf.crop(
+                        to: CGSize(width: imageData.image.size.width * 0.95, height: imageData.image.size.height * 0.95),
+                        anchorOn: CGPoint(x: 0.5, y: 0.5))
+                    imageView.image = croppedImage
+                    
+                case .failure(let error):
+                    print(error.isInvalidResponseStatusCode)
+                }
+            }
+
+        return imageView
     }
 }
-
-

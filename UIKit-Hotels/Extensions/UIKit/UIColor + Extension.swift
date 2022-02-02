@@ -33,6 +33,9 @@ extension UIColor {
         return UIColor(named: "appBackgroundSet") ?? .systemBackground
     }
     
+    static func sortHotelVCBackgroundSet() -> UIColor {
+        return UIColor(named: "sortHotelVCBackgroundSet") ?? .systemBackground
+    }
     
     
     static func starsYellow() -> UIColor {

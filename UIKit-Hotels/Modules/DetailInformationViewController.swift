@@ -20,14 +20,17 @@ class DetailInformationViewController: UIViewController {
         return image
     }()
     
-    private let hotelNameLabel      = UILabel(style: .titleText(), numberOfLines: 0)
+    private let hotelNameLabel      = UILabel(style: .firstTitleText(), numberOfLines: 0)
     private let hotelStarsLabel     = UILabel()
     private let hotelAddres         = UILabel(textColor: .textGray())
     private let suites              = UILabel(style: .subheadingText())
     private let suitesAvailability  = UILabel(textColor: .blueTextSet())
     
-    private let mapButton: CustomButton = {
-        let button = CustomButton(title: "Watch On Map", backgroundColor: .buttonColorSet())
+    private let mapButton: UIButton = {
+        let button = UIButton(
+            title: "Watch on map", titleColor: .white,
+            backgroundColor: .buttonColorSet(), font: .bodyText(),
+            isShadow: true, cornerRadius: 10)
         button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
         
         return button
@@ -38,8 +41,6 @@ class DetailInformationViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        navigationController?.navigationBar.prefersLargeTitles = false
         view.backgroundColor = .systemBackground
         
         fetchData(with: hotelID)
@@ -59,11 +60,14 @@ class DetailInformationViewController: UIViewController {
         mapScreenVC.hotel = hotel
         
         navigationController?.pushViewController(mapScreenVC, animated: true)
+        print("button tapped")
     }
 }
 
 // MARK: - Fetch Data
 extension DetailInformationViewController {
+    
+    
     func fetchData(with hotelID: Int?) {
         guard let id = hotelID else { return }
         
@@ -72,17 +76,19 @@ extension DetailInformationViewController {
             case .success(let hotel):
                 self.hotel = hotel
                 self.setupContent(whith: hotel)
-                
                 guard let imageURL = hotel.imageHandler else { return }
                 
-                ImageManager.shared.fetchImage(
-                    from: .image(imageURL),
-                    image: self.hotelImageView
-                )
+                self.cropImageProcessor(from: .image(imageURL))
+                
             case .failure(let error):
                 print(error.localizedDescription)
             }
         }
+    }
+    
+    private func cropImageProcessor(from imageURL: Endpoint) {
+        let imageManager = ImageManager.shared.fetchCropedImage(from: imageURL)
+        self.hotelImageView.image = imageManager.image
     }
 }
 
@@ -90,7 +96,6 @@ extension DetailInformationViewController {
 extension DetailInformationViewController {
     
     private func setupConstraints(with stars: Double) {
-        
         
         let starsArray = StarsIcon.shared.starsConverter(input: stars)
         

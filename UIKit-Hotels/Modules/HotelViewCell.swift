@@ -19,16 +19,15 @@ class HotelViewCell: UITableViewCell {
     }()
     
     private let networkService: NetworkServiceSingleHotelProtocol = NetworkService()
-    private let hotelNameLabel = UILabel(style: .titleText(),textColor: .generalTextSet(), numberOfLines: 2)
+    private let hotelNameLabel = UILabel(style: .firstTitleText(),textColor: .generalTextSet(), numberOfLines: 2)
     private let distanceIconImage = UIImageView(image: UIImage.distanseIcon(), tintColor: .textGray())
     private let distanceToCenterLabel = UILabel(textColor: .gray, numberOfLines: 2)
-    private let availableSuitesLabel = UILabel(style: .bodyTextBold(), textColor: .blueTextSet())
+    private let availableSuitesLabel = UILabel(style: .bodyBoldText(), textColor: .blueTextSet())
     
     // MARK: - Lifecycle
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.backgroundColor = UIColor.clear
-
     }
     
     required init?(coder: NSCoder) {
@@ -54,14 +53,24 @@ extension HotelViewCell {
                 
             case .success(let hotel):
                 guard let imageURL = hotel.imageHandler else { return }
-                ImageManager.shared.fetchImage(
-                    from: .image(imageURL),
-                    image: self.hotelImageView
-                )
+                
+                self.cropImageProcessor(from: .image(imageURL))
+                
+                
+//                ImageManager.shared.fetchImage(
+//                    from: .image(imageURL),
+//                    image: self.hotelImageView
+//                )
+                
             case .failure(let error):
                 print(error.localizedDescription)
             }
         }
+    }
+    
+    private func cropImageProcessor(from imageURL: Endpoint) {
+        let imageManager = ImageManager.shared.fetchCropedImage(from: imageURL)
+        self.hotelImageView.image = imageManager.image
     }
 }
 

@@ -55,10 +55,27 @@ class HotelsListViewController: UIViewController {
     
     @objc private func sortButtonTapped() {
         let sortedVC = SortHotelViewController()
-        sortedVC.hotelListViewController = self
+        
+//        if #available(iOS 15.0, *) {
+//
+//            if let sheet = sortedVC.sheetPresentationController {
+//                sheet.detents = [.medium()]
+//                sheet.prefersScrollingExpandsWhenScrolledToEdge = false
+//                sheet.prefersGrabberVisible = true
+//                sheet.largestUndimmedDetentIdentifier = .medium
+//                sheet.preferredCornerRadius = 20
+//                
+//                present(sortedVC, animated: true)
+//            }
+//        } else {
+//            present(sortedVC, animated: true)
+//        }
+        
         present(sortedVC, animated: true)
+        sortedVC.hotelListViewController = self
     }
 }
+
 // MARK: - Networking
 extension HotelsListViewController {
     private func fetchData() {

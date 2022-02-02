@@ -9,9 +9,16 @@ import UIKit
 
 class SortHotelViewController: UIViewController {
     
+    private let dismissButton: UIButton = {
+        let button = UIButton(title: "", titleColor: .clear, backgroundColor: .clear)
+        button.addTarget(self, action: #selector(dismissButtonTapped), for: .touchUpInside)
+        
+        return button
+    }()
+    
     private let sortedRoomsButton: UIButton = {
         let button = UIButton(title: "Number of empty rooms", titleColor: .white, backgroundColor: .buttonColorSet())
-        button.addTarget(self, action: #selector(sortedDistanceButtonTapped), for: .touchUpInside)
+        button.addTarget(self, action: #selector(sortedRoomsButtonTapped), for: .touchUpInside)
         
         return button
     }()
@@ -23,17 +30,16 @@ class SortHotelViewController: UIViewController {
         return button
     }()
     
+    private let sortedTitle = UILabel(text: "Sorted by:", style: .largeTitleText(), textColor: .generalTextSet())
     weak var hotelListViewController: HotelsListViewController!
-    
     var hotels: Hotels = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        setupConstraints()
-        view.backgroundColor = .systemBackground
+        setuppConstraints()
     }
     
+    // MARK: - Private Methods
     @objc private func sortedRoomsButtonTapped() {
         hotelListViewController.hotels.sort {
             $1.suitesArray.count < $0.suitesArray.count
@@ -49,30 +55,62 @@ class SortHotelViewController: UIViewController {
         hotelListViewController.tableView.reloadData()
         dismiss(animated: true)
     }
+    
+    @objc private func dismissButtonTapped() {
+        dismiss(animated: true)
+    }
 }
 
+// MARK: - Setup Constraints
 extension SortHotelViewController {
-    private func setupConstraints() {
     
-        let stackView = UIStackView(
-            arrangedSubviews: [sortedRoomsButton,sortedDistanceButton],
+    private func setuppConstraints() {
+        let sheetPresentationView: UIView = {
+            let view = UIView()
+            view.translatesAutoresizingMaskIntoConstraints = false
+            view.backgroundColor = .sortHotelVCBackgroundSet()
+            view.layer.cornerRadius = 20
+            
+            return view
+        }()
+        
+        let generalStackView = UIStackView(
+            arrangedSubviews: [dismissButton, sheetPresentationView],
+            axis: .vertical,
+            spacing: 0)
+        
+        let contentStackView = UIStackView(
+            arrangedSubviews: [sortedTitle, sortedRoomsButton,sortedDistanceButton],
             axis: .vertical,
             spacing: 6)
-        stackView.distribution = .fillProportionally
         
-        stackView.translatesAutoresizingMaskIntoConstraints = false
+        generalStackView.distribution = .fillEqually
+        contentStackView.distribution = .fillEqually
         
-        view.addSubview(stackView)
+        generalStackView.translatesAutoresizingMaskIntoConstraints = false
+        contentStackView.translatesAutoresizingMaskIntoConstraints = false
+        
+        view.addSubview(generalStackView)
+        sheetPresentationView.addSubview(contentStackView)
         
         NSLayoutConstraint.activate([
-            stackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 50),
-            stackView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 5),
-            stackView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -5)
+            generalStackView.topAnchor.constraint(equalTo: view.topAnchor),
+            generalStackView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            generalStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            generalStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor)
+        ])
+        
+        NSLayoutConstraint.activate([
+            contentStackView.topAnchor.constraint(equalTo: sheetPresentationView.topAnchor, constant: 50),
+            contentStackView.leadingAnchor.constraint(equalTo: sheetPresentationView.leadingAnchor, constant: 5),
+            contentStackView.trailingAnchor.constraint(equalTo: sheetPresentationView.trailingAnchor, constant: -5),
+            contentStackView.bottomAnchor.constraint(lessThanOrEqualTo: sheetPresentationView.bottomAnchor, constant: 10)
         ])
         
         NSLayoutConstraint.activate([
             sortedRoomsButton.heightAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.15)
         ])
+        
     }
 }
 
