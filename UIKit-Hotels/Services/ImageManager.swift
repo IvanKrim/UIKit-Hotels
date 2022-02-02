@@ -34,7 +34,20 @@ class ImageManager {
                     print(error.isInvalidResponseStatusCode)
                 }
             }
-
+        
         return imageView
     }
+    //    func fetchImage(from imageURL: Endpoint, completion: @escaping(Data, URLResponse) -> Void) {
+    //        guard let downloadedURL = imageURL.linkGenerator(path: imageURL) else { return }
+    //        URLSession.shared.dataTask(with: downloadedURL) { data, response, error in
+    //            guard let data = data, let response = response else {
+    //                print(error?.localizedDescription ?? "No Description")
+    //                return
+    //            }
+    //
+    //            DispatchQueue.main.async {
+    //                completion(data, response)
+    //            }
+    //        }.resume()
+    //    }
 }

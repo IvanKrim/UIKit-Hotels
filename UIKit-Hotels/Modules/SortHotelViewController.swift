@@ -31,6 +31,7 @@ class SortHotelViewController: UIViewController {
     }()
     
     private let sortedTitle = UILabel(text: "Sorted by:", style: .largeTitleText(), textColor: .generalTextSet())
+    
     weak var hotelListViewController: HotelsListViewController!
     var hotels: Hotels = []
     

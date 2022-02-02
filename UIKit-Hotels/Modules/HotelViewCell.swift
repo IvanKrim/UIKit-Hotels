@@ -9,7 +9,6 @@ import UIKit
 import Kingfisher
 
 class HotelViewCell: UITableViewCell {
-    
     // MARK: - Properties
     private var hotelImageView: UIImageView = {
         var image = UIImageView()
@@ -19,10 +18,14 @@ class HotelViewCell: UITableViewCell {
     }()
     
     private let networkService: NetworkServiceSingleHotelProtocol = NetworkService()
-    private let hotelNameLabel = UILabel(style: .firstTitleText(),textColor: .generalTextSet(), numberOfLines: 2)
-    private let distanceIconImage = UIImageView(image: UIImage.distanseIcon(), tintColor: .textGray())
-    private let distanceToCenterLabel = UILabel(textColor: .gray, numberOfLines: 2)
-    private let availableSuitesLabel = UILabel(style: .bodyBoldText(), textColor: .blueTextSet())
+    private let hotelNameLabel = UILabel(
+        style: .firstTitleText(),textColor: .generalTextSet(), numberOfLines: 2)
+    private let distanceIconImage = UIImageView(
+        image: UIImage.distanseIcon(), tintColor: .textGray())
+    private let distanceToCenterLabel = UILabel(
+        textColor: .gray, numberOfLines: 2)
+    private let availableSuitesLabel = UILabel(
+        style: .bodyBoldText(), textColor: .blueTextSet())
     
     // MARK: - Lifecycle
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -47,7 +50,6 @@ class HotelViewCell: UITableViewCell {
 
 extension HotelViewCell {
     private func fetchImage(with hotelID: Int) {
-        
         networkService.getHotelInformation(with: hotelID) { [self] result in
             switch result {
                 
@@ -55,12 +57,6 @@ extension HotelViewCell {
                 guard let imageURL = hotel.imageHandler else { return }
                 
                 self.cropImageProcessor(from: .image(imageURL))
-                
-                
-//                ImageManager.shared.fetchImage(
-//                    from: .image(imageURL),
-//                    image: self.hotelImageView
-//                )
                 
             case .failure(let error):
                 print(error.localizedDescription)
@@ -90,7 +86,7 @@ extension HotelViewCell {
             
             return view
         }()
-       
+        
         let starsArray = StarsIcon.shared.starsConverter(input: stars)
         
         let emptyImageView = UIImageView()
