@@ -9,15 +9,15 @@ import UIKit
 import Kingfisher
 
 extension UIImageView {
+  
+  convenience init(image: UIImage?, tintColor: UIColor) {
+    self.init()
     
-    convenience init(image: UIImage?, tintColor: UIColor) {
-        self.init()
-        
-        self.translatesAutoresizingMaskIntoConstraints = false
-        self.image = image
-        self.tintColor = tintColor
-        self.contentMode = .scaleAspectFit
-    }
+    self.translatesAutoresizingMaskIntoConstraints = false
+    self.image = image
+    self.tintColor = tintColor
+    self.contentMode = .scaleAspectFit
+  }
 }
 
 

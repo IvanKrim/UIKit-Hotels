@@ -28,7 +28,6 @@
 		20C1687A278F1BE90059CCF3 /* HotelsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C16879278F1BE90059CCF3 /* HotelsListViewController.swift */; };
 		20D3986827A923D1002DA6FE /* UIView + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20D3986727A923D1002DA6FE /* UIView + Extension.swift */; };
 		20D3986A27A9570C002DA6FE /* StarsIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20D3986927A9570C002DA6FE /* StarsIcon.swift */; };
-		20D9750C279F0BB900B18939 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20D9750B279F0BB900B18939 /* CustomButton.swift */; };
 		20D9750E279F135700B18939 /* MapScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20D9750D279F135700B18939 /* MapScreenViewController.swift */; };
 		20DE6A5A2799D65D001591D8 /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20DE6A592799D65D001591D8 /* NetworkError.swift */; };
 		B136DF5F59AE869AD597EA02 /* Pods_UIKit_Hotels.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8AAFFB4D3ECEB02802F29C50 /* Pods_UIKit_Hotels.framework */; };
@@ -58,7 +57,6 @@
 		20C16879278F1BE90059CCF3 /* HotelsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotelsListViewController.swift; sourceTree = "<group>"; };
 		20D3986727A923D1002DA6FE /* UIView + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView + Extension.swift"; sourceTree = "<group>"; };
 		20D3986927A9570C002DA6FE /* StarsIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarsIcon.swift; sourceTree = "<group>"; };
-		20D9750B279F0BB900B18939 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 		20D9750D279F135700B18939 /* MapScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapScreenViewController.swift; sourceTree = "<group>"; };
 		20DE6A592799D65D001591D8 /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
 		5E86653750D68AEE2154300B /* Pods-UIKit-Hotels.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UIKit-Hotels.debug.xcconfig"; path = "Target Support Files/Pods-UIKit-Hotels/Pods-UIKit-Hotels.debug.xcconfig"; sourceTree = "<group>"; };
@@ -81,7 +79,6 @@
 		206F38C3278F1E7600227437 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				20D9750B279F0BB900B18939 /* CustomButton.swift */,
 				20D3986927A9570C002DA6FE /* StarsIcon.swift */,
 				209B4F09278F5E510091EC89 /* UIKit */,
 			);
@@ -101,13 +98,13 @@
 		209B4F09278F5E510091EC89 /* UIKit */ = {
 			isa = PBXGroup;
 			children = (
-				206F38C1278F1E5D00227437 /* UIStackView + Extension.swift */,
 				206F38C5278F1EC500227437 /* UIButton + Extension.swift */,
 				206F38C7278F1EC500227437 /* UIColor + Extension.swift */,
 				206F38C8278F1EC500227437 /* UIFont + Extension.swift */,
+				203B076E27915F0E005C8AFB /* UIImage + Extension.swift */,
 				206F38C6278F1EC500227437 /* UIImageView + Extension.swift */,
 				206F38C4278F1EC500227437 /* UILabel + Extension.swift */,
-				203B076E27915F0E005C8AFB /* UIImage + Extension.swift */,
+				206F38C1278F1E5D00227437 /* UIStackView + Extension.swift */,
 				20D3986727A923D1002DA6FE /* UIView + Extension.swift */,
 			);
 			path = UIKit;
@@ -331,7 +328,6 @@
 				209FF13927A315F3002AF186 /* ImageManager.swift in Sources */,
 				206F38CB278F1EC500227437 /* UIImageView + Extension.swift in Sources */,
 				20C16876278F1AFB0059CCF3 /* Hotel.swift in Sources */,
-				20D9750C279F0BB900B18939 /* CustomButton.swift in Sources */,
 				209B4F06278F5B510091EC89 /* HotelViewCell.swift in Sources */,
 				206F38C2278F1E5D00227437 /* UIStackView + Extension.swift in Sources */,
 				20C16864278F1A970059CCF3 /* SceneDelegate.swift in Sources */,

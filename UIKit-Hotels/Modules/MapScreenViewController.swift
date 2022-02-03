@@ -31,7 +31,6 @@ class MapScreenViewController: UIViewController {
 
 // MARK: - Setup MapView
 extension MapScreenViewController {
-    
     private func setupMapView(with coordinate: CLLocationCoordinate2D, and title: String) {
         mapView.setRegion(
             MKCoordinateRegion(
@@ -50,23 +49,3 @@ extension MapScreenViewController {
         mapView.addAnnotation(pin)
     }
 }
-
-//// MARK: - SwiftUI
-//import SwiftUI
-//
-//struct MapScreenVCProvider: PreviewProvider {
-//    static var previews: some View {
-//        ContainerView().edgesIgnoringSafeArea(.all)
-//    }
-//
-//    struct ContainerView: UIViewControllerRepresentable {
-//        let mapScreenVCProvider = MapScreenViewController()
-//
-//        func makeUIViewController(context: Context) -> some UIViewController {
-//            return mapScreenVCProvider
-//        }
-//
-//        func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
-//        }
-//    }
-//}
