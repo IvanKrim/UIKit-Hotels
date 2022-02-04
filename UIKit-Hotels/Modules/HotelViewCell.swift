@@ -9,6 +9,7 @@ import UIKit
 import Kingfisher
 
 class HotelViewCell: UITableViewCell {
+  
   // MARK: - Properties
   private var hotelImageView: UIImageView = {
     var image = UIImageView()
@@ -27,9 +28,22 @@ class HotelViewCell: UITableViewCell {
   private let availableSuitesLabel = UILabel(
     style: .bodyBoldText(), textColor: .secondaryTextSet())
   
+  private var activityIndicator = UIActivityIndicatorView()
+  
+  private let backgroundViewCell: UIVisualEffectView = {
+    let view = UIVisualEffectView()
+    let blurEffect = UIBlurEffect(style: .systemUltraThinMaterial)
+    view.effect = blurEffect
+    
+    view.translatesAutoresizingMaskIntoConstraints = false
+    
+    return view
+  }()
+  
   // MARK: - Lifecycle
   override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
+    
     self.backgroundColor = .clear
   }
   
@@ -38,7 +52,7 @@ class HotelViewCell: UITableViewCell {
   }
   
   // MARK: - Public Methods
-  public func setupContent(with hotel: Hotel) {
+  func setupContent(with hotel: Hotel) {
     hotelNameLabel.text = hotel.name
     distanceToCenterLabel.text = "\(hotel.distance) meters to the center"
     availableSuitesLabel.text = "Available rooms: \(hotel.suitesArray.count)"
@@ -48,6 +62,7 @@ class HotelViewCell: UITableViewCell {
   }
 }
 
+// MARK: - Fetch Data
 extension HotelViewCell {
   private func fetchImage(with hotelID: Int) {
     networkService.getHotelInformation(with: hotelID) { [self] result in
@@ -56,7 +71,6 @@ extension HotelViewCell {
       case .success(let hotel):
         guard let imageURL = hotel.imageHandler else { return }
         self.cropImageProcessor(from: .image(imageURL))
-        
       case .failure(let error):
         print(error.localizedDescription)
       }
@@ -66,7 +80,41 @@ extension HotelViewCell {
   private func cropImageProcessor(from imageURL: Endpoint) {
     ImageManager.shared.fetchCropedImage(from: imageURL) { [unowned self] in
       self.hotelImageView.image = $0.image
+      spinerViewStopAnimating()
     }
+  }
+}
+
+// MARK: - Setup Activity Indicator
+extension HotelViewCell {
+  private func showSpinnerView(in view: UIView) {
+    activityIndicator = UIActivityIndicatorView(style: .large)
+    activityIndicator.color = UIColor.textSet()
+    activityIndicator.startAnimating()
+    activityIndicator.hidesWhenStopped = true
+    
+    activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+    backgroundViewCell.translatesAutoresizingMaskIntoConstraints = false
+    
+    view.addSubview(backgroundViewCell)
+    backgroundViewCell.contentView.addSubview(activityIndicator)
+    
+    NSLayoutConstraint.activate([
+      backgroundViewCell.topAnchor.constraint(equalTo: view.topAnchor),
+      backgroundViewCell.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+      backgroundViewCell.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+      backgroundViewCell.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+    ])
+    
+    NSLayoutConstraint.activate([
+      activityIndicator.centerXAnchor.constraint(equalTo: backgroundViewCell.centerXAnchor),
+      activityIndicator.centerYAnchor.constraint(equalTo: backgroundViewCell.centerYAnchor)
+    ])
+  }
+  
+  private func spinerViewStopAnimating() {
+    activityIndicator.startAnimating()
+    backgroundViewCell.isHidden = true
   }
 }
 
@@ -89,16 +137,13 @@ extension HotelViewCell {
     
     let starsArray = StarsIcon.shared.starsConverter(input: stars)
     
-    let emptyImageView = UIImageView()
-    emptyImageView.setContentHuggingPriority(UILayoutPriority(rawValue: 1), for: .vertical)
-    
     let starsStackView = UIStackView(
       arrangedSubviews: starsArray,
       axis: .horizontal,
       spacing: 3)
     
     let distanseStackView = UIStackView(
-      arrangedSubviews: [distanceIconImage ,distanceToCenterLabel, emptyImageView],
+      arrangedSubviews: [distanceIconImage ,distanceToCenterLabel],
       axis: .horizontal,
       spacing: 3)
     
@@ -112,6 +157,7 @@ extension HotelViewCell {
     
     addSubview(view)
     view.addSubviews([hotelImageView, generalStackView])
+    showSpinnerView(in: view)
     
     NSLayoutConstraint.activate([
       view.topAnchor.constraint(equalTo: self.topAnchor, constant: 6),
