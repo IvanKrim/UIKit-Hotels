@@ -19,8 +19,9 @@ class HotelViewCell: UITableViewCell {
   }()
   
   private let networkService: NetworkServiceSingleHotelProtocol = NetworkService()
+  
   private let hotelNameLabel = UILabel(
-    style: .firstTitleText(),textColor: .textSet(), numberOfLines: 2)
+    style: .firstTitleText(), textColor: .textSet(), numberOfLines: 2)
   private let distanceIconImage = UIImageView(
     image: UIImage.distanseIcon(), tintColor: .textGraySet())
   private let distanceToCenterLabel = UILabel(
@@ -87,6 +88,7 @@ extension HotelViewCell {
 
 // MARK: - Setup Activity Indicator
 extension HotelViewCell {
+  
   private func showSpinnerView(in view: UIView) {
     activityIndicator = UIActivityIndicatorView(style: .large)
     activityIndicator.color = UIColor.textSet()
@@ -143,7 +145,7 @@ extension HotelViewCell {
       spacing: 3)
     
     let distanseStackView = UIStackView(
-      arrangedSubviews: [distanceIconImage ,distanceToCenterLabel],
+      arrangedSubviews: [distanceIconImage, distanceToCenterLabel],
       axis: .horizontal,
       spacing: 3)
     
@@ -170,7 +172,7 @@ extension HotelViewCell {
       hotelImageView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.3),
       hotelImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0),
       hotelImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
-      hotelImageView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0),
+      hotelImageView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0)
     ])
     
     NSLayoutConstraint.activate([

@@ -28,7 +28,7 @@ class DetailInformationViewController: UIViewController {
   private let availableSuitesLabel = UILabel(
     text: "Available rooms:", style: .bodyBoldText(), textColor: .secondaryTextSet())
   
-  private let mapButton: UIButton = {
+  private lazy var mapButton: UIButton = {
     let button = UIButton(
       title: "Watch on map", titleColor: .white,
       backgroundColor: .buttonColorSet(), font: .bodyText(),
@@ -40,9 +40,9 @@ class DetailInformationViewController: UIViewController {
   
   private var hotel: Hotel?
   
-  lazy var contentViewSize = CGSize(width: self.view.frame.width, height: self.view.frame.height + 1)
+  private lazy var contentViewSize = CGSize(width: self.view.frame.width, height: self.view.frame.height + 1)
   
-  lazy var scrollView: UIScrollView = {
+  private lazy var scrollView: UIScrollView = {
     let view = UIScrollView(frame: .zero)
     view.backgroundColor = .systemBackground
     view.frame = self.view.bounds
@@ -53,7 +53,7 @@ class DetailInformationViewController: UIViewController {
     return view
   }()
   
-  lazy var containerView: UIView = {
+  private lazy var containerView: UIView = {
     let view = UIView()
     view.backgroundColor = .systemBackground
     view.frame = self.view.bounds
@@ -168,7 +168,7 @@ extension DetailInformationViewController {
     NSLayoutConstraint.activate([
       contentStackView.topAnchor.constraint(equalTo: hotelImageView.bottomAnchor, constant: 20),
       contentStackView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
-      contentStackView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16),
+      contentStackView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16)
     ])
   }
 }

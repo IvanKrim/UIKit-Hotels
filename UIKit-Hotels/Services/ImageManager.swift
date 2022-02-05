@@ -14,7 +14,7 @@ class ImageManager {
   
   private init() {}
   
-  func fetchCropedImage(from imageURL: Endpoint, completion: @escaping (UIImageView) -> Void)  {
+  func fetchCropedImage(from imageURL: Endpoint, completion: @escaping (UIImageView) -> Void) {
     let imageView = UIImageView()
     let downloadURL = imageURL.linkManager(path: imageURL)
     let placeholder = UIImage(systemName: "photo.fill")

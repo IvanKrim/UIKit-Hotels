@@ -34,5 +34,3 @@ struct Hotel: Decodable {
 }
 
 typealias Hotels = [Hotel]
-
-

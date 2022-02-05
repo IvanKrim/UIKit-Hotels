@@ -37,9 +37,9 @@ class NetworkService: NetworkServiceSingleHotelProtocol {
     }
   }
   
-  private func request <T:Decodable>(
+  private func request <T: Decodable>(
     path url: Endpoint,
-    completion: @escaping(Result<T, Error>)-> Void) {
+    completion: @escaping(Result<T, Error>) -> Void) {
       
       guard let url = url.linkManager(path: url) else { return }
       
@@ -69,4 +69,3 @@ class NetworkService: NetworkServiceSingleHotelProtocol {
       }.resume()
     }
 }
-

@@ -9,25 +9,25 @@ import UIKit
 
 class SortHotelViewController: UIViewController {
   
-  private let dismissButton: UIButton = {
+  private lazy var dismissButton: UIButton = {
     let button = UIButton(title: "", titleColor: .clear, backgroundColor: .clear)
     button.addTarget(self, action: #selector(dismissButtonTapped), for: .touchUpInside)
     
     return button
   }()
   
-  private let sortedRoomsButton: UIButton = {
+  private lazy var sortedRoomsButton: UIButton = {
     let button = UIButton(title: "Number of empty rooms", titleColor: .white, backgroundColor: .buttonColorSet())
     button.addTarget(self, action: #selector(sortedRoomsButtonTapped), for: .touchUpInside)
     
     return button
   }()
   
-  private let sortedDistanceButton: UIButton = {
+  private lazy var sortedDistanceButton: UIButton = {
     let button = UIButton(title: "Distance from city centre", titleColor: .white, backgroundColor: .buttonColorSet())
     button.addTarget(self, action: #selector(sortedDistanceButtonTapped), for: .touchUpInside)
     
-    return button
+    return UIButton()
   }()
   
   private let sortedTitle = UILabel(text: "Sorted by:", style: .largeTitleText(), textColor: .textSet())
@@ -81,7 +81,7 @@ extension SortHotelViewController {
       spacing: 0)
     
     let contentStackView = UIStackView(
-      arrangedSubviews: [sortedTitle, sortedRoomsButton,sortedDistanceButton],
+      arrangedSubviews: [sortedTitle, sortedRoomsButton, sortedDistanceButton],
       axis: .vertical,
       spacing: 6)
     

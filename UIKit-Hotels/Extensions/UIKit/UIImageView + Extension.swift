@@ -19,11 +19,3 @@ extension UIImageView {
     self.contentMode = .scaleAspectFit
   }
 }
-
-
-
-
-
-
-
-

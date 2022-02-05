@@ -9,10 +9,9 @@ import UIKit
 
 class HotelsListViewController: UIViewController {
   
-  // MARK: - Properties
-  //    private var activityIndicator = UIActivityIndicatorView() // Сделать
+  private let networkService: NetworkServiceSingleHotelProtocol = NetworkService()
   
-  private let sortButton: UIButton = {
+  private lazy var sortButton: UIButton = {
     let button = UIButton(title: "Sort", titleColor: .secondaryTextSet(), backgroundColor: .clear)
     button.addTarget(self, action: #selector(sortButtonTapped), for: .touchUpInside)
     button.layer.borderWidth = 0.5
@@ -21,9 +20,9 @@ class HotelsListViewController: UIViewController {
     return button
   }()
   
-  private let networkService: NetworkServiceSingleHotelProtocol = NetworkService()
   private var dataSorted = false
-  let tableView = UITableView(frame: .zero, style: .plain)
+  
+  let tableView = UITableView(frame: .zero, style: .plain) // NOT SECURED!
   var hotels: Hotels = []
   
   // MARK: - Lifecycle
@@ -63,7 +62,6 @@ class HotelsListViewController: UIViewController {
 
 // MARK: - Networking
 extension HotelsListViewController {
-  
   private func fetchData() {
     networkService.getHotelsInformation { result in
       

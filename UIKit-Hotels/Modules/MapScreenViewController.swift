@@ -35,7 +35,7 @@ extension MapScreenViewController {
         mapView.setRegion(
             MKCoordinateRegion(
                 center: coordinate,
-                span: MKCoordinateSpan(latitudeDelta: 0.05,longitudeDelta: 0.05)),
+                span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)),
             animated: false)
         
         addCustomPin(title: title, coordinate: coordinate)

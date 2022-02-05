@@ -32,7 +32,6 @@ class StarsIcon {
     }()
     
     var starsArray: [UIImageView] = []
-    
     for _ in 0..<Int(input) {
       starsArray.append(starIcon(image: UIImage.filledStarIcon()))
     }
@@ -41,7 +40,6 @@ class StarsIcon {
       starsArray.append(starIcon(image: UIImage.emptyStarIcon()))
     }
     starsArray.append(emptyView)
-    
     return starsArray
   }
 }

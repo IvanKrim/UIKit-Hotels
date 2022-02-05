@@ -205,6 +205,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 20C16872278F1A990059CCF3 /* Build configuration list for PBXNativeTarget "UIKit-Hotels" */;
 			buildPhases = (
+				20BFC34F27AE905100B1D0A1 /* Run SwiftLint */,
 				5787180E961EE8842D2153E5 /* [CP] Check Pods Manifest.lock */,
 				20C1685A278F1A970059CCF3 /* Sources */,
 				20C1685B278F1A970059CCF3 /* Frameworks */,
@@ -266,6 +267,24 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		20BFC34F27AE905100B1D0A1 /* Run SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Run SwiftLint";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint >/dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+		};
 		5787180E961EE8842D2153E5 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;

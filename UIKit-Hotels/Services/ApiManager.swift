@@ -12,7 +12,7 @@ enum Endpoint {
   case image (String)
   case id (Int)
   
-  private var baseURL: URL{ URL(string: "https://raw.githubusercontent.com/iMofas/ios-android-test/master/")!}
+  private var baseURL: URL { URL(string: "https://raw.githubusercontent.com/iMofas/ios-android-test/master/")!}
   
   private func path() -> String {
     switch self {
