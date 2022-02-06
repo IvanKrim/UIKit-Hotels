@@ -22,7 +22,7 @@ extension NetworkError: LocalizedError {
     case .noConnectionError:
       return "No connection to the server"
     case .serverError(let error):
-      return "Server error - \(error.localizedDescription)"
+      return "Server Error \(error.localizedDescription)"
     }
   }
 }

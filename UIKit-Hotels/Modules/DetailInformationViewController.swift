@@ -104,6 +104,7 @@ extension DetailInformationViewController {
     guard let id = hotelID else { return }
     
     networkService.getHotelInformation(with: id) { result in
+      
       switch result {
       case .success(let hotel):
         self.hotel = hotel
@@ -113,7 +114,9 @@ extension DetailInformationViewController {
         self.cropImageProcessor(from: .image(imageURL))
         
       case .failure(let error):
-        print(error.localizedDescription)
+        self.showAlert(
+          with: error.localizedDescription,
+          and: "Please try again later or contact Support.")
       }
     }
   }

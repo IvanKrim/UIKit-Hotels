@@ -27,7 +27,7 @@ class SortHotelViewController: UIViewController {
     let button = UIButton(title: "Distance from city centre", titleColor: .white, backgroundColor: .buttonColorSet())
     button.addTarget(self, action: #selector(sortedDistanceButtonTapped), for: .touchUpInside)
     
-    return UIButton()
+    return button
   }()
   
   private let sortedTitle = UILabel(text: "Sorted by:", style: .largeTitleText(), textColor: .textSet())

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		200197F827AFCB4C002B4DE4 /* AlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200197F727AFCB4C002B4DE4 /* AlertController.swift */; };
+		200197FA27AFD5B7002B4DE4 /* NetworkMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200197F927AFD5B7002B4DE4 /* NetworkMonitor.swift */; };
 		202665C627A04FA9009DB94A /* SortHotelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 202665C527A04FA9009DB94A /* SortHotelViewController.swift */; };
 		203B076F27915F0E005C8AFB /* UIImage + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 203B076E27915F0E005C8AFB /* UIImage + Extension.swift */; };
 		20658EB32796BBC700184FD1 /* ApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20658EB22796BBC700184FD1 /* ApiManager.swift */; };
@@ -34,6 +36,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		200197F727AFCB4C002B4DE4 /* AlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertController.swift; sourceTree = "<group>"; };
+		200197F927AFD5B7002B4DE4 /* NetworkMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkMonitor.swift; sourceTree = "<group>"; };
 		202665C527A04FA9009DB94A /* SortHotelViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortHotelViewController.swift; sourceTree = "<group>"; };
 		203B076E27915F0E005C8AFB /* UIImage + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage + Extension.swift"; sourceTree = "<group>"; };
 		20658EB22796BBC700184FD1 /* ApiManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiManager.swift; sourceTree = "<group>"; };
@@ -79,6 +83,7 @@
 		206F38C3278F1E7600227437 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				200197F727AFCB4C002B4DE4 /* AlertController.swift */,
 				20D3986927A9570C002DA6FE /* StarsIcon.swift */,
 				209B4F09278F5E510091EC89 /* UIKit */,
 			);
@@ -88,6 +93,7 @@
 		206F38D0278F1F8F00227437 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				200197F927AFD5B7002B4DE4 /* NetworkMonitor.swift */,
 				206F38CE278F1F1900227437 /* NetworkManager.swift */,
 				209FF13827A315F3002AF186 /* ImageManager.swift */,
 				20658EB22796BBC700184FD1 /* ApiManager.swift */,
@@ -339,6 +345,7 @@
 				20C1687A278F1BE90059CCF3 /* HotelsListViewController.swift in Sources */,
 				206F38CF278F1F1900227437 /* NetworkManager.swift in Sources */,
 				20C16862278F1A970059CCF3 /* AppDelegate.swift in Sources */,
+				200197F827AFCB4C002B4DE4 /* AlertController.swift in Sources */,
 				20D3986A27A9570C002DA6FE /* StarsIcon.swift in Sources */,
 				209B4F08278F5C100091EC89 /* DetailInformationViewController.swift in Sources */,
 				206F38CA278F1EC500227437 /* UIButton + Extension.swift in Sources */,
@@ -352,6 +359,7 @@
 				20C16864278F1A970059CCF3 /* SceneDelegate.swift in Sources */,
 				202665C627A04FA9009DB94A /* SortHotelViewController.swift in Sources */,
 				20D9750E279F135700B18939 /* MapScreenViewController.swift in Sources */,
+				200197FA27AFD5B7002B4DE4 /* NetworkMonitor.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
