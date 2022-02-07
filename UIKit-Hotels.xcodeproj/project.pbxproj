@@ -12,6 +12,7 @@
 		202665C627A04FA9009DB94A /* SortHotelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 202665C527A04FA9009DB94A /* SortHotelViewController.swift */; };
 		203B076F27915F0E005C8AFB /* UIImage + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 203B076E27915F0E005C8AFB /* UIImage + Extension.swift */; };
 		20658EB32796BBC700184FD1 /* ApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20658EB22796BBC700184FD1 /* ApiManager.swift */; };
+		206E61CE27B1B129008C74E7 /* String + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 206E61CD27B1B129008C74E7 /* String + Extension.swift */; };
 		206F38C2278F1E5D00227437 /* UIStackView + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 206F38C1278F1E5D00227437 /* UIStackView + Extension.swift */; };
 		206F38C9278F1EC500227437 /* UILabel + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 206F38C4278F1EC500227437 /* UILabel + Extension.swift */; };
 		206F38CA278F1EC500227437 /* UIButton + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 206F38C5278F1EC500227437 /* UIButton + Extension.swift */; };
@@ -32,7 +33,6 @@
 		20D3986A27A9570C002DA6FE /* StarsIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20D3986927A9570C002DA6FE /* StarsIcon.swift */; };
 		20D9750E279F135700B18939 /* MapScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20D9750D279F135700B18939 /* MapScreenViewController.swift */; };
 		20DE6A5A2799D65D001591D8 /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20DE6A592799D65D001591D8 /* NetworkError.swift */; };
-		B136DF5F59AE869AD597EA02 /* Pods_UIKit_Hotels.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8AAFFB4D3ECEB02802F29C50 /* Pods_UIKit_Hotels.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,6 +41,7 @@
 		202665C527A04FA9009DB94A /* SortHotelViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortHotelViewController.swift; sourceTree = "<group>"; };
 		203B076E27915F0E005C8AFB /* UIImage + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage + Extension.swift"; sourceTree = "<group>"; };
 		20658EB22796BBC700184FD1 /* ApiManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiManager.swift; sourceTree = "<group>"; };
+		206E61CD27B1B129008C74E7 /* String + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String + Extension.swift"; sourceTree = "<group>"; };
 		206F38C1278F1E5D00227437 /* UIStackView + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView + Extension.swift"; sourceTree = "<group>"; };
 		206F38C4278F1EC500227437 /* UILabel + Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UILabel + Extension.swift"; sourceTree = "<group>"; };
 		206F38C5278F1EC500227437 /* UIButton + Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIButton + Extension.swift"; sourceTree = "<group>"; };
@@ -65,7 +66,6 @@
 		20DE6A592799D65D001591D8 /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
 		5E86653750D68AEE2154300B /* Pods-UIKit-Hotels.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UIKit-Hotels.debug.xcconfig"; path = "Target Support Files/Pods-UIKit-Hotels/Pods-UIKit-Hotels.debug.xcconfig"; sourceTree = "<group>"; };
 		71765DE4876DF72DF20893F7 /* Pods-UIKit-Hotels.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UIKit-Hotels.release.xcconfig"; path = "Target Support Files/Pods-UIKit-Hotels/Pods-UIKit-Hotels.release.xcconfig"; sourceTree = "<group>"; };
-		8AAFFB4D3ECEB02802F29C50 /* Pods_UIKit_Hotels.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_UIKit_Hotels.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,7 +73,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B136DF5F59AE869AD597EA02 /* Pods_UIKit_Hotels.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -85,6 +84,7 @@
 			children = (
 				200197F727AFCB4C002B4DE4 /* AlertController.swift */,
 				20D3986927A9570C002DA6FE /* StarsIcon.swift */,
+				206E61CD27B1B129008C74E7 /* String + Extension.swift */,
 				209B4F09278F5E510091EC89 /* UIKit */,
 			);
 			path = Extensions;
@@ -199,7 +199,6 @@
 		82B2A72E3FA086401C1C9929 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				8AAFFB4D3ECEB02802F29C50 /* Pods_UIKit_Hotels.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -339,6 +338,7 @@
 			files = (
 				206F38CD278F1EC500227437 /* UIFont + Extension.swift in Sources */,
 				20DE6A5A2799D65D001591D8 /* NetworkError.swift in Sources */,
+				206E61CE27B1B129008C74E7 /* String + Extension.swift in Sources */,
 				206F38CC278F1EC500227437 /* UIColor + Extension.swift in Sources */,
 				20658EB32796BBC700184FD1 /* ApiManager.swift in Sources */,
 				206F38C9278F1EC500227437 /* UILabel + Extension.swift in Sources */,

@@ -22,9 +22,9 @@ class DetailInformationViewController: UIViewController {
   }()
   
   private let hotelNameLabel = UILabel(style: .firstTitleText(), textColor: .textSet(), numberOfLines: 0)
-  private let hotelStarsLabel = UILabel()
   private let hotelAddres = UILabel(textColor: .textGraySet(), numberOfLines: 0)
   private let suitesAvailability = UILabel(textColor: .secondaryTextSet(), numberOfLines: 0)
+  
   private let availableSuitesLabel = UILabel(
     text: "Available rooms:", style: .bodyBoldText(), textColor: .secondaryTextSet())
   
@@ -43,6 +43,7 @@ class DetailInformationViewController: UIViewController {
   private lazy var contentViewSize = CGSize(width: self.view.frame.width, height: self.view.frame.height + 1)
   
   private lazy var scrollView: UIScrollView = {
+
     let view = UIScrollView(frame: .zero)
     view.backgroundColor = .systemBackground
     view.frame = self.view.bounds
@@ -77,7 +78,7 @@ class DetailInformationViewController: UIViewController {
     navigationItem.title = hotel.name
     hotelNameLabel.text = hotel.name
     hotelAddres.text = hotel.address
-    suitesAvailability.text = suitesArrayConverter(array: hotel.suitesArray)
+    suitesAvailability.text = .suitesArrayConverter(array: hotel.suitesArray)
   }
   
   @objc private func buttonTapped() {
@@ -85,16 +86,6 @@ class DetailInformationViewController: UIViewController {
     mapScreenVC.hotel = hotel
     
     navigationController?.pushViewController(mapScreenVC, animated: true)
-  }
-  
-  private func suitesArrayConverter(array: [String]) -> String {
-    var convertedArray = ""
-    
-    array.forEach { room in
-      convertedArray += "・\(room)"
-    }
-    
-    return convertedArray
   }
 }
 

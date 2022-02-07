@@ -9,6 +9,7 @@ import Foundation
 import Network
 
 final class NetworkMonitor {
+  
   static let shared = NetworkMonitor()
   
   private let queue = DispatchQueue.global()

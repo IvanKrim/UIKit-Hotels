@@ -124,7 +124,7 @@ extension HotelViewCell {
 extension HotelViewCell {
   private func setupConstraints(with stars: Double) {
     
-    let view: UIView = {
+    let cellBackgroundView: UIView = {
       let view = UIView()
       view.translatesAutoresizingMaskIntoConstraints = false
       view.backgroundColor = .cellBackgroundSet()
@@ -157,29 +157,29 @@ extension HotelViewCell {
     hotelImageView.translatesAutoresizingMaskIntoConstraints = false
     generalStackView.translatesAutoresizingMaskIntoConstraints = false
     
-    addSubview(view)
-    view.addSubviews([hotelImageView, generalStackView])
-    showSpinnerView(in: view)
+    addSubview(cellBackgroundView)
+    cellBackgroundView.addSubviews([hotelImageView, generalStackView])
+    showSpinnerView(in: cellBackgroundView)
     
     NSLayoutConstraint.activate([
-      view.topAnchor.constraint(equalTo: self.topAnchor, constant: 6),
-      view.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 5),
-      view.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -5),
-      view.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -6)
+      cellBackgroundView.topAnchor.constraint(equalTo: self.topAnchor, constant: 6),
+      cellBackgroundView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 5),
+      cellBackgroundView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -5),
+      cellBackgroundView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -6)
     ])
     
     NSLayoutConstraint.activate([
-      hotelImageView.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.3),
-      hotelImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0),
-      hotelImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
-      hotelImageView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0)
+      hotelImageView.widthAnchor.constraint(equalTo: cellBackgroundView.widthAnchor, multiplier: 0.3),
+      hotelImageView.topAnchor.constraint(equalTo: cellBackgroundView.topAnchor, constant: 0),
+      hotelImageView.leadingAnchor.constraint(equalTo: cellBackgroundView.leadingAnchor, constant: 0),
+      hotelImageView.bottomAnchor.constraint(equalTo: cellBackgroundView.bottomAnchor, constant: 0)
     ])
     
     NSLayoutConstraint.activate([
-      generalStackView.topAnchor.constraint(equalTo: view.topAnchor, constant: 4),
+      generalStackView.topAnchor.constraint(equalTo: cellBackgroundView.topAnchor, constant: 4),
       generalStackView.leadingAnchor.constraint(equalTo: hotelImageView.trailingAnchor, constant: 8),
-      generalStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8),
-      generalStackView.bottomAnchor.constraint(lessThanOrEqualTo: view.bottomAnchor, constant: -4)
+      generalStackView.trailingAnchor.constraint(equalTo: cellBackgroundView.trailingAnchor, constant: -8),
+      generalStackView.bottomAnchor.constraint(lessThanOrEqualTo: cellBackgroundView.bottomAnchor, constant: -4)
     ])
   }
 }
