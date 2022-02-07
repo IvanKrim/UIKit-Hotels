@@ -17,18 +17,17 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="IconH" translatesAutoresizingMaskIntoConstraints="NO" id="0xQ-Ec-Ui7">
-                                <rect key="frame" x="20" y="64" width="374" height="778"/>
-                                <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="default"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="HotelIcon" translatesAutoresizingMaskIntoConstraints="NO" id="ac6-jh-Mgb">
+                                <rect key="frame" x="0.0" y="238" width="414" height="420"/>
                             </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" name="SecondaryBackgroundSet"/>
                         <constraints>
-                            <constraint firstItem="0xQ-Ec-Ui7" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="G7V-5j-0Vj"/>
-                            <constraint firstItem="0xQ-Ec-Ui7" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="20" id="t4C-df-heu"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="0xQ-Ec-Ui7" secondAttribute="bottom" constant="20" id="wrc-eS-utf"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="0xQ-Ec-Ui7" secondAttribute="trailing" constant="20" id="y4Z-BD-cSS"/>
+                            <constraint firstItem="ac6-jh-Mgb" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="4MK-l8-8Le"/>
+                            <constraint firstAttribute="trailing" secondItem="ac6-jh-Mgb" secondAttribute="trailing" id="8X7-Tm-xXY"/>
+                            <constraint firstItem="ac6-jh-Mgb" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="194" id="Ghs-Be-ArM"/>
+                            <constraint firstItem="ac6-jh-Mgb" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="yas-OJ-xfu"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -38,7 +37,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="IconH" width="1024" height="1024"/>
+        <image name="HotelIcon" width="1024" height="1024"/>
         <namedColor name="SecondaryBackgroundSet">
             <color red="0.67799997329711914" green="0.79199999570846558" blue="0.87800002098083496" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>

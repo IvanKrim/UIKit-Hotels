@@ -60,6 +60,7 @@
 		20C1686F278F1A990059CCF3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		20C16875278F1AFB0059CCF3 /* Hotel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hotel.swift; sourceTree = "<group>"; };
 		20C16879278F1BE90059CCF3 /* HotelsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotelsListViewController.swift; sourceTree = "<group>"; };
+		20D21E8627B1B6DC00FE0BBA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		20D3986727A923D1002DA6FE /* UIView + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView + Extension.swift"; sourceTree = "<group>"; };
 		20D3986927A9570C002DA6FE /* StarsIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarsIcon.swift; sourceTree = "<group>"; };
 		20D9750D279F135700B18939 /* MapScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapScreenViewController.swift; sourceTree = "<group>"; };
@@ -370,6 +371,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				20C1686D278F1A990059CCF3 /* Base */,
+				20D21E8627B1B6DC00FE0BBA /* en */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
