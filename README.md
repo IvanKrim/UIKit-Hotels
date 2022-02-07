@@ -1,7 +1,7 @@
 # UIKit-Hotels (in progress)
 ## Обзор 
 
-![IphoneMock](https://user-images.githubusercontent.com/61357670/152789179-36dcf111-5c84-4884-a57e-a77c997675f0.jpg)
+![TestMock](https://user-images.githubusercontent.com/61357670/152789994-f8520a30-4de1-4253-afbf-53b0cb5e26ba.jpg)
 ![DarkModeHotelsApp2](https://user-images.githubusercontent.com/61357670/152788833-af01d51d-0a9f-4aab-bb61-c9e5060764f3.jpg)
 
 
