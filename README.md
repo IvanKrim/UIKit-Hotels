@@ -1,4 +1,4 @@
-# UIKit-Hotels (in progress)
+# UIKit-Hotels
 ## Обзор 
 ![20220207-183248-379-2](https://user-images.githubusercontent.com/61357670/152829352-463e931c-2641-4dbd-8616-2f4321471d68.gif)
 ![DarkModeHotelsApp](https://user-images.githubusercontent.com/61357670/152828198-edf2c79d-d511-4318-baf5-149c35dd91d4.jpg)
