@@ -1,9 +1,13 @@
 # UIKit-Hotels (in progress)
 ## Обзор 
 
-![TestMock](https://user-images.githubusercontent.com/61357670/152789994-f8520a30-4de1-4253-afbf-53b0cb5e26ba.jpg)
-![DarkModeHotelsApp2](https://user-images.githubusercontent.com/61357670/152788833-af01d51d-0a9f-4aab-bb61-c9e5060764f3.jpg)
 
+![ezgif com-gif-maker-2](https://user-images.githubusercontent.com/61357670/152823503-b75a62fa-c155-4a86-83da-1f144e11b885.gif)
+
+
+![DarkModeHotelsApp](https://user-images.githubusercontent.com/61357670/152823456-f5939b18-e9a2-4be2-84f9-5a1c43acdcf3.jpg)
+
+<div style="text-align:center"><img src="центр" /></div>
 
 ### Данный проект ялвляется тестовым заданием  
 #### Требования:
