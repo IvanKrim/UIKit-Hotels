@@ -7,57 +7,66 @@
 
 import Foundation
 
-class NetworkManager {
-    static let shared = NetworkManager()
-    
-    private init() {}
-    
-    func fetchHotels(from url: String, completion: @escaping(Result<Hotels, Error>) -> Void) {
-        guard let url = URL(string: url) else { return }
-        
-        URLSession.shared.dataTask(with: url) { data, _, error in
-            guard let data = data else {
-                print(error?.localizedDescription ?? "No description error")
-                return
-            }
-            
-            do {
-                let hotels = try JSONDecoder().decode(Hotels.self, from: data)
-                DispatchQueue.main.async {
-                    completion(.success(hotels))
-                }
-            } catch let error {
-                completion(.failure(error))
-            }
-        } .resume()
+protocol NetworkServiceSingleHotelProtocol {
+  func getHotelsInformation(completion: @escaping (Result<Hotels, Error>) -> Void)
+  
+  func getHotelInformation(with id: Int, completion: @escaping (Result<Hotel, Error>) -> Void)
+}
+
+class NetworkService: NetworkServiceSingleHotelProtocol {
+  
+  func getHotelsInformation(completion: @escaping (Result<Hotels, Error>) -> Void) {
+    request(path: .baseURL) { (result: Result<Hotels, Error>) in
+      switch result {
+      case .success(let data):
+        completion(.success(data))
+      case .failure(let error):
+        completion(.failure(error))
+      }
     }
-    
-    func fetchHotel(from url: String, completion: @escaping(Result<Hotel, Error>) -> Void) {
-        guard let url = URL(string: url) else { return }
-        
-        URLSession.shared.dataTask(with: url) { data, _, error in
-            guard let data = data else {
-                print(error?.localizedDescription ?? "No description error")
-                return
-            }
-            
-            do {
-                let hotel = try JSONDecoder().decode(Hotel.self, from: data)
-                DispatchQueue.main.async {
-                    completion(.success(hotel))
-                }
-            } catch let error {
-                completion(.failure(error))
-            }
-        } .resume()
+  }
+  
+  func getHotelInformation(with id: Int, completion: @escaping (Result<Hotel, Error>) -> Void) {
+    request(path: .id(id)) { (result: Result<Hotel, Error>) in
+      switch result {
+      case .success(let data):
+        completion(.success(data))
+      case .failure(let error):
+        completion(.failure(error))
+      }
     }
-    
-//    func fetchImageData(from jpg: String) {
-//        let imageLink = "https://raw.githubusercontent.com/iMofas/ios-android-test/master/\(jpg)"
-//        
-//        guard let url = URL(string: imageLink) else { return }
-//        
-//        URLSession.shared.
-//        
-//    }
+  }
+  
+  private func request <T: Decodable>(
+    path url: Endpoint,
+    completion: @escaping(Result<T, Error>) -> Void) {
+      
+      guard let url = url.linkManager(path: url) else { return }
+      
+      URLSession.shared.dataTask(with: url) { data, _, error in
+        guard let data = data else {
+          if let error = error {
+            DispatchQueue.main.async {
+              completion(.failure(NetworkError.serverError(error: error)))
+            }
+            return
+          }
+          DispatchQueue.main.async {
+            completion(.failure(NetworkError.noConnectionError))
+          }
+          return
+        }
+        do {
+          let result = try JSONDecoder().decode(T.self, from: data)
+          DispatchQueue.main.async {
+            completion(.success(result))
+          }
+        } catch {
+          DispatchQueue.main.async {
+            print("ошибочка")
+            completion(.failure(NetworkError.incorrectDataError))
+          }
+        }
+      }.resume()
+    }
 }
