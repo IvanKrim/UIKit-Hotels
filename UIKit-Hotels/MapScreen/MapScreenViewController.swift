@@ -13,10 +13,19 @@ class MapScreenViewController: UIViewController {
   
   private let mapView = MKMapView()
   
+  var viewModel: MapScreenViewModelProtocol! {
+    didSet {
+      
+    }
+  }
+  
   var hotel: Hotel!
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    
+    viewModel = MapScreenViewModel(hotel: hotel)
+    
     view.addSubview(mapView)
     mapView.frame = view.bounds
     

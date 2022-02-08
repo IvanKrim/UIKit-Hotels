@@ -1,5 +1,5 @@
 //
-//  DetailInformationViewController.swift
+//  HotelDetailsViewController.swift
 //  UIKit-Hotels
 //
 //  Created by Kalabishka Ivan on 10.01.2022.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class DetailInformationViewController: UIViewController {
+class HotelDetailsViewController: UIViewController {
   
   private let networkService: NetworkServiceSingleHotelProtocol = NetworkService()
   
@@ -21,7 +21,7 @@ class DetailInformationViewController: UIViewController {
   }()
   
   private let hotelNameLabel = UILabel(style: .firstTitleText(), textColor: .textSet(), numberOfLines: 0)
-  private let hotelAddres = UILabel(textColor: .textGraySet(), numberOfLines: 0)
+  private let hotelAddress = UILabel(textColor: .textGraySet(), numberOfLines: 0)
   private let suitesAvailability = UILabel(textColor: .secondaryTextSet(), numberOfLines: 0)
   
   private let availableSuitesLabel = UILabel(
@@ -37,12 +37,10 @@ class DetailInformationViewController: UIViewController {
     return button
   }()
   
-  private var hotel: Hotel?
-  
   private lazy var contentViewSize = CGSize(width: self.view.frame.width, height: self.view.frame.height + 1)
   
   private lazy var scrollView: UIScrollView = {
-
+    
     let view = UIScrollView(frame: .zero)
     view.backgroundColor = .systemBackground
     view.frame = self.view.bounds
@@ -62,21 +60,42 @@ class DetailInformationViewController: UIViewController {
     return view
   }()
   
+  private var hotel: Hotel!
+  
+  var viewModel: HotelDetailsViewModelProtocol! {
+    didSet {
+      // указываем путь к данным
+      hotelNameLabel.text = viewModel.hotelName
+      hotelAddress.text = viewModel.hotelAddress
+      suitesAvailability.text = viewModel.suitesAvailability
+      
+//      guard let imageData = viewModel.imageData else { return } //место для пелйсхолдера
+      
+      
+      //      navigationItem.title = hotel.name
+      //      hotelNameLabel.text = hotel.name
+      //      hotelAddres.text = hotel.address
+      //      suitesAvailability.text = .suitesArrayConverter(array: hotel.suitesArray)
+    }
+  }
+  
   var hotelID: Int?
   
   override func viewDidLoad() {
     super.viewDidLoad()
+//    viewModel = HotelDetailsViewModel(hotel: hotel)
     view.backgroundColor = .systemBackground
     
     fetchData(with: hotelID)
   }
   
-  private func setupContent(whith hotel: Hotel) {
+  private func setupContent(with hotel: Hotel) {
     setupConstraints(with: hotel.stars)
-    
+  
     navigationItem.title = hotel.name
     hotelNameLabel.text = hotel.name
-    hotelAddres.text = hotel.address
+    
+    hotelAddress.text = hotel.address
     suitesAvailability.text = .suitesArrayConverter(array: hotel.suitesArray)
   }
   
@@ -89,7 +108,7 @@ class DetailInformationViewController: UIViewController {
 }
 
 // MARK: - Fetch Data
-extension DetailInformationViewController {
+extension HotelDetailsViewController {
   func fetchData(with hotelID: Int?) {
     guard let id = hotelID else { return }
     
@@ -98,7 +117,7 @@ extension DetailInformationViewController {
       switch result {
       case .success(let hotel):
         self.hotel = hotel
-        self.setupContent(whith: hotel)
+        self.setupContent(with: hotel)
         guard let imageURL = hotel.imageHandler else { return }
         
         self.cropImageProcessor(from: .image(imageURL))
@@ -112,14 +131,14 @@ extension DetailInformationViewController {
   }
   
   private func cropImageProcessor(from imageURL: Endpoint) {
-//    ImageManager.shared.fetchCropedImage(from: imageURL) { [unowned self] in
-//      self.hotelImageView.image = $0.image
-//    }
+    //    ImageManager.shared.fetchCropedImage(from: imageURL) { [unowned self] in
+    //      self.hotelImageView.image = $0.image
+    //    }
   }
 }
 
 // MARK: - Setup Constraints
-extension DetailInformationViewController {
+extension HotelDetailsViewController {
   private func setupConstraints(with stars: Double) {
     let starsArray = StarsIcon.shared.starsConverter(input: stars)
     
@@ -134,7 +153,7 @@ extension DetailInformationViewController {
       spacing: 6)
     
     let contentStackView = UIStackView(
-      arrangedSubviews: [hotelNameLabel, starsStackView, hotelAddres, availableRoomsStackView, mapButton],
+      arrangedSubviews: [hotelNameLabel, starsStackView, hotelAddress, availableRoomsStackView, mapButton],
       axis: .vertical,
       spacing: 20)
     

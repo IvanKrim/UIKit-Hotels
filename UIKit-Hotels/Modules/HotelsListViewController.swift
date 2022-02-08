@@ -112,7 +112,7 @@ extension HotelsListViewController: UITableViewDelegate {
     tableView.deselectRow(at: indexPath, animated: true)
     let hotel = hotels[indexPath.row]
     
-    let detailInformationVC = DetailInformationViewController()
+    let detailInformationVC = HotelDetailsViewController()
     detailInformationVC.hotelID = hotel.id
     
     navigationController?.pushViewController(detailInformationVC, animated: true)
