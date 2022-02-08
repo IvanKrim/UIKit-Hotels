@@ -13,8 +13,7 @@ protocol HotelDetailsViewModelProtocol {
   var hotelName: String { get }
   var hotelAddress: String { get }
   var suitesAvailability: String { get }
-//  var imageData: Data? { get }
-  
+  //  var imageData: Data? { get }
   init(hotel: Hotel)
 }
 

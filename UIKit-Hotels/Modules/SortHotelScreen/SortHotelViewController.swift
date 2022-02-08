@@ -37,7 +37,7 @@ class SortHotelViewController: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    setuppConstraints()
+    setupConstraints()
   }
   
   // MARK: - Private Methods
@@ -65,7 +65,7 @@ class SortHotelViewController: UIViewController {
 // MARK: - Setup Constraints
 extension SortHotelViewController {
   
-  private func setuppConstraints() {
+  private func setupConstraints() {
     let sheetPresentationView: UIView = {
       let view = UIView()
       view.translatesAutoresizingMaskIntoConstraints = false
