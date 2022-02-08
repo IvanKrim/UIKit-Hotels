@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import Kingfisher
 
 class HotelViewCell: UITableViewCell {
   
@@ -70,8 +69,10 @@ extension HotelViewCell {
       
       switch result {
       case .success(let hotel):
+        spinerViewStopAnimating()
         guard let imageURL = hotel.imageHandler else { return }
         self.cropImageProcessor(from: .image(imageURL))
+        
       case .failure(let error):
         print(error.localizedDescription)
       }
@@ -79,10 +80,10 @@ extension HotelViewCell {
   }
   
   private func cropImageProcessor(from imageURL: Endpoint) {
-    ImageManager.shared.fetchCropedImage(from: imageURL) { [unowned self] in
-      self.hotelImageView.image = $0.image
-      spinerViewStopAnimating()
-    }
+//    ImageManager.shared.fetchCropedImage(from: imageURL) { [unowned self] in
+//      self.hotelImageView.image = $0.image
+//      spinerViewStopAnimating()
+//    }
   }
 }
 

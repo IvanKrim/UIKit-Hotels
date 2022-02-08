@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import Kingfisher
 
 class DetailInformationViewController: UIViewController {
   
@@ -113,9 +112,9 @@ extension DetailInformationViewController {
   }
   
   private func cropImageProcessor(from imageURL: Endpoint) {
-    ImageManager.shared.fetchCropedImage(from: imageURL) { [unowned self] in
-      self.hotelImageView.image = $0.image
-    }
+//    ImageManager.shared.fetchCropedImage(from: imageURL) { [unowned self] in
+//      self.hotelImageView.image = $0.image
+//    }
   }
 }
 

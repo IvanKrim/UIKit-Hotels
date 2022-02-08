@@ -1,6 +1,0 @@
-framework module Pods_UIKit_Hotels {
-  umbrella header "Pods-UIKit-Hotels-umbrella.h"
-
-  export *
-  module * { export * }
-}
