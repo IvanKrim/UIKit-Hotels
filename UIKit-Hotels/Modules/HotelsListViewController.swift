@@ -2,56 +2,65 @@
 //  HotelsListViewController.swift
 //  UIKit-Hotels
 //
-//  Created by Kalabishka Ivan on 06.01.2022.
+//  Created by Kalabishka Ivan on 15.02.2022.
 //
 
 import UIKit
 
 class HotelsListViewController: UIViewController {
   
-  private let networkService: NetworkServiceSingleHotelProtocol = NetworkService()
+  let tableView = UITableView(frame: .zero, style: .plain)
+  
+  private var viewModel: HotelListViewModelProtocol! {
+    didSet {
+      viewModel.fetchHotels {
+        self.tableView.reloadData()
+      }
+    }
+  }
   
   private lazy var sortButton: UIButton = {
-    let button = UIButton(title: "Sort", titleColor: .secondaryTextSet(), backgroundColor: .clear)
-    button.addTarget(self, action: #selector(sortButtonTapped), for: .touchUpInside)
+    let button = UIButton(title: "Sort", titleColor: .secondaryTextSet, backgroundColor: .clear)
+    //    button.addTarget(self, action: #selector(sortButtonTapped), for: .touchUpInside)
     button.layer.borderWidth = 0.5
-    button.layer.borderColor = UIColor.secondaryTextSet().cgColor
+    button.layer.borderColor = UIColor.secondaryTextSet.cgColor
     
     return button
   }()
   
-  private var dataSorted = false
-  
-  let tableView = UITableView(frame: .zero, style: .plain) // NOT SECURED!
-  var hotels: Hotels = []
+  private var dataSorted = false // dell
   
   // MARK: - Lifecycle
   override func viewDidLoad() {
     super.viewDidLoad()
-    title = "Hotel App"
-    view.backgroundColor = .backgroundSet()
+    viewModel = HotelListViewModel()
     
-    networkMonitor()
+    title = "Hotel App"
+    view.backgroundColor = .backgroundSet
+    
+    setupTableView()
+    setupConstraints()
+    //    networkMonitor()
   }
   
-  private func networkMonitor() {
-    if NetworkMonitor.shared.isConnected {
-      setupTableView()
-      setupConstraints()
-      updateContent()
-    } else {
-      showAlert(
-        with: "Networl Error",
-        and: "Please check your internet connection or try again later.")
-    }
-  }
+  //  private func networkMonitor() {
+  //    if NetworkMonitor.shared.isConnected {
+  //      setupTableView()
+  //      setupConstraints()
+  //      updateContent()
+  //    } else {
+  //      showAlert(
+  //        with: "Networl Error",
+  //        and: "Please check your internet connection or try again later.")
+  //    }
+  //  }
   
-  private func updateContent() {
-    if !dataSorted {
-      fetchData()
-      dataSorted.toggle()
-    }
-  }
+  //  private func updateContent() {
+  //    if !dataSorted {
+  //      fetchData()
+  //      dataSorted.toggle()
+  //    }
+  //  }
   
   private func setupTableView() {
     self.tableView.delegate = self
@@ -62,44 +71,25 @@ class HotelsListViewController: UIViewController {
     tableView.backgroundColor = .clear
   }
   
-  @objc private func sortButtonTapped() {
-    let sortedVC = SortHotelViewController()
-    
-    present(sortedVC, animated: true)
-    sortedVC.hotelListViewController = self
-  }
-}
-
-// MARK: - Networking
-extension HotelsListViewController {
-  private func fetchData() {
-    networkService.getHotelsInformation { result in
-      
-      switch result {
-      case .success(let data):
-        self.hotels = data
-        self.dataSorted = true
-        self.tableView.reloadData()
-      case .failure(let error):
-        self.showAlert(
-          with: "\(error.localizedDescription)",
-          and: "Please try again later or contact Support.")
-      }
-    }
-  }
+  //  @objc private func sortButtonTapped() {
+  //    let sortedVC = SortHotelViewController()
+  //
+  //    present(sortedVC, animated: true)
+  //    sortedVC.hotelListViewController = self
+  //  }
 }
 
 // MARK: - UITableViewDataSource
 extension HotelsListViewController: UITableViewDataSource {
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return hotels.count
+    viewModel.numberOfRows()
   }
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     guard let cell = tableView.dequeueReusableCell(withIdentifier: "CellID", for: indexPath) as? HotelViewCell  else {
       fatalError("Creating cell from HotelsListViewController failed")
     }
-    cell.setupContent(with: hotels[indexPath.row])
+    cell.viewModel = viewModel.cellViewModel(at: indexPath)
     
     return cell
   }
@@ -110,10 +100,11 @@ extension HotelsListViewController: UITableViewDelegate {
   
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     tableView.deselectRow(at: indexPath, animated: true)
-    let hotel = hotels[indexPath.row]
+    
+    let detailViewModel = viewModel.detailsViewModel(at: indexPath)
     
     let detailInformationVC = HotelDetailsViewController()
-    detailInformationVC.hotelID = hotel.id
+    detailInformationVC.viewModel = detailViewModel
     
     navigationController?.pushViewController(detailInformationVC, animated: true)
   }
@@ -123,7 +114,6 @@ extension HotelsListViewController: UITableViewDelegate {
 extension HotelsListViewController {
   
   private func setupConstraints() {
-    
     let buttonStackView = UIStackView(
       arrangedSubviews: [sortButton],
       axis: .horizontal,

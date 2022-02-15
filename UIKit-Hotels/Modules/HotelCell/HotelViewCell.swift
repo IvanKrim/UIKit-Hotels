@@ -17,16 +17,14 @@ class HotelViewCell: UITableViewCell {
     return image
   }()
   
-  private let networkService: NetworkServiceSingleHotelProtocol = NetworkService()
-  
   private let hotelNameLabel = UILabel(
-    style: .firstTitleText(), textColor: .textSet(), numberOfLines: 2)
+    fontStyle: .firstTitleText, textColor: .textSet, numberOfLines: 2)
   private let distanceIconImage = UIImageView(
-    image: UIImage.distanseIcon(), tintColor: .textGraySet())
+    image: UIImage.distanseIcon(), tintColor: .textGraySet)
   private let distanceToCenterLabel = UILabel(
     textColor: .gray, numberOfLines: 2)
   private let availableSuitesLabel = UILabel(
-    style: .bodyBoldText(), textColor: .secondaryTextSet())
+    fontStyle: .bodyBoldText, textColor: .secondaryTextSet)
   
   private var activityIndicator = UIActivityIndicatorView()
   
@@ -40,6 +38,19 @@ class HotelViewCell: UITableViewCell {
     return view
   }()
   
+  var viewModel: HotelCellViewModelProtocol! {
+    didSet {
+      hotelNameLabel.text = viewModel.hotelName
+      distanceToCenterLabel.text = viewModel.distanceToCenter
+      availableSuitesLabel.text = viewModel.availableSuites
+      setupConstraints(with: viewModel.stars)
+      
+      viewModel.fetchImage {
+        self.spinnerViewStopAnimating()
+      }
+    }
+  }
+  
   // MARK: - Lifecycle
   override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -50,49 +61,39 @@ class HotelViewCell: UITableViewCell {
   required init?(coder: NSCoder) {
     fatalError("init?(coder: has not been implemented")
   }
-  
-  // MARK: - Public Methods
-  func setupContent(with hotel: Hotel) {
-    hotelNameLabel.text = hotel.name
-    distanceToCenterLabel.text = "\(hotel.distance) meters to the center"
-    availableSuitesLabel.text = "Available rooms: \(hotel.suitesArray.count)"
-    
-    setupConstraints(with: hotel.stars)
-    fetchImage(with: hotel.id)
-  }
 }
 
 // MARK: - Fetch Data
-extension HotelViewCell {
-  private func fetchImage(with hotelID: Int) {
-    networkService.getHotelInformation(with: hotelID) { [self] result in
-      
-      switch result {
-      case .success(let hotel):
-        spinerViewStopAnimating()
-        guard let imageURL = hotel.imageHandler else { return }
-        self.cropImageProcessor(from: .image(imageURL))
-        
-      case .failure(let error):
-        print(error.localizedDescription)
-      }
-    }
-  }
-  
-  private func cropImageProcessor(from imageURL: Endpoint) {
+//extension HotelViewCell {
+//  private func fetchImage(with hotelID: Int) {
+//    networkService.getHotelInformation(with: hotelID) { [self] result in
+//
+//      switch result {
+//      case .success(let hotel):
+//        spinerViewStopAnimating()
+//        guard let imageURL = hotel.imageHandler else { return }
+//        self.cropImageProcessor(from: .image(imageURL))
+//
+//      case .failure(let error):
+//        print(error.localizedDescription)
+//      }
+//    }
+//  }
+//
+//  private func cropImageProcessor(from imageURL: Endpoint) {
 //    ImageManager.shared.fetchCropedImage(from: imageURL) { [unowned self] in
 //      self.hotelImageView.image = $0.image
 //      spinerViewStopAnimating()
 //    }
-  }
-}
+//  }
+//}
 
 // MARK: - Setup Activity Indicator
 extension HotelViewCell {
   
   private func showSpinnerView(in view: UIView) {
     activityIndicator = UIActivityIndicatorView(style: .large)
-    activityIndicator.color = UIColor.textSet()
+    activityIndicator.color = UIColor.textSet
     activityIndicator.startAnimating()
     activityIndicator.hidesWhenStopped = true
     
@@ -115,7 +116,7 @@ extension HotelViewCell {
     ])
   }
   
-  private func spinerViewStopAnimating() {
+  private func spinnerViewStopAnimating() {
     activityIndicator.startAnimating()
     backgroundViewCell.isHidden = true
   }
@@ -128,7 +129,7 @@ extension HotelViewCell {
     let cellBackgroundView: UIView = {
       let view = UIView()
       view.translatesAutoresizingMaskIntoConstraints = false
-      view.backgroundColor = .cellBackgroundSet()
+      view.backgroundColor = .cellBackgroundSet
       view.layer.cornerRadius = 2
       view.layer.shadowColor = UIColor.black.cgColor
       view.layer.shadowRadius = 5

@@ -9,8 +9,6 @@ import UIKit
 
 class HotelDetailsViewController: UIViewController {
   
-  private let networkService: NetworkServiceSingleHotelProtocol = NetworkService()
-  
   private let hotelImageView: UIImageView = {
     var image = UIImageView()
     image.contentMode = .scaleAspectFill
@@ -20,19 +18,23 @@ class HotelDetailsViewController: UIViewController {
     return image
   }()
   
-  private let hotelNameLabel = UILabel(style: .firstTitleText(), textColor: .textSet(), numberOfLines: 0)
-  private let hotelAddress = UILabel(textColor: .textGraySet(), numberOfLines: 0)
-  private let suitesAvailability = UILabel(textColor: .secondaryTextSet(), numberOfLines: 0)
+  private let hotelNameLabel = UILabel(
+    fontStyle: .firstTitleText,
+    textColor: .textSet,
+    numberOfLines: 0)
+  
+  private let hotelAddress = UILabel(textColor: .textGraySet, numberOfLines: 0)
+  private let suitesAvailability = UILabel(textColor: .secondaryTextSet, numberOfLines: 0)
   
   private let availableSuitesLabel = UILabel(
-    text: "Available rooms:", style: .bodyBoldText(), textColor: .secondaryTextSet())
+    text: "Available rooms:", fontStyle: .bodyBoldText, textColor: .secondaryTextSet)
   
   private lazy var mapButton: UIButton = {
     let button = UIButton(
       title: "Watch on map", titleColor: .white,
-      backgroundColor: .buttonColorSet(), font: .bodyText(),
+      backgroundColor: .buttonColorSet, font: .bodyText,
       isShadow: true, cornerRadius: 10)
-    button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
+//    button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
     
     return button
   }()
@@ -40,7 +42,6 @@ class HotelDetailsViewController: UIViewController {
   private lazy var contentViewSize = CGSize(width: self.view.frame.width, height: self.view.frame.height + 1)
   
   private lazy var scrollView: UIScrollView = {
-    
     let view = UIScrollView(frame: .zero)
     view.backgroundColor = .systemBackground
     view.frame = self.view.bounds
@@ -48,6 +49,7 @@ class HotelDetailsViewController: UIViewController {
     view.autoresizingMask = .flexibleHeight
     view.bounces = true
     view.showsHorizontalScrollIndicator = true
+    
     return view
   }()
   
@@ -60,82 +62,56 @@ class HotelDetailsViewController: UIViewController {
     return view
   }()
   
-  private var hotel: Hotel!
-  
-  var viewModel: HotelDetailsViewModelProtocol! {
-    didSet {
-      // указываем путь к данным
-      hotelNameLabel.text = viewModel.hotelName
-      hotelAddress.text = viewModel.hotelAddress
-      suitesAvailability.text = viewModel.suitesAvailability
-      
-//      guard let imageData = viewModel.imageData else { return } //место для пелйсхолдера
-      
-      
-      //      navigationItem.title = hotel.name
-      //      hotelNameLabel.text = hotel.name
-      //      hotelAddres.text = hotel.address
-      //      suitesAvailability.text = .suitesArrayConverter(array: hotel.suitesArray)
-    }
-  }
-  
-  var hotelID: Int?
+  var viewModel: HotelDetailsViewModelProtocol!
   
   override func viewDidLoad() {
     super.viewDidLoad()
-//    viewModel = HotelDetailsViewModel(hotel: hotel)
     view.backgroundColor = .systemBackground
     
-    fetchData(with: hotelID)
+    setupUI()
   }
   
-  private func setupContent(with hotel: Hotel) {
-    setupConstraints(with: hotel.stars)
-  
-    navigationItem.title = hotel.name
-    hotelNameLabel.text = hotel.name
+  private func setupUI() {
+    setupConstraints(with: viewModel.stars)
     
-    hotelAddress.text = hotel.address
-    suitesAvailability.text = .suitesArrayConverter(array: hotel.suitesArray)
+    navigationItem.title = viewModel.hotelName
+    hotelNameLabel.text = viewModel.hotelName
+    hotelAddress.text = viewModel.hotelAddress
+    suitesAvailability.text = viewModel.suitesAvailability
   }
   
-  @objc private func buttonTapped() {
-    let mapScreenVC = MapScreenViewController()
-    mapScreenVC.hotel = hotel
-    
-    navigationController?.pushViewController(mapScreenVC, animated: true)
-  }
+//  @objc private func buttonTapped() {
+//    let mapScreenVC = MapScreenViewController()
+//    mapScreenVC.hotel = hotel
+//
+//    navigationController?.pushViewController(mapScreenVC, animated: true)
+//  }
 }
 
 // MARK: - Fetch Data
-extension HotelDetailsViewController {
-  func fetchData(with hotelID: Int?) {
-    guard let id = hotelID else { return }
-    
-    networkService.getHotelInformation(with: id) { result in
-      
-      switch result {
-      case .success(let hotel):
-        self.hotel = hotel
-        self.setupContent(with: hotel)
-        guard let imageURL = hotel.imageHandler else { return }
-        
-        self.cropImageProcessor(from: .image(imageURL))
-        
-      case .failure(let error):
-        self.showAlert(
-          with: error.localizedDescription,
-          and: "Please try again later or contact Support.")
-      }
-    }
-  }
-  
-  private func cropImageProcessor(from imageURL: Endpoint) {
-    //    ImageManager.shared.fetchCropedImage(from: imageURL) { [unowned self] in
-    //      self.hotelImageView.image = $0.image
-    //    }
-  }
-}
+//extension HotelDetailsViewController {
+//  func fetchData(with hotelID: Int?) {
+//    guard let id = hotelID else { return }
+//
+//    networkService.getHotelInformation(with: id) { result in
+//
+//      switch result {
+//      case .success(let hotel):
+//        self.hotel = hotel
+//        self.setupContent(with: hotel)
+//        guard let imageURL = hotel.imageHandler else { return }
+//
+//        self.cropImageProcessor(from: .image(imageURL))
+//
+//      case .failure(let error):
+//        self.showAlert(
+//          with: error.localizedDescription,
+//          and: "Please try again later or contact Support.")
+//      }
+//    }
+//  }
+//
+//}
 
 // MARK: - Setup Constraints
 extension HotelDetailsViewController {

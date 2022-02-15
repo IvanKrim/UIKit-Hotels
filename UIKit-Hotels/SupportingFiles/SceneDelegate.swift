@@ -21,7 +21,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     let navigationController = UINavigationController(rootViewController: firstViewController)
     navigationController.navigationBar.prefersLargeTitles = false
-    navigationController.navigationBar.tintColor = .textSet()
+    navigationController.navigationBar.tintColor = .textSet
     navigationController.navigationBar.topItem?.backButtonTitle = "Back"
     
     window = UIWindow(frame: windowScene.coordinateSpace.bounds)

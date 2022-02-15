@@ -8,5 +8,51 @@
 import Foundation
 
 protocol HotelCellViewModelProtocol {
+  var hotelName: String { get }
+  var distanceToCenter: String { get }
+  var availableSuites: String { get }
+  var stars: Double { get }
+  var networkService: NetworkServiceSingleHotelProtocol { get }
+  func fetchImage(completion: @escaping() -> Void)
   
+  init(hotel: Hotel)
+}
+
+class HotelCellViewModel: HotelCellViewModelProtocol {
+  var networkService: NetworkServiceSingleHotelProtocol = NetworkService()
+  
+  var hotelName: String {
+    hotel.name
+  }
+  
+  var distanceToCenter: String {
+    "\(hotel.distance) meters to the center"
+  }
+  
+  var availableSuites: String {
+    "Available rooms: \(hotel.suitesArray.count)"
+  }
+  
+  var stars: Double {
+    hotel.stars
+  }
+  
+  func fetchImage(completion: @escaping () -> Void) {
+    networkService.getHotelInformation(with: hotel.id) { result in
+      switch result {
+        
+      case .success(let data):
+        print(data)
+        completion()
+      case .failure(let error):
+        print(error.localizedDescription)
+      }
+    }
+  }
+  
+  private let hotel: Hotel
+  
+  required init(hotel: Hotel) {
+    self.hotel = hotel
+  }
 }
