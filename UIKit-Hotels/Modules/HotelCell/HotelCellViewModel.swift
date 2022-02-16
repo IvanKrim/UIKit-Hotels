@@ -42,7 +42,6 @@ class HotelCellViewModel: HotelCellViewModelProtocol {
       switch result {
         
       case .success(let data):
-        print(data)
         completion()
       case .failure(let error):
         print(error.localizedDescription)

@@ -17,7 +17,6 @@ class MapScreenViewController: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    
     view.addSubview(mapView)
     mapView.frame = view.bounds
     

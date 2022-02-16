@@ -12,8 +12,9 @@ protocol HotelDetailsViewModelProtocol {
   var hotelAddress: String { get }
   var suitesAvailability: String { get }
   var stars: Double { get }
+  var transferData: Hotel { get }
   var networkService: NetworkServiceSingleHotelProtocol { get }
-  func fetchHotel(completion: @escaping() -> Void)
+  func fetchHotel()
   //  var imageData: Data? { get }
   init(hotel: Hotel)
 }
@@ -39,17 +40,20 @@ class HotelDetailsViewModel: HotelDetailsViewModelProtocol {
   
   private var hotel: Hotel
   
+  var transferData: Hotel {
+    self.hotel
+  }
+  
   required init(hotel: Hotel) {
     self.hotel = hotel
   }
   
-  func fetchHotel(completion: @escaping () -> Void) {
+  func fetchHotel() {
     networkService.getHotelInformation(with: hotel.id) { result in
       switch result {
         
       case .success(let data):
         self.hotel = data
-        completion()
       case .failure(let error):
         print(error.localizedDescription)
       }

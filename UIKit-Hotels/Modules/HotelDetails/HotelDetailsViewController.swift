@@ -34,7 +34,7 @@ class HotelDetailsViewController: UIViewController {
       title: "Watch on map", titleColor: .white,
       backgroundColor: .buttonColorSet, font: .bodyText,
       isShadow: true, cornerRadius: 10)
-//    button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
+    button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
     
     return button
   }()
@@ -62,7 +62,11 @@ class HotelDetailsViewController: UIViewController {
     return view
   }()
   
-  var viewModel: HotelDetailsViewModelProtocol!
+  var viewModel: HotelDetailsViewModelProtocol! {
+    didSet {
+      viewModel.fetchHotel()
+    }
+  }
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -73,45 +77,19 @@ class HotelDetailsViewController: UIViewController {
   
   private func setupUI() {
     setupConstraints(with: viewModel.stars)
-    
     navigationItem.title = viewModel.hotelName
     hotelNameLabel.text = viewModel.hotelName
     hotelAddress.text = viewModel.hotelAddress
     suitesAvailability.text = viewModel.suitesAvailability
   }
   
-//  @objc private func buttonTapped() {
-//    let mapScreenVC = MapScreenViewController()
-//    mapScreenVC.hotel = hotel
-//
-//    navigationController?.pushViewController(mapScreenVC, animated: true)
-//  }
+  @objc private func buttonTapped() {
+    let mapScreenVC = MapScreenViewController()
+    mapScreenVC.hotel = viewModel.transferData
+    
+    navigationController?.pushViewController(mapScreenVC, animated: true)
+  }
 }
-
-// MARK: - Fetch Data
-//extension HotelDetailsViewController {
-//  func fetchData(with hotelID: Int?) {
-//    guard let id = hotelID else { return }
-//
-//    networkService.getHotelInformation(with: id) { result in
-//
-//      switch result {
-//      case .success(let hotel):
-//        self.hotel = hotel
-//        self.setupContent(with: hotel)
-//        guard let imageURL = hotel.imageHandler else { return }
-//
-//        self.cropImageProcessor(from: .image(imageURL))
-//
-//      case .failure(let error):
-//        self.showAlert(
-//          with: error.localizedDescription,
-//          and: "Please try again later or contact Support.")
-//      }
-//    }
-//  }
-//
-//}
 
 // MARK: - Setup Constraints
 extension HotelDetailsViewController {

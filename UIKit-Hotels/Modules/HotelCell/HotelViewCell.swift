@@ -64,7 +64,7 @@ class HotelViewCell: UITableViewCell {
 }
 
 // MARK: - Fetch Data
-//extension HotelViewCell {
+// extension HotelViewCell {
 //  private func fetchImage(with hotelID: Int) {
 //    networkService.getHotelInformation(with: hotelID) { [self] result in
 //
@@ -86,7 +86,7 @@ class HotelViewCell: UITableViewCell {
 //      spinerViewStopAnimating()
 //    }
 //  }
-//}
+// }
 
 // MARK: - Setup Activity Indicator
 extension HotelViewCell {

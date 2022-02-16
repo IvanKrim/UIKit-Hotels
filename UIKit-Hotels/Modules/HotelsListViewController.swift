@@ -11,9 +11,11 @@ class HotelsListViewController: UIViewController {
   
   let tableView = UITableView(frame: .zero, style: .plain)
   
-  private var viewModel: HotelListViewModelProtocol! {
+  private var viewModel: HotelsListViewModelProtocol! {
     didSet {
+      //      print("this hotels before fetch \n \(viewModel.hotels)")
       viewModel.fetchHotels {
+        //        print("this hotels after fetch \n \(self.viewModel.hotels)")
         self.tableView.reloadData()
       }
     }
@@ -21,19 +23,17 @@ class HotelsListViewController: UIViewController {
   
   private lazy var sortButton: UIButton = {
     let button = UIButton(title: "Sort", titleColor: .secondaryTextSet, backgroundColor: .clear)
-    //    button.addTarget(self, action: #selector(sortButtonTapped), for: .touchUpInside)
+    button.addTarget(self, action: #selector(sortButtonTapped), for: .touchUpInside)
     button.layer.borderWidth = 0.5
     button.layer.borderColor = UIColor.secondaryTextSet.cgColor
     
     return button
   }()
   
-  private var dataSorted = false // dell
-  
   // MARK: - Lifecycle
   override func viewDidLoad() {
     super.viewDidLoad()
-    viewModel = HotelListViewModel()
+    viewModel = HotelsListViewModel()
     
     title = "Hotel App"
     view.backgroundColor = .backgroundSet
@@ -56,7 +56,7 @@ class HotelsListViewController: UIViewController {
   //  }
   
   //  private func updateContent() {
-  //    if !dataSorted {
+  //  if !dataSorted {
   //      fetchData()
   //      dataSorted.toggle()
   //    }
@@ -71,12 +71,14 @@ class HotelsListViewController: UIViewController {
     tableView.backgroundColor = .clear
   }
   
-  //  @objc private func sortButtonTapped() {
-  //    let sortedVC = SortHotelViewController()
-  //
-  //    present(sortedVC, animated: true)
-  //    sortedVC.hotelListViewController = self
-  //  }
+  @objc private func sortButtonTapped() {
+    viewModel.buttonPressed()
+    let sortedVC = SortHotelViewController()
+    //    sortedVC.hotels = viewModel.hotels
+    present(sortedVC, animated: true)
+    
+    //    sortedVC.hotelListViewController = self
+  }
 }
 
 // MARK: - UITableViewDataSource
