@@ -7,7 +7,7 @@
 
 import UIKit
 
-//class ImageManager {
+// class ImageManager {
 //  
 //  static let shared = ImageManager()
 //  
@@ -36,4 +36,18 @@ import UIKit
 //        }
 //      }
 //  }
-//}
+// }
+
+class ImageManager {
+  static let shared = ImageManager()
+  
+  private init() {}
+  
+  func fetchImage(from imageURL: Endpoint) -> Data? {
+    guard let url = imageURL.linkManager(path: imageURL) else { return nil}
+    print(url)
+    guard let imageData = try? Data(contentsOf: url) else { return nil }
+    
+    return imageData
+  }
+}

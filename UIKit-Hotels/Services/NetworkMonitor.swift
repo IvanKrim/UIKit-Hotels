@@ -32,3 +32,8 @@ final class NetworkMonitor {
     monitor.cancel()
   }
 }
+
+enum NetworkStatus {
+  case connected
+  case disconnected
+}

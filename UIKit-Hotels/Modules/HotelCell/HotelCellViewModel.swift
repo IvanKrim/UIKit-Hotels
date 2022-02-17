@@ -19,6 +19,7 @@ protocol HotelCellViewModelProtocol {
 }
 
 class HotelCellViewModel: HotelCellViewModelProtocol {
+  
   var networkService: NetworkServiceSingleHotelProtocol = NetworkService()
   
   var hotelName: String {
@@ -42,6 +43,9 @@ class HotelCellViewModel: HotelCellViewModelProtocol {
       switch result {
         
       case .success(let data):
+        guard let imageURL = data.imageHandler else { return }
+        print(imageURL)
+        
         completion()
       case .failure(let error):
         print(error.localizedDescription)

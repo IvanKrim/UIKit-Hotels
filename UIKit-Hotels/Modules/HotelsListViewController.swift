@@ -13,9 +13,7 @@ class HotelsListViewController: UIViewController {
   
   private var viewModel: HotelsListViewModelProtocol! {
     didSet {
-      //      print("this hotels before fetch \n \(viewModel.hotels)")
       viewModel.fetchHotels {
-        //        print("this hotels after fetch \n \(self.viewModel.hotels)")
         self.tableView.reloadData()
       }
     }
@@ -34,33 +32,26 @@ class HotelsListViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     viewModel = HotelsListViewModel()
-    
     title = "Hotel App"
     view.backgroundColor = .backgroundSet
     
-    setupTableView()
-    setupConstraints()
-    //    networkMonitor()
+    networkMonitor()
   }
   
-  //  private func networkMonitor() {
-  //    if NetworkMonitor.shared.isConnected {
-  //      setupTableView()
-  //      setupConstraints()
-  //      updateContent()
-  //    } else {
-  //      showAlert(
-  //        with: "Networl Error",
-  //        and: "Please check your internet connection or try again later.")
-  //    }
-  //  }
-  
-  //  private func updateContent() {
-  //  if !dataSorted {
-  //      fetchData()
-  //      dataSorted.toggle()
-  //    }
-  //  }
+  private func networkMonitor() {
+    viewModel.networkMonitor { status in
+      switch status {
+        
+      case .connected:
+        setupTableView()
+        setupConstraints()
+      case .disconnected:
+        showAlert(
+          with: "Network Error",
+          and: "Please check your internet connection or try again later.")
+      }
+    }
+  }
   
   private func setupTableView() {
     self.tableView.delegate = self
@@ -72,12 +63,17 @@ class HotelsListViewController: UIViewController {
   }
   
   @objc private func sortButtonTapped() {
-    viewModel.buttonPressed()
-    let sortedVC = SortHotelViewController()
-    //    sortedVC.hotels = viewModel.hotels
-    present(sortedVC, animated: true)
+    let sortedVC = viewModel.buttonPressed() as? SortHotelViewController
+    guard let sortedVC = sortedVC else { return }
+    sortedVC.reloadDataDelegate = self
     
-    //    sortedVC.hotelListViewController = self
+    present(sortedVC, animated: true)
+  }
+}
+
+extension HotelsListViewController: SortHotelReloadDataProtocol {
+  func dataDidSorted() {
+    tableView.reloadData()
   }
 }
 

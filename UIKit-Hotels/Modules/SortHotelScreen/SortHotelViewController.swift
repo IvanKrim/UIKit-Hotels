@@ -7,24 +7,45 @@
 
 import UIKit
 
+protocol SortHotelDataProtocol {
+  func sortedByEmptyRooms()
+  func sortedByDistance()
+}
+
+protocol SortHotelReloadDataProtocol {
+  func dataDidSorted()
+}
+
 class SortHotelViewController: UIViewController {
   
   private lazy var dismissButton: UIButton = {
-    let button = UIButton(title: "", titleColor: .clear, backgroundColor: .clear)
+    let button = UIButton(
+      title: "",
+      titleColor: .clear,
+      backgroundColor: .clear)
+    
     button.addTarget(self, action: #selector(dismissButtonTapped), for: .touchUpInside)
     
     return button
   }()
   
   private lazy var sortedRoomsButton: UIButton = {
-    let button = UIButton(title: "Number of empty rooms", titleColor: .white, backgroundColor: .buttonColorSet)
+    let button = UIButton(
+      title: "Number of empty rooms",
+      titleColor: .white,
+      backgroundColor: .buttonColorSet)
+    
     button.addTarget(self, action: #selector(sortedRoomsButtonTapped), for: .touchUpInside)
     
     return button
   }()
   
   private lazy var sortedDistanceButton: UIButton = {
-    let button = UIButton(title: "Distance from city centre", titleColor: .white, backgroundColor: .buttonColorSet)
+    let button = UIButton(
+      title: "Distance from city centre",
+      titleColor: .white,
+      backgroundColor: .buttonColorSet)
+    
     button.addTarget(self, action: #selector(sortedDistanceButtonTapped), for: .touchUpInside)
     
     return button
@@ -35,7 +56,8 @@ class SortHotelViewController: UIViewController {
     fontStyle: .largeTitleText,
     textColor: .textSet)
   
-  var hotelListViewModel: HotelsListViewModelProtocol!
+  var sortDataDelegate: SortHotelDataProtocol?
+  var reloadDataDelegate: SortHotelReloadDataProtocol?
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -45,18 +67,19 @@ class SortHotelViewController: UIViewController {
   
   // MARK: - Private Methods
   @objc private func sortedRoomsButtonTapped() {
-    hotelListViewModel.buttonPressed()
+    sortDataDelegate?.sortedByEmptyRooms()
     
-    dismiss(animated: true)
+    dismiss(animated: true) { [unowned self] in
+      reloadDataDelegate?.dataDidSorted()
+    }
   }
   
   @objc private func sortedDistanceButtonTapped() {
-   
-//    hotelListViewController.hotels.sort {
-//      $0.distance < $1.distance
-//    }
-//    hotelListViewController.tableView.reloadData()
-    dismiss(animated: true)
+    sortDataDelegate?.sortedByDistance()
+    
+    dismiss(animated: true) { [unowned self] in
+      reloadDataDelegate?.dataDidSorted()
+    }
   }
   
   @objc private func dismissButtonTapped() {

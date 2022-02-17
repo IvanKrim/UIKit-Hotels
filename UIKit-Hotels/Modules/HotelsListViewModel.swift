@@ -6,19 +6,16 @@
 //
 
 import Foundation
+import UIKit
 
 protocol HotelsListViewModelProtocol {
   var hotels: Hotels { get }
   var networkService: NetworkServiceSingleHotelProtocol { get }
+  func networkMonitor(completion: (NetworkStatus) -> Void)
   func fetchHotels(completion: @escaping() -> Void)
   func numberOfRows() -> Int
+  func buttonPressed() -> UIViewController
   
-  var viewModelDidChange: ((HotelsListViewModelProtocol) -> Void)? { get set }
-  
-  func buttonPressed()
-  
-  func sortedByEmptyRooms()
-  func sortedByDistance()
   func cellViewModel(at indexPath: IndexPath) -> HotelCellViewModelProtocol
   func detailsViewModel(at indexPath: IndexPath) -> HotelDetailsViewModelProtocol
 }
@@ -27,6 +24,14 @@ class HotelsListViewModel: HotelsListViewModelProtocol {
   var networkService: NetworkServiceSingleHotelProtocol = NetworkService()
   
   var hotels: Hotels = []
+  
+  func networkMonitor(completion: (NetworkStatus) -> Void) {
+    if NetworkMonitor.shared.isConnected {
+      completion(.connected)
+    } else {
+      completion(.disconnected)
+    }
+  }
   
   func fetchHotels(completion: @escaping () -> Void) {
     networkService.getHotelsInformation { result in
@@ -45,23 +50,11 @@ class HotelsListViewModel: HotelsListViewModelProtocol {
     hotels.count
   }
   
-  var viewModelDidChange: ((HotelsListViewModelProtocol) -> Void)?
-  
-  func buttonPressed() {
-    sortedByDistance()
-    print("это отсортированные данные \n \(hotels)")
-  }
-  
-  func sortedByEmptyRooms() {
-    hotels.sort {
-      $1.suitesArray.count < $0.suitesArray.count
-    }
-  }
-  
-  func sortedByDistance() {
-    hotels.sort {
-      $0.distance < $1.distance
-    }
+  func buttonPressed() -> UIViewController {
+    let sortedVC = SortHotelViewController()
+    sortedVC.sortDataDelegate = self
+    
+    return sortedVC
   }
   
   func cellViewModel(at indexPath: IndexPath) -> HotelCellViewModelProtocol {
@@ -75,7 +68,13 @@ class HotelsListViewModel: HotelsListViewModelProtocol {
   }
 }
 
-enum SortedBy {
-  case emptyRooms
-  case byDistance
+// MARK: - Data sorting methods
+extension HotelsListViewModel: SortHotelDataProtocol {
+  func sortedByEmptyRooms() {
+    hotels.sort { $1.suitesArray.count < $0.suitesArray.count }
+  }
+  
+  func sortedByDistance() {
+    hotels.sort { $0.distance < $1.distance }
+  }
 }

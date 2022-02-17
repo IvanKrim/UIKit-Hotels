@@ -15,11 +15,15 @@ protocol HotelDetailsViewModelProtocol {
   var transferData: Hotel { get }
   var networkService: NetworkServiceSingleHotelProtocol { get }
   func fetchHotel()
-  //  var imageData: Data? { get }
+  var imageData: Data? { get }
   init(hotel: Hotel)
 }
 
 class HotelDetailsViewModel: HotelDetailsViewModelProtocol {
+  var imageData: Data? {
+    ImageManager.shared.fetchImage(from: .image(hotel.imageHandler ?? "no"))
+  }
+  
   var networkService: NetworkServiceSingleHotelProtocol = NetworkService()
   
   var hotelName: String {
