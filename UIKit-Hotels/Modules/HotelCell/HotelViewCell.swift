@@ -10,14 +10,7 @@ import UIKit
 class HotelViewCell: UITableViewCell {
   
   // MARK: - Properties
-  private var hotelImageView: UIImageView = {
-    var image = UIImageView()
-    image.contentMode   = .scaleAspectFill
-    image.clipsToBounds = true
-    return image
-  }()
-  
-  //  let hotelImageView = CroppedImage()
+  private let hotelImageView = CroppedImage()
   
   private let hotelNameLabel = UILabel(
     fontStyle: .firstTitleText, textColor: .textSet, numberOfLines: 2)
@@ -48,9 +41,7 @@ class HotelViewCell: UITableViewCell {
       setupConstraints(with: viewModel.stars)
       
       viewModel.fetchImage { [self] imageData in
-        let hotelImage = ImageManager.shared.convertImage(from: imageData)
-        self.hotelImageView.image = hotelImage
-        
+        self.hotelImageView.convertImage(from: imageData)
         self.spinnerViewStopAnimating()
       }
     }

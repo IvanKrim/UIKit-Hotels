@@ -8,17 +8,7 @@
 import UIKit
 
 class HotelDetailsViewController: UIViewController {
-  
-  //  private let hotelImageView: UIImageView = {
-  //    var image = UIImageView()
-  //    image.contentMode = .scaleAspectFill
-  //    image.layer.cornerRadius = 2
-  //    image.clipsToBounds = true
-  //
-  //    return image
-  //  }()
-  
-  var hotelImageView = CroppedImage()
+  private let hotelImageView = CroppedImage()
   
   private let hotelNameLabel = UILabel(
     fontStyle: .firstTitleText,

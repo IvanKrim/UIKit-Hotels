@@ -20,38 +20,34 @@ class CroppedImage: UIView {
   
   override init(frame: CGRect) {
     super.init(frame: frame)
-    self.backgroundColor = .blue
+    self.backgroundColor = .systemBackground
     addSubview(hotelImage)
-  
+    
     setupConstraint()
-  } 
+  }
   
   required init?(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
   
   func convertImage(from imageURL: String) {
-    let fetchImage = ImageManager.shared.fetchImage(from: .image(imageURL))
-    
-    if let imageData = fetchImage {
+    if let imageData = ImageManager.shared.fetchImageData(from: .image(imageURL)) {
       let rawImage = UIImage(data: imageData)!
-      
-      hotelImage.image = cropImage(input: rawImage)
+      hotelImage.image = cropImage(input: rawImage) // присваиваем кропнутое изображение
       hotelImage.contentMode = .scaleAspectFill
     } else {
-      hotelImage.image = UIImage(systemName: "star")
+      hotelImage.image = UIImage(systemName: "photo.on.rectangle.angled") // здесь плейсхолдер
     }
   }
   
   private func cropImage(input image: UIImage) -> UIImage? {
     let cgImage = image.cgImage
-    
     let croppedCGImage = cgImage?.cropping(to: CGRect(
       x: 1, y: 1,
       width: image.size.width * 0.9,
       height: image.size.height * 0.9))
     
-    return UIImage(cgImage: croppedCGImage!) // возвращаем кропнутое
+    return UIImage(cgImage: croppedCGImage!)
   }
   
   // MARK: - SetupConstraints

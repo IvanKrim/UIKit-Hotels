@@ -88,6 +88,7 @@
 		206F38C3278F1E7600227437 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				203503DA27BE80B700E69571 /* CroppedImage.swift */,
 				200197F727AFCB4C002B4DE4 /* AlertController.swift */,
 				20D3986927A9570C002DA6FE /* StarsIcon.swift */,
 				206E61CD27B1B129008C74E7 /* String + Extension.swift */,
@@ -153,7 +154,6 @@
 			children = (
 				20C1687B278F1BF00059CCF3 /* Model */,
 				20C1687C278F1C040059CCF3 /* Modules */,
-				20E837B927BCF5B20010055A /* Helpers */,
 				206F38D0278F1F8F00227437 /* Services */,
 				206F38C3278F1E7600227437 /* Extensions */,
 				20C1686A278F1A990059CCF3 /* Assets.xcassets */,
@@ -190,14 +190,6 @@
 				20DE6A592799D65D001591D8 /* NetworkError.swift */,
 			);
 			path = Errors;
-			sourceTree = "<group>";
-		};
-		20E837B927BCF5B20010055A /* Helpers */ = {
-			isa = PBXGroup;
-			children = (
-				203503DA27BE80B700E69571 /* CroppedImage.swift */,
-			);
-			path = Helpers;
 			sourceTree = "<group>";
 		};
 		20FE2D5027B264B300BCDC05 /* HotelDetails */ = {
