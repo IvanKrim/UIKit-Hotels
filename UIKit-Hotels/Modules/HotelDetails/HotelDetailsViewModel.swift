@@ -14,15 +14,15 @@ protocol HotelDetailsViewModelProtocol {
   var stars: Double { get }
   var transferData: Hotel { get }
   var networkService: NetworkServiceSingleHotelProtocol { get }
-  func fetchHotel()
-  var imageData: Data? { get }
+  func fetchHotel(completion: @escaping(String) -> Void)
+//  var imageData: Data? { get }
   init(hotel: Hotel)
 }
 
 class HotelDetailsViewModel: HotelDetailsViewModelProtocol {
-  var imageData: Data? {
-    ImageManager.shared.fetchImage(from: .image(hotel.imageHandler ?? "no"))
-  }
+//  var imageData: Data? {
+//    ImageManager.shared.fetchImage(from: .image(hotel.imageHandler ?? "no"))
+//  }
   
   var networkService: NetworkServiceSingleHotelProtocol = NetworkService()
   
@@ -52,12 +52,20 @@ class HotelDetailsViewModel: HotelDetailsViewModelProtocol {
     self.hotel = hotel
   }
   
-  func fetchHotel() {
+  func fetchHotel(completion: @escaping(String) -> Void) {
     networkService.getHotelInformation(with: hotel.id) { result in
       switch result {
         
       case .success(let data):
         self.hotel = data
+        
+        guard let imageURL = data.imageHandler else { return }
+//        let imageData = ImageManager.shared.fetchImage(from: .image(imageURL))
+        
+        DispatchQueue.main.async {
+          completion(imageURL)
+        }
+        
       case .failure(let error):
         print(error.localizedDescription)
       }

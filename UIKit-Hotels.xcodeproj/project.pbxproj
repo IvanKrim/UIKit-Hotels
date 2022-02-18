@@ -10,6 +10,7 @@
 		200197F827AFCB4C002B4DE4 /* AlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200197F727AFCB4C002B4DE4 /* AlertController.swift */; };
 		200197FA27AFD5B7002B4DE4 /* NetworkMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200197F927AFD5B7002B4DE4 /* NetworkMonitor.swift */; };
 		202665C627A04FA9009DB94A /* SortHotelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 202665C527A04FA9009DB94A /* SortHotelViewController.swift */; };
+		203503DB27BE80B700E69571 /* CroppedImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 203503DA27BE80B700E69571 /* CroppedImage.swift */; };
 		203B076F27915F0E005C8AFB /* UIImage + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 203B076E27915F0E005C8AFB /* UIImage + Extension.swift */; };
 		20658EB32796BBC700184FD1 /* ApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20658EB22796BBC700184FD1 /* ApiManager.swift */; };
 		206E61CE27B1B129008C74E7 /* String + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 206E61CD27B1B129008C74E7 /* String + Extension.swift */; };
@@ -42,6 +43,7 @@
 		200197F727AFCB4C002B4DE4 /* AlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertController.swift; sourceTree = "<group>"; };
 		200197F927AFD5B7002B4DE4 /* NetworkMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkMonitor.swift; sourceTree = "<group>"; };
 		202665C527A04FA9009DB94A /* SortHotelViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortHotelViewController.swift; sourceTree = "<group>"; };
+		203503DA27BE80B700E69571 /* CroppedImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CroppedImage.swift; sourceTree = "<group>"; };
 		203B076E27915F0E005C8AFB /* UIImage + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage + Extension.swift"; sourceTree = "<group>"; };
 		20658EB22796BBC700184FD1 /* ApiManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiManager.swift; sourceTree = "<group>"; };
 		206E61CD27B1B129008C74E7 /* String + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String + Extension.swift"; sourceTree = "<group>"; };
@@ -193,6 +195,7 @@
 		20E837B927BCF5B20010055A /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				203503DA27BE80B700E69571 /* CroppedImage.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -357,6 +360,7 @@
 				202665C627A04FA9009DB94A /* SortHotelViewController.swift in Sources */,
 				20D9750E279F135700B18939 /* MapScreenViewController.swift in Sources */,
 				200197FA27AFD5B7002B4DE4 /* NetworkMonitor.swift in Sources */,
+				203503DB27BE80B700E69571 /* CroppedImage.swift in Sources */,
 				20FE2D5B27B29EC300BCDC05 /* HotelCellViewModel.swift in Sources */,
 				208063AB27BBCE6600E52633 /* HotelsListViewController.swift in Sources */,
 			);

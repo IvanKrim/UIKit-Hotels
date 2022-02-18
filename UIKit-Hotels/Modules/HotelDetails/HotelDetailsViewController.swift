@@ -9,14 +9,16 @@ import UIKit
 
 class HotelDetailsViewController: UIViewController {
   
-  private let hotelImageView: UIImageView = {
-    var image = UIImageView()
-    image.contentMode = .scaleAspectFill
-    image.layer.cornerRadius = 2
-    image.clipsToBounds = true
-    
-    return image
-  }()
+  //  private let hotelImageView: UIImageView = {
+  //    var image = UIImageView()
+  //    image.contentMode = .scaleAspectFill
+  //    image.layer.cornerRadius = 2
+  //    image.clipsToBounds = true
+  //
+  //    return image
+  //  }()
+  
+  var hotelImageView = CroppedImage()
   
   private let hotelNameLabel = UILabel(
     fontStyle: .firstTitleText,
@@ -64,7 +66,9 @@ class HotelDetailsViewController: UIViewController {
   
   var viewModel: HotelDetailsViewModelProtocol! {
     didSet {
-      viewModel.fetchHotel()
+      viewModel.fetchHotel { imageData in
+        self.hotelImageView.convertImage(from: imageData)
+      }
     }
   }
   
@@ -81,6 +85,7 @@ class HotelDetailsViewController: UIViewController {
     hotelNameLabel.text = viewModel.hotelName
     hotelAddress.text = viewModel.hotelAddress
     suitesAvailability.text = viewModel.suitesAvailability
+    
   }
   
   @objc private func buttonTapped() {

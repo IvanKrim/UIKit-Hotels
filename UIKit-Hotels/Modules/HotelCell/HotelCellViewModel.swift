@@ -13,7 +13,7 @@ protocol HotelCellViewModelProtocol {
   var availableSuites: String { get }
   var stars: Double { get }
   var networkService: NetworkServiceSingleHotelProtocol { get }
-  func fetchImage(completion: @escaping() -> Void)
+  func fetchImage(completion: @escaping(Data?) -> Void)
   
   init(hotel: Hotel)
 }
@@ -38,15 +38,18 @@ class HotelCellViewModel: HotelCellViewModelProtocol {
     hotel.stars
   }
   
-  func fetchImage(completion: @escaping () -> Void) {
+  func fetchImage(completion: @escaping (Data?) -> Void) {
     networkService.getHotelInformation(with: hotel.id) { result in
       switch result {
         
       case .success(let data):
         guard let imageURL = data.imageHandler else { return }
-        print(imageURL)
+        let imageData = ImageManager.shared.fetchImage(from: .image(imageURL))
         
-        completion()
+        DispatchQueue.main.async {
+          completion(imageData)
+        }
+        
       case .failure(let error):
         print(error.localizedDescription)
       }

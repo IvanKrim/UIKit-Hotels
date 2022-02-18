@@ -17,6 +17,8 @@ class HotelViewCell: UITableViewCell {
     return image
   }()
   
+  //  let hotelImageView = CroppedImage()
+  
   private let hotelNameLabel = UILabel(
     fontStyle: .firstTitleText, textColor: .textSet, numberOfLines: 2)
   private let distanceIconImage = UIImageView(
@@ -45,7 +47,10 @@ class HotelViewCell: UITableViewCell {
       availableSuitesLabel.text = viewModel.availableSuites
       setupConstraints(with: viewModel.stars)
       
-      viewModel.fetchImage {
+      viewModel.fetchImage { [self] imageData in
+        let hotelImage = ImageManager.shared.convertImage(from: imageData)
+        self.hotelImageView.image = hotelImage
+        
         self.spinnerViewStopAnimating()
       }
     }
@@ -62,31 +67,6 @@ class HotelViewCell: UITableViewCell {
     fatalError("init?(coder: has not been implemented")
   }
 }
-
-// MARK: - Fetch Data
-// extension HotelViewCell {
-//  private func fetchImage(with hotelID: Int) {
-//    networkService.getHotelInformation(with: hotelID) { [self] result in
-//
-//      switch result {
-//      case .success(let hotel):
-//        spinerViewStopAnimating()
-//        guard let imageURL = hotel.imageHandler else { return }
-//        self.cropImageProcessor(from: .image(imageURL))
-//
-//      case .failure(let error):
-//        print(error.localizedDescription)
-//      }
-//    }
-//  }
-//
-//  private func cropImageProcessor(from imageURL: Endpoint) {
-//    ImageManager.shared.fetchCropedImage(from: imageURL) { [unowned self] in
-//      self.hotelImageView.image = $0.image
-//      spinerViewStopAnimating()
-//    }
-//  }
-// }
 
 // MARK: - Setup Activity Indicator
 extension HotelViewCell {
