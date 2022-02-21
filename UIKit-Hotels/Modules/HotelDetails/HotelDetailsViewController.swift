@@ -8,6 +8,7 @@
 import UIKit
 
 class HotelDetailsViewController: UIViewController {
+  private let activityIndicator = SpinnerView()
   private let hotelImageView = CroppedImage()
   
   private let hotelNameLabel = UILabel(
@@ -57,7 +58,10 @@ class HotelDetailsViewController: UIViewController {
   var viewModel: HotelDetailsViewModelProtocol! {
     didSet {
       viewModel.fetchHotel { imageData in
-        self.hotelImageView.convertImage(from: imageData)
+        self.hotelImageView.convertImage(from: imageData) {
+          self.activityIndicator.spinnerViewStopAnimating()
+          self.activityIndicator.isHidden = true
+        }
       }
     }
   }
@@ -89,6 +93,7 @@ class HotelDetailsViewController: UIViewController {
 // MARK: - Setup Constraints
 extension HotelDetailsViewController {
   private func setupConstraints(with stars: Double) {
+    
     let starsArray = StarsIcon.shared.starsConverter(input: stars)
     
     let starsStackView = UIStackView(
@@ -106,11 +111,13 @@ extension HotelDetailsViewController {
       axis: .vertical,
       spacing: 20)
     
+    activityIndicator.translatesAutoresizingMaskIntoConstraints = false
     hotelImageView.translatesAutoresizingMaskIntoConstraints = false
     contentStackView.translatesAutoresizingMaskIntoConstraints = false
     mapButton.translatesAutoresizingMaskIntoConstraints = false
     
     view.addSubview(scrollView)
+    view.addSubview(activityIndicator)
     scrollView.addSubview(containerView)
     containerView.addSubview(hotelImageView)
     containerView.addSubview(contentStackView)
@@ -130,6 +137,13 @@ extension HotelDetailsViewController {
       contentStackView.topAnchor.constraint(equalTo: hotelImageView.bottomAnchor, constant: 20),
       contentStackView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
       contentStackView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16)
+    ])
+    
+    NSLayoutConstraint.activate([
+      activityIndicator.topAnchor.constraint(equalTo: view.topAnchor),
+      activityIndicator.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+      activityIndicator.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+      activityIndicator.leadingAnchor.constraint(equalTo: view.leadingAnchor)
     ])
   }
 }

@@ -55,9 +55,7 @@ class HotelDetailsViewModel: HotelDetailsViewModelProtocol {
         self.hotel = data
         
         guard let imageURL = data.imageHandler else { return }
-        DispatchQueue.main.async {
-          completion(imageURL)
-        }
+        completion(imageURL)
         
       case .failure(let error):
         print(error.localizedDescription)

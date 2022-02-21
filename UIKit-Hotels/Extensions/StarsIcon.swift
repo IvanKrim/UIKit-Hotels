@@ -8,7 +8,6 @@
 import UIKit
 
 class StarsIcon {
-  
   static let shared = StarsIcon()
   
   private init() {}

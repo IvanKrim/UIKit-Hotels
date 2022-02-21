@@ -11,6 +11,7 @@ class HotelViewCell: UITableViewCell {
   
   // MARK: - Properties
   private let hotelImageView = CroppedImage()
+  private let activityIndicator = SpinnerView()
   
   private let hotelNameLabel = UILabel(
     fontStyle: .firstTitleText, textColor: .textSet, numberOfLines: 2)
@@ -21,18 +22,6 @@ class HotelViewCell: UITableViewCell {
   private let availableSuitesLabel = UILabel(
     fontStyle: .bodyBoldText, textColor: .secondaryTextSet)
   
-  private var activityIndicator = UIActivityIndicatorView()
-  
-  private let backgroundViewCell: UIVisualEffectView = {
-    let view = UIVisualEffectView()
-    let blurEffect = UIBlurEffect(style: .systemUltraThinMaterial)
-    view.effect = blurEffect
-    
-    view.translatesAutoresizingMaskIntoConstraints = false
-    
-    return view
-  }()
-  
   var viewModel: HotelCellViewModelProtocol! {
     didSet {
       hotelNameLabel.text = viewModel.hotelName
@@ -40,9 +29,11 @@ class HotelViewCell: UITableViewCell {
       availableSuitesLabel.text = viewModel.availableSuites
       setupConstraints(with: viewModel.stars)
       
-      viewModel.fetchImage { [self] imageData in
-        self.hotelImageView.convertImage(from: imageData)
-        self.spinnerViewStopAnimating()
+      viewModel.fetchImage { imageData in
+        self.hotelImageView.convertImage(from: imageData) {
+          self.activityIndicator.spinnerViewStopAnimating()
+          self.activityIndicator.isHidden = true
+        }
       }
     }
   }
@@ -56,40 +47,6 @@ class HotelViewCell: UITableViewCell {
   
   required init?(coder: NSCoder) {
     fatalError("init?(coder: has not been implemented")
-  }
-}
-
-// MARK: - Setup Activity Indicator
-extension HotelViewCell {
-  
-  private func showSpinnerView(in view: UIView) {
-    activityIndicator = UIActivityIndicatorView(style: .large)
-    activityIndicator.color = UIColor.textSet
-    activityIndicator.startAnimating()
-    activityIndicator.hidesWhenStopped = true
-    
-    activityIndicator.translatesAutoresizingMaskIntoConstraints = false
-    backgroundViewCell.translatesAutoresizingMaskIntoConstraints = false
-    
-    view.addSubview(backgroundViewCell)
-    backgroundViewCell.contentView.addSubview(activityIndicator)
-    
-    NSLayoutConstraint.activate([
-      backgroundViewCell.topAnchor.constraint(equalTo: view.topAnchor),
-      backgroundViewCell.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-      backgroundViewCell.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-      backgroundViewCell.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-    ])
-    
-    NSLayoutConstraint.activate([
-      activityIndicator.centerXAnchor.constraint(equalTo: backgroundViewCell.centerXAnchor),
-      activityIndicator.centerYAnchor.constraint(equalTo: backgroundViewCell.centerYAnchor)
-    ])
-  }
-  
-  private func spinnerViewStopAnimating() {
-    activityIndicator.startAnimating()
-    backgroundViewCell.isHidden = true
   }
 }
 
@@ -117,22 +74,24 @@ extension HotelViewCell {
       axis: .horizontal,
       spacing: 3)
     
-    let distanseStackView = UIStackView(
+    let distanceStackView = UIStackView(
       arrangedSubviews: [distanceIconImage, distanceToCenterLabel],
       axis: .horizontal,
       spacing: 3)
     
     let generalStackView = UIStackView(
-      arrangedSubviews: [hotelNameLabel, starsStackView, availableSuitesLabel, distanseStackView],
+      arrangedSubviews: [hotelNameLabel, starsStackView, availableSuitesLabel, distanceStackView],
       axis: .vertical,
       spacing: 20)
     
+    activityIndicator.translatesAutoresizingMaskIntoConstraints = false
     hotelImageView.translatesAutoresizingMaskIntoConstraints = false
     generalStackView.translatesAutoresizingMaskIntoConstraints = false
     
     addSubview(cellBackgroundView)
+    addSubview(activityIndicator)
+    
     cellBackgroundView.addSubviews([hotelImageView, generalStackView])
-    showSpinnerView(in: cellBackgroundView)
     
     NSLayoutConstraint.activate([
       cellBackgroundView.topAnchor.constraint(equalTo: self.topAnchor, constant: 6),
@@ -153,6 +112,13 @@ extension HotelViewCell {
       generalStackView.leadingAnchor.constraint(equalTo: hotelImageView.trailingAnchor, constant: 8),
       generalStackView.trailingAnchor.constraint(equalTo: cellBackgroundView.trailingAnchor, constant: -8),
       generalStackView.bottomAnchor.constraint(lessThanOrEqualTo: cellBackgroundView.bottomAnchor, constant: -4)
+    ])
+    
+    NSLayoutConstraint.activate([
+      activityIndicator.topAnchor.constraint(equalTo: cellBackgroundView.topAnchor),
+      activityIndicator.bottomAnchor.constraint(equalTo: cellBackgroundView.bottomAnchor),
+      activityIndicator.trailingAnchor.constraint(equalTo: cellBackgroundView.trailingAnchor),
+      activityIndicator.leadingAnchor.constraint(equalTo: cellBackgroundView.leadingAnchor)
     ])
   }
 }

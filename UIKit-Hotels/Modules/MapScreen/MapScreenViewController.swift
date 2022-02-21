@@ -10,7 +10,6 @@ import MapKit
 import CoreLocation
 
 class MapScreenViewController: UIViewController {
-  
   private let mapView = MKMapView()
   
   var hotel: Hotel!
@@ -33,7 +32,6 @@ class MapScreenViewController: UIViewController {
 
 // MARK: - Setup MapView
 extension MapScreenViewController {
-  
   private func setupMapView(with coordinate: CLLocationCoordinate2D, and title: String) {
     mapView.setRegion(
       MKCoordinateRegion(

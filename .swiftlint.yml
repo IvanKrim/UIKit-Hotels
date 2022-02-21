@@ -4,6 +4,10 @@ excluded:
 disabled_rules:
 - trailing_whitespace
 
+function_body_length:
+- 50
+- 100
+
 line_length:
 warning: 150
 

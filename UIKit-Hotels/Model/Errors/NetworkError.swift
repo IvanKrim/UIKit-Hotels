@@ -15,8 +15,8 @@ enum NetworkError: Error {
 
 extension NetworkError: LocalizedError {
   var errorDescription: String? {
-    
     switch self {
+      
     case .incorrectDataError:
       return "Incorrect data received from the server"
     case .noConnectionError:

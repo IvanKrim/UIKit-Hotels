@@ -5,11 +5,9 @@
 //  Created by Kalabishka Ivan on 17.02.2022.
 //
 
-import Foundation
 import UIKit
 
 class CroppedImage: UIView {
-  
   private let hotelImage: UIImageView = {
     let imageView = UIImageView()
     imageView.contentMode = .scaleAspectFit
@@ -18,25 +16,26 @@ class CroppedImage: UIView {
     return imageView
   }()
   
+  private var imageCache = NSCache<AnyObject, AnyObject>()
+  
   override init(frame: CGRect) {
     super.init(frame: frame)
-    self.backgroundColor = .systemBackground
-    addSubview(hotelImage)
+    self.backgroundColor = .cellBackgroundSet
     
+    addSubview(hotelImage)
     setupConstraint()
   }
   
-  required init?(coder: NSCoder) {
-    fatalError("init(coder:) has not been implemented")
-  }
-  
-  func convertImage(from imageURL: String) {
-    if let imageData = ImageManager.shared.fetchImageData(from: .image(imageURL)) {
-      let rawImage = UIImage(data: imageData)!
-      hotelImage.image = cropImage(input: rawImage) // присваиваем кропнутое изображение
-      hotelImage.contentMode = .scaleAspectFill
-    } else {
-      hotelImage.image = UIImage(systemName: "photo.on.rectangle.angled") // здесь плейсхолдер
+  func convertImage(from imageURL: String, completion: @escaping() -> Void) {
+    ImageManager.shared.fetchImageData(from: .image(imageURL)) { imageData in
+      
+      if let rawImage = UIImage(data: imageData) {
+        self.hotelImage.image = self.cropImage(input: rawImage)
+        self.hotelImage.contentMode = .scaleAspectFill
+      } else {
+        self.hotelImage.image = UIImage(systemName: "photo.on.rectangle.angled") // placeholder
+      }
+      completion()
     }
   }
   
@@ -60,5 +59,9 @@ class CroppedImage: UIView {
       hotelImage.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -5),
       hotelImage.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 5)
     ])
+  }
+  
+  required init?(coder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
   }
 }

@@ -8,8 +8,7 @@
 import UIKit
 
 class HotelsListViewController: UIViewController {
-  
-  let tableView = UITableView(frame: .zero, style: .plain)
+  private let tableView = UITableView(frame: .zero, style: .plain)
   
   private var viewModel: HotelsListViewModelProtocol! {
     didSet {
@@ -110,7 +109,6 @@ extension HotelsListViewController: UITableViewDelegate {
 
 // MARK: - Setup Constraints
 extension HotelsListViewController {
-  
   private func setupConstraints() {
     let buttonStackView = UIStackView(
       arrangedSubviews: [sortButton],

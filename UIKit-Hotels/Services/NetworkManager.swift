@@ -14,7 +14,6 @@ protocol NetworkServiceSingleHotelProtocol {
 }
 
 class NetworkService: NetworkServiceSingleHotelProtocol {
-  
   func getHotelsInformation(completion: @escaping (Result<Hotels, Error>) -> Void) {
     request(path: .baseURL) { (result: Result<Hotels, Error>) in
       switch result {
