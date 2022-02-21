@@ -8,13 +8,12 @@
 import UIKit
 
 class StarsIcon {
-  
   static let shared = StarsIcon()
   
   private init() {}
   
   private func starIcon(image: UIImage) -> UIImageView {
-    let icon = UIImageView(image: image, tintColor: .starIconColor())
+    let icon = UIImageView(image: image, tintColor: .starIconColor)
     icon.translatesAutoresizingMaskIntoConstraints = false
     
     return icon

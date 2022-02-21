@@ -9,7 +9,6 @@ import Foundation
 import Network
 
 final class NetworkMonitor {
-  
   static let shared = NetworkMonitor()
   
   private let queue = DispatchQueue.global()
@@ -31,4 +30,9 @@ final class NetworkMonitor {
   public func stopMonitoring() {
     monitor.cancel()
   }
+}
+
+enum NetworkStatus {
+  case connected
+  case disconnected
 }

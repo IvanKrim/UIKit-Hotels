@@ -7,54 +7,78 @@
 
 import UIKit
 
+protocol SortHotelDataProtocol {
+  func sortedByEmptyRooms()
+  func sortedByDistance()
+}
+
+protocol SortHotelReloadDataProtocol {
+  func dataDidSorted()
+}
+
 class SortHotelViewController: UIViewController {
   
   private lazy var dismissButton: UIButton = {
-    let button = UIButton(title: "", titleColor: .clear, backgroundColor: .clear)
+    let button = UIButton(
+      title: "",
+      titleColor: .clear,
+      backgroundColor: .clear)
+    
     button.addTarget(self, action: #selector(dismissButtonTapped), for: .touchUpInside)
     
     return button
   }()
   
   private lazy var sortedRoomsButton: UIButton = {
-    let button = UIButton(title: "Number of empty rooms", titleColor: .white, backgroundColor: .buttonColorSet())
+    let button = UIButton(
+      title: "Number of empty rooms",
+      titleColor: .white,
+      backgroundColor: .buttonColorSet)
+    
     button.addTarget(self, action: #selector(sortedRoomsButtonTapped), for: .touchUpInside)
     
     return button
   }()
   
   private lazy var sortedDistanceButton: UIButton = {
-    let button = UIButton(title: "Distance from city centre", titleColor: .white, backgroundColor: .buttonColorSet())
+    let button = UIButton(
+      title: "Distance from city centre",
+      titleColor: .white,
+      backgroundColor: .buttonColorSet)
+    
     button.addTarget(self, action: #selector(sortedDistanceButtonTapped), for: .touchUpInside)
     
     return button
   }()
   
-  private let sortedTitle = UILabel(text: "Sorted by:", style: .largeTitleText(), textColor: .textSet())
+  private let sortedTitle = UILabel(
+    text: "Sorted by:",
+    fontStyle: .largeTitleText,
+    textColor: .textSet)
   
-  weak var hotelListViewController: HotelsListViewController!
-  var hotels: Hotels = []
+  var sortDataDelegate: SortHotelDataProtocol?
+  var reloadDataDelegate: SortHotelReloadDataProtocol?
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    setuppConstraints()
+    setupConstraints()
   }
   
   // MARK: - Private Methods
   @objc private func sortedRoomsButtonTapped() {
-    hotelListViewController.hotels.sort {
-      $1.suitesArray.count < $0.suitesArray.count
+    sortDataDelegate?.sortedByEmptyRooms()
+    
+    dismiss(animated: true) { [unowned self] in
+      reloadDataDelegate?.dataDidSorted()
     }
-    hotelListViewController.tableView.reloadData()
-    dismiss(animated: true)
   }
   
   @objc private func sortedDistanceButtonTapped() {
-    hotelListViewController.hotels.sort {
-      $0.distance < $1.distance
+    sortDataDelegate?.sortedByDistance()
+    
+    dismiss(animated: true) { [unowned self] in
+      reloadDataDelegate?.dataDidSorted()
     }
-    hotelListViewController.tableView.reloadData()
-    dismiss(animated: true)
   }
   
   @objc private func dismissButtonTapped() {
@@ -65,11 +89,11 @@ class SortHotelViewController: UIViewController {
 // MARK: - Setup Constraints
 extension SortHotelViewController {
   
-  private func setuppConstraints() {
+  private func setupConstraints() {
     let sheetPresentationView: UIView = {
       let view = UIView()
       view.translatesAutoresizingMaskIntoConstraints = false
-      view.backgroundColor = .secondaryBackgroundSet()
+      view.backgroundColor = .secondaryBackgroundSet
       view.layer.cornerRadius = 20
       
       return view

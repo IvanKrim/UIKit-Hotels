@@ -10,6 +10,7 @@
 		200197F827AFCB4C002B4DE4 /* AlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200197F727AFCB4C002B4DE4 /* AlertController.swift */; };
 		200197FA27AFD5B7002B4DE4 /* NetworkMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 200197F927AFD5B7002B4DE4 /* NetworkMonitor.swift */; };
 		202665C627A04FA9009DB94A /* SortHotelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 202665C527A04FA9009DB94A /* SortHotelViewController.swift */; };
+		203503DB27BE80B700E69571 /* CroppedImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 203503DA27BE80B700E69571 /* CroppedImage.swift */; };
 		203B076F27915F0E005C8AFB /* UIImage + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 203B076E27915F0E005C8AFB /* UIImage + Extension.swift */; };
 		20658EB32796BBC700184FD1 /* ApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20658EB22796BBC700184FD1 /* ApiManager.swift */; };
 		206E61CE27B1B129008C74E7 /* String + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 206E61CD27B1B129008C74E7 /* String + Extension.swift */; };
@@ -20,6 +21,8 @@
 		206F38CC278F1EC500227437 /* UIColor + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 206F38C7278F1EC500227437 /* UIColor + Extension.swift */; };
 		206F38CD278F1EC500227437 /* UIFont + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 206F38C8278F1EC500227437 /* UIFont + Extension.swift */; };
 		206F38CF278F1F1900227437 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 206F38CE278F1F1900227437 /* NetworkManager.swift */; };
+		207F379127C388F100145E7A /* SpinnerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 207F379027C388F100145E7A /* SpinnerView.swift */; };
+		208063AB27BBCE6600E52633 /* HotelsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 208063AA27BBCE6600E52633 /* HotelsListViewController.swift */; };
 		209B4F06278F5B510091EC89 /* HotelViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 209B4F05278F5B510091EC89 /* HotelViewCell.swift */; };
 		209B4F08278F5C100091EC89 /* HotelDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 209B4F07278F5C100091EC89 /* HotelDetailsViewController.swift */; };
 		209FF13927A315F3002AF186 /* ImageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 209FF13827A315F3002AF186 /* ImageManager.swift */; };
@@ -28,19 +31,20 @@
 		20C1686B278F1A990059CCF3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 20C1686A278F1A990059CCF3 /* Assets.xcassets */; };
 		20C1686E278F1A990059CCF3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 20C1686C278F1A990059CCF3 /* LaunchScreen.storyboard */; };
 		20C16876278F1AFB0059CCF3 /* Hotel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C16875278F1AFB0059CCF3 /* Hotel.swift */; };
-		20C1687A278F1BE90059CCF3 /* HotelsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C16879278F1BE90059CCF3 /* HotelsListViewController.swift */; };
 		20D3986827A923D1002DA6FE /* UIView + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20D3986727A923D1002DA6FE /* UIView + Extension.swift */; };
 		20D3986A27A9570C002DA6FE /* StarsIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20D3986927A9570C002DA6FE /* StarsIcon.swift */; };
 		20D9750E279F135700B18939 /* MapScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20D9750D279F135700B18939 /* MapScreenViewController.swift */; };
 		20DE6A5A2799D65D001591D8 /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20DE6A592799D65D001591D8 /* NetworkError.swift */; };
 		20FE2D5227B2653000BCDC05 /* HotelDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20FE2D5127B2653000BCDC05 /* HotelDetailsViewModel.swift */; };
-		20FE2D5527B26B5400BCDC05 /* MapScreenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20FE2D5427B26B5400BCDC05 /* MapScreenViewModel.swift */; };
+		20FE2D5827B29E8400BCDC05 /* HotelsListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20FE2D5727B29E8400BCDC05 /* HotelsListViewModel.swift */; };
+		20FE2D5B27B29EC300BCDC05 /* HotelCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20FE2D5A27B29EC300BCDC05 /* HotelCellViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		200197F727AFCB4C002B4DE4 /* AlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertController.swift; sourceTree = "<group>"; };
 		200197F927AFD5B7002B4DE4 /* NetworkMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkMonitor.swift; sourceTree = "<group>"; };
 		202665C527A04FA9009DB94A /* SortHotelViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortHotelViewController.swift; sourceTree = "<group>"; };
+		203503DA27BE80B700E69571 /* CroppedImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CroppedImage.swift; sourceTree = "<group>"; };
 		203B076E27915F0E005C8AFB /* UIImage + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage + Extension.swift"; sourceTree = "<group>"; };
 		20658EB22796BBC700184FD1 /* ApiManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiManager.swift; sourceTree = "<group>"; };
 		206E61CD27B1B129008C74E7 /* String + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String + Extension.swift"; sourceTree = "<group>"; };
@@ -51,6 +55,8 @@
 		206F38C7278F1EC500227437 /* UIColor + Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor + Extension.swift"; sourceTree = "<group>"; };
 		206F38C8278F1EC500227437 /* UIFont + Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIFont + Extension.swift"; sourceTree = "<group>"; };
 		206F38CE278F1F1900227437 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		207F379027C388F100145E7A /* SpinnerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinnerView.swift; sourceTree = "<group>"; };
+		208063AA27BBCE6600E52633 /* HotelsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotelsListViewController.swift; sourceTree = "<group>"; };
 		209B4F05278F5B510091EC89 /* HotelViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotelViewCell.swift; sourceTree = "<group>"; };
 		209B4F07278F5C100091EC89 /* HotelDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotelDetailsViewController.swift; sourceTree = "<group>"; };
 		209FF13827A315F3002AF186 /* ImageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageManager.swift; sourceTree = "<group>"; };
@@ -61,13 +67,13 @@
 		20C1686D278F1A990059CCF3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		20C1686F278F1A990059CCF3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		20C16875278F1AFB0059CCF3 /* Hotel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hotel.swift; sourceTree = "<group>"; };
-		20C16879278F1BE90059CCF3 /* HotelsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotelsListViewController.swift; sourceTree = "<group>"; };
 		20D3986727A923D1002DA6FE /* UIView + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView + Extension.swift"; sourceTree = "<group>"; };
 		20D3986927A9570C002DA6FE /* StarsIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarsIcon.swift; sourceTree = "<group>"; };
 		20D9750D279F135700B18939 /* MapScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapScreenViewController.swift; sourceTree = "<group>"; };
 		20DE6A592799D65D001591D8 /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
 		20FE2D5127B2653000BCDC05 /* HotelDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotelDetailsViewModel.swift; sourceTree = "<group>"; };
-		20FE2D5427B26B5400BCDC05 /* MapScreenViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapScreenViewModel.swift; sourceTree = "<group>"; };
+		20FE2D5727B29E8400BCDC05 /* HotelsListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotelsListViewModel.swift; sourceTree = "<group>"; };
+		20FE2D5A27B29EC300BCDC05 /* HotelCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotelCellViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,6 +90,8 @@
 		206F38C3278F1E7600227437 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				207F379027C388F100145E7A /* SpinnerView.swift */,
+				203503DA27BE80B700E69571 /* CroppedImage.swift */,
 				200197F727AFCB4C002B4DE4 /* AlertController.swift */,
 				20D3986927A9570C002DA6FE /* StarsIcon.swift */,
 				206E61CD27B1B129008C74E7 /* String + Extension.swift */,
@@ -147,8 +155,6 @@
 		20C16860278F1A970059CCF3 /* UIKit-Hotels */ = {
 			isa = PBXGroup;
 			children = (
-				20FE2D5027B264B300BCDC05 /* HotelDetails */,
-				20FE2D5327B26B1400BCDC05 /* MapScreen */,
 				20C1687B278F1BF00059CCF3 /* Model */,
 				20C1687C278F1C040059CCF3 /* Modules */,
 				206F38D0278F1F8F00227437 /* Services */,
@@ -172,9 +178,11 @@
 		20C1687C278F1C040059CCF3 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
-				20C16879278F1BE90059CCF3 /* HotelsListViewController.swift */,
-				209B4F05278F5B510091EC89 /* HotelViewCell.swift */,
-				202665C527A04FA9009DB94A /* SortHotelViewController.swift */,
+				20FE2D5627B29E5700BCDC05 /* HotelsList */,
+				20FE2D5C27B29EE000BCDC05 /* SortHotelScreen */,
+				20FE2D5927B29EA300BCDC05 /* HotelCell */,
+				20FE2D5027B264B300BCDC05 /* HotelDetails */,
+				20FE2D5327B26B1400BCDC05 /* MapScreen */,
 			);
 			path = Modules;
 			sourceTree = "<group>";
@@ -199,10 +207,35 @@
 		20FE2D5327B26B1400BCDC05 /* MapScreen */ = {
 			isa = PBXGroup;
 			children = (
-				20FE2D5427B26B5400BCDC05 /* MapScreenViewModel.swift */,
 				20D9750D279F135700B18939 /* MapScreenViewController.swift */,
 			);
 			path = MapScreen;
+			sourceTree = "<group>";
+		};
+		20FE2D5627B29E5700BCDC05 /* HotelsList */ = {
+			isa = PBXGroup;
+			children = (
+				20FE2D5727B29E8400BCDC05 /* HotelsListViewModel.swift */,
+				208063AA27BBCE6600E52633 /* HotelsListViewController.swift */,
+			);
+			name = HotelsList;
+			sourceTree = "<group>";
+		};
+		20FE2D5927B29EA300BCDC05 /* HotelCell */ = {
+			isa = PBXGroup;
+			children = (
+				20FE2D5A27B29EC300BCDC05 /* HotelCellViewModel.swift */,
+				209B4F05278F5B510091EC89 /* HotelViewCell.swift */,
+			);
+			path = HotelCell;
+			sourceTree = "<group>";
+		};
+		20FE2D5C27B29EE000BCDC05 /* SortHotelScreen */ = {
+			isa = PBXGroup;
+			children = (
+				202665C527A04FA9009DB94A /* SortHotelViewController.swift */,
+			);
+			path = SortHotelScreen;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -288,7 +321,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if which swiftlint >/dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+			shellScript = "if which swiftlint >/dev/null; then\n swiftlint\n else\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -303,15 +336,15 @@
 				206F38CC278F1EC500227437 /* UIColor + Extension.swift in Sources */,
 				20658EB32796BBC700184FD1 /* ApiManager.swift in Sources */,
 				206F38C9278F1EC500227437 /* UILabel + Extension.swift in Sources */,
-				20C1687A278F1BE90059CCF3 /* HotelsListViewController.swift in Sources */,
 				206F38CF278F1F1900227437 /* NetworkManager.swift in Sources */,
 				20C16862278F1A970059CCF3 /* AppDelegate.swift in Sources */,
 				200197F827AFCB4C002B4DE4 /* AlertController.swift in Sources */,
+				20FE2D5827B29E8400BCDC05 /* HotelsListViewModel.swift in Sources */,
 				20D3986A27A9570C002DA6FE /* StarsIcon.swift in Sources */,
-				20FE2D5527B26B5400BCDC05 /* MapScreenViewModel.swift in Sources */,
 				209B4F08278F5C100091EC89 /* HotelDetailsViewController.swift in Sources */,
 				206F38CA278F1EC500227437 /* UIButton + Extension.swift in Sources */,
 				203B076F27915F0E005C8AFB /* UIImage + Extension.swift in Sources */,
+				207F379127C388F100145E7A /* SpinnerView.swift in Sources */,
 				20D3986827A923D1002DA6FE /* UIView + Extension.swift in Sources */,
 				209FF13927A315F3002AF186 /* ImageManager.swift in Sources */,
 				206F38CB278F1EC500227437 /* UIImageView + Extension.swift in Sources */,
@@ -323,6 +356,9 @@
 				202665C627A04FA9009DB94A /* SortHotelViewController.swift in Sources */,
 				20D9750E279F135700B18939 /* MapScreenViewController.swift in Sources */,
 				200197FA27AFD5B7002B4DE4 /* NetworkMonitor.swift in Sources */,
+				203503DB27BE80B700E69571 /* CroppedImage.swift in Sources */,
+				20FE2D5B27B29EC300BCDC05 /* HotelCellViewModel.swift in Sources */,
+				208063AB27BBCE6600E52633 /* HotelsListViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

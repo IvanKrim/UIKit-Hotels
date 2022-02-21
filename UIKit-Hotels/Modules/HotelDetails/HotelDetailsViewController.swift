@@ -8,29 +8,24 @@
 import UIKit
 
 class HotelDetailsViewController: UIViewController {
+  private let activityIndicator = SpinnerView()
+  private let hotelImageView = CroppedImage()
   
-  private let networkService: NetworkServiceSingleHotelProtocol = NetworkService()
+  private let hotelNameLabel = UILabel(
+    fontStyle: .firstTitleText,
+    textColor: .textSet,
+    numberOfLines: 0)
   
-  private let hotelImageView: UIImageView = {
-    var image = UIImageView()
-    image.contentMode = .scaleAspectFill
-    image.layer.cornerRadius = 2
-    image.clipsToBounds = true
-    
-    return image
-  }()
-  
-  private let hotelNameLabel = UILabel(style: .firstTitleText(), textColor: .textSet(), numberOfLines: 0)
-  private let hotelAddress = UILabel(textColor: .textGraySet(), numberOfLines: 0)
-  private let suitesAvailability = UILabel(textColor: .secondaryTextSet(), numberOfLines: 0)
+  private let hotelAddress = UILabel(textColor: .textGraySet, numberOfLines: 0)
+  private let suitesAvailability = UILabel(textColor: .secondaryTextSet, numberOfLines: 0)
   
   private let availableSuitesLabel = UILabel(
-    text: "Available rooms:", style: .bodyBoldText(), textColor: .secondaryTextSet())
+    text: "Available rooms:", fontStyle: .bodyBoldText, textColor: .secondaryTextSet)
   
   private lazy var mapButton: UIButton = {
     let button = UIButton(
       title: "Watch on map", titleColor: .white,
-      backgroundColor: .buttonColorSet(), font: .bodyText(),
+      backgroundColor: .buttonColorSet, font: .bodyText,
       isShadow: true, cornerRadius: 10)
     button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
     
@@ -40,7 +35,6 @@ class HotelDetailsViewController: UIViewController {
   private lazy var contentViewSize = CGSize(width: self.view.frame.width, height: self.view.frame.height + 1)
   
   private lazy var scrollView: UIScrollView = {
-    
     let view = UIScrollView(frame: .zero)
     view.backgroundColor = .systemBackground
     view.frame = self.view.bounds
@@ -48,6 +42,7 @@ class HotelDetailsViewController: UIViewController {
     view.autoresizingMask = .flexibleHeight
     view.bounces = true
     view.showsHorizontalScrollIndicator = true
+    
     return view
   }()
   
@@ -60,86 +55,45 @@ class HotelDetailsViewController: UIViewController {
     return view
   }()
   
-  private var hotel: Hotel!
-  
   var viewModel: HotelDetailsViewModelProtocol! {
     didSet {
-      // указываем путь к данным
-      hotelNameLabel.text = viewModel.hotelName
-      hotelAddress.text = viewModel.hotelAddress
-      suitesAvailability.text = viewModel.suitesAvailability
-      
-//      guard let imageData = viewModel.imageData else { return } //место для пелйсхолдера
-      
-      
-      //      navigationItem.title = hotel.name
-      //      hotelNameLabel.text = hotel.name
-      //      hotelAddres.text = hotel.address
-      //      suitesAvailability.text = .suitesArrayConverter(array: hotel.suitesArray)
-    }
-  }
-  
-  var hotelID: Int?
-  
-  override func viewDidLoad() {
-    super.viewDidLoad()
-//    viewModel = HotelDetailsViewModel(hotel: hotel)
-    view.backgroundColor = .systemBackground
-    
-    fetchData(with: hotelID)
-  }
-  
-  private func setupContent(with hotel: Hotel) {
-    setupConstraints(with: hotel.stars)
-  
-    navigationItem.title = hotel.name
-    hotelNameLabel.text = hotel.name
-    
-    hotelAddress.text = hotel.address
-    suitesAvailability.text = .suitesArrayConverter(array: hotel.suitesArray)
-  }
-  
-  @objc private func buttonTapped() {
-    let mapScreenVC = MapScreenViewController()
-    mapScreenVC.hotel = hotel
-    
-    navigationController?.pushViewController(mapScreenVC, animated: true)
-  }
-}
-
-// MARK: - Fetch Data
-extension HotelDetailsViewController {
-  func fetchData(with hotelID: Int?) {
-    guard let id = hotelID else { return }
-    
-    networkService.getHotelInformation(with: id) { result in
-      
-      switch result {
-      case .success(let hotel):
-        self.hotel = hotel
-        self.setupContent(with: hotel)
-        guard let imageURL = hotel.imageHandler else { return }
-        
-        self.cropImageProcessor(from: .image(imageURL))
-        
-      case .failure(let error):
-        self.showAlert(
-          with: error.localizedDescription,
-          and: "Please try again later or contact Support.")
+      viewModel.fetchHotel { imageData in
+        self.hotelImageView.convertImage(from: imageData) {
+          self.activityIndicator.spinnerViewStopAnimating()
+          self.activityIndicator.isHidden = true
+        }
       }
     }
   }
   
-  private func cropImageProcessor(from imageURL: Endpoint) {
-    //    ImageManager.shared.fetchCropedImage(from: imageURL) { [unowned self] in
-    //      self.hotelImageView.image = $0.image
-    //    }
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    view.backgroundColor = .systemBackground
+    
+    setupUI()
+  }
+  
+  private func setupUI() {
+    setupConstraints(with: viewModel.stars)
+    navigationItem.title = viewModel.hotelName
+    hotelNameLabel.text = viewModel.hotelName
+    hotelAddress.text = viewModel.hotelAddress
+    suitesAvailability.text = viewModel.suitesAvailability
+    
+  }
+  
+  @objc private func buttonTapped() {
+    let mapScreenVC = MapScreenViewController()
+    mapScreenVC.hotel = viewModel.transferData
+    
+    navigationController?.pushViewController(mapScreenVC, animated: true)
   }
 }
 
 // MARK: - Setup Constraints
 extension HotelDetailsViewController {
   private func setupConstraints(with stars: Double) {
+    
     let starsArray = StarsIcon.shared.starsConverter(input: stars)
     
     let starsStackView = UIStackView(
@@ -157,11 +111,13 @@ extension HotelDetailsViewController {
       axis: .vertical,
       spacing: 20)
     
+    activityIndicator.translatesAutoresizingMaskIntoConstraints = false
     hotelImageView.translatesAutoresizingMaskIntoConstraints = false
     contentStackView.translatesAutoresizingMaskIntoConstraints = false
     mapButton.translatesAutoresizingMaskIntoConstraints = false
     
     view.addSubview(scrollView)
+    view.addSubview(activityIndicator)
     scrollView.addSubview(containerView)
     containerView.addSubview(hotelImageView)
     containerView.addSubview(contentStackView)
@@ -181,6 +137,13 @@ extension HotelDetailsViewController {
       contentStackView.topAnchor.constraint(equalTo: hotelImageView.bottomAnchor, constant: 20),
       contentStackView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
       contentStackView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16)
+    ])
+    
+    NSLayoutConstraint.activate([
+      activityIndicator.topAnchor.constraint(equalTo: view.topAnchor),
+      activityIndicator.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+      activityIndicator.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+      activityIndicator.leadingAnchor.constraint(equalTo: view.leadingAnchor)
     ])
   }
 }

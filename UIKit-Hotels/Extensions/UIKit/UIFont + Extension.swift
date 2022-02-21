@@ -8,24 +8,24 @@
 import UIKit
 
 extension UIFont {
-  
-  static func largeTitleText() -> UIFont? {
-    return UIFont.init(name: "HelveticaNeue-Bold", size: 35)
+
+  static var largeTitleText: UIFont? {
+    UIFont(name: "HelveticaNeue-Bold", size: 35)
   }
   
-  static func firstTitleText() -> UIFont? {
-    return UIFont.init(name: "HelveticaNeue-Bold", size: 22)
+  static var firstTitleText: UIFont? {
+    UIFont(name: "HelveticaNeue-Bold", size: 22)
   }
   
-  static func subheadingText() -> UIFont? {
-    return UIFont.init(name: "HelveticaNeue-Bold", size: 20)
+  static var subheadingText: UIFont? {
+    UIFont(name: "HelveticaNeue-Bold", size: 20)
   }
   
-  static func bodyText() -> UIFont? {
-    return UIFont.init(name: "HelveticaNeue", size: 18)
+  static var bodyText: UIFont? {
+    UIFont(name: "HelveticaNeue", size: 18)
   }
   
-  static func bodyBoldText() -> UIFont? {
-    return UIFont.init(name: "HelveticaNeue-Bold", size: 18)
+  static var bodyBoldText: UIFont? {
+    UIFont(name: "HelveticaNeue-Bold", size: 18)
   }
 }

@@ -1,4 +1,12 @@
-# UIKit-Hotels (in progress)
+# UIKit-Hotels _(MVVM version in progress)_
+
+The **MVC version is ready**, you can see the implementation in the MVC branch
+
+<img width="301" alt="Screenshot 2022-02-15 at 17 22 33" src="https://user-images.githubusercontent.com/61357670/154081155-e2aa6b29-9417-4326-8bea-3c7db8ca46dc.png">
+
+
+
+
 ## Обзор 
 ![20220207-183248-379-2](https://user-images.githubusercontent.com/61357670/152829352-463e931c-2641-4dbd-8616-2f4321471d68.gif)
 ![DarkModeHotelsApp](https://user-images.githubusercontent.com/61357670/152828198-edf2c79d-d511-4318-baf5-149c35dd91d4.jpg)
