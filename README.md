@@ -1,14 +1,6 @@
-# UIKit-Hotels _(MVVM version in progress)_
-
-The **MVC version is ready**, you can see the implementation in the MVC branch
-
-<img width="301" alt="Screenshot 2022-02-15 at 17 22 33" src="https://user-images.githubusercontent.com/61357670/154081155-e2aa6b29-9417-4326-8bea-3c7db8ca46dc.png">
-
-
-
-
+# UIKit-Hotels 
 ## Обзор 
-![20220207-183248-379-2](https://user-images.githubusercontent.com/61357670/152829352-463e931c-2641-4dbd-8616-2f4321471d68.gif)
+![20220221-235348-415-2](https://user-images.githubusercontent.com/61357670/155025630-02870146-d69e-4f9f-83f4-d2ddf2f33b88.gif)
 ![DarkModeHotelsApp](https://user-images.githubusercontent.com/61357670/152828198-edf2c79d-d511-4318-baf5-149c35dd91d4.jpg)
 
 ### Данный проект ялвляется тестовым заданием  
@@ -25,8 +17,32 @@ The **MVC version is ready**, you can see the implementation in the MVC branch
 
 *Код-стайл должен быть таким, чтобы работа в команде над подобным проектом была комфортна.*
 
+## Реализация 
+#### MVVM
+- Адаптивная верстка кодом с использованием NSLayoutConstraint & Anchors
+- Архитектура MVVM 
+- Работа с сетью URLSession 
+- Работа с изображениями URLSession, нативная реализация кропа изображения согласно ТЗ
+- Кеширование изображений NSCache 
+- Отображение ошибок через UIAlerController
+- NetworkMonitor для отслеживания сетевого подключения 
 
-### This is Test app 
+#### MVC
+- Адаптивная верстка кодом с использованием NSLayoutConstraint & Anchors
+- Архитектура MVC 
+- Работа с сетью URLSession 
+- Работа с изображениями Kingfisher
+- Отображение ошибок через UIAlerController
+- NetworkMonitor для отслеживания сетевого подключения
+
+**Реализацию MVC версии вы можете посмотреть в одноименной ветке:** 
+
+<img width="305" alt="Screenshot 2022-02-22 at 00 16 33" src="https://user-images.githubusercontent.com/61357670/155027338-62a69054-1ac2-4865-b854-491ee3338b8e.png">
+
+## Будет реализовано 
+- Unit Tests 
+
+## This is Test app 
 #### Requirements:
 * iOS 13.0+
 * Implementation of MVC and MVVM templates
