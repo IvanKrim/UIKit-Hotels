@@ -10,10 +10,11 @@ import MapKit
 import CoreLocation
 
 class MapScreenViewController: UIViewController {
+  // MARK: - Properties
   private let mapView = MKMapView()
-  
   var hotel: Hotel!
   
+  // MARK: - Lifecycle
   override func viewDidLoad() {
     super.viewDidLoad()
     view.addSubview(mapView)
@@ -22,6 +23,7 @@ class MapScreenViewController: UIViewController {
     setupContent()
   }
   
+  // MARK: - Private Methods
   private func setupContent() {
     guard let latitude = hotel.lat, let longitude = hotel.lon else { return }
     setupMapView(
@@ -30,7 +32,7 @@ class MapScreenViewController: UIViewController {
   }
 }
 
-// MARK: - Setup MapView
+  // MARK: - Setup MapView
 extension MapScreenViewController {
   private func setupMapView(with coordinate: CLLocationCoordinate2D, and title: String) {
     mapView.setRegion(

@@ -8,7 +8,6 @@
 import UIKit
 
 class HotelViewCell: UITableViewCell {
-  
   // MARK: - Properties
   private let hotelImageView = CroppedImage()
   private let activityIndicator = SpinnerView()

@@ -53,10 +53,9 @@ class HotelDetailsViewModel: HotelDetailsViewModelProtocol {
         
       case .success(let data):
         self.hotel = data
-        
         guard let imageURL = data.imageHandler else { return }
-        completion(imageURL)
         
+        completion(imageURL)
       case .failure(let error):
         print(error.localizedDescription)
       }

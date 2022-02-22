@@ -17,13 +17,12 @@ protocol SortHotelReloadDataProtocol {
 }
 
 class SortHotelViewController: UIViewController {
-  
+  // MARK: - Properties
   private lazy var dismissButton: UIButton = {
     let button = UIButton(
       title: "",
       titleColor: .clear,
       backgroundColor: .clear)
-    
     button.addTarget(self, action: #selector(dismissButtonTapped), for: .touchUpInside)
     
     return button
@@ -34,7 +33,6 @@ class SortHotelViewController: UIViewController {
       title: "Number of empty rooms",
       titleColor: .white,
       backgroundColor: .buttonColorSet)
-    
     button.addTarget(self, action: #selector(sortedRoomsButtonTapped), for: .touchUpInside)
     
     return button
@@ -45,7 +43,6 @@ class SortHotelViewController: UIViewController {
       title: "Distance from city centre",
       titleColor: .white,
       backgroundColor: .buttonColorSet)
-    
     button.addTarget(self, action: #selector(sortedDistanceButtonTapped), for: .touchUpInside)
     
     return button
@@ -59,6 +56,7 @@ class SortHotelViewController: UIViewController {
   var sortDataDelegate: SortHotelDataProtocol?
   var reloadDataDelegate: SortHotelReloadDataProtocol?
   
+  // MARK: - Lifecycle
   override func viewDidLoad() {
     super.viewDidLoad()
     setupConstraints()
@@ -88,7 +86,6 @@ class SortHotelViewController: UIViewController {
 
 // MARK: - Setup Constraints
 extension SortHotelViewController {
-  
   private func setupConstraints() {
     let sheetPresentationView: UIView = {
       let view = UIView()
