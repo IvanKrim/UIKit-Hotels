@@ -62,7 +62,6 @@ class NetworkService: NetworkServiceSingleHotelProtocol {
           }
         } catch {
           DispatchQueue.main.async {
-            print("ошибочка")
             completion(.failure(NetworkError.incorrectDataError))
           }
         }

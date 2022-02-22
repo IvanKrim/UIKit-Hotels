@@ -8,11 +8,17 @@
 import UIKit
 
 class HotelsListViewController: UIViewController {
+  // MARK: - Properties
   private let tableView = UITableView(frame: .zero, style: .plain)
   
   private var viewModel: HotelsListViewModelProtocol! {
     didSet {
       viewModel.fetchHotels {
+        if let errorDescription = self.viewModel.errorDescription {
+          self.showAlert(
+            with: errorDescription,
+            and: "Please contact support or try again later.")
+        }
         self.tableView.reloadData()
       }
     }
@@ -37,6 +43,7 @@ class HotelsListViewController: UIViewController {
     networkMonitor()
   }
   
+  // MARK: - Private Methods
   private func networkMonitor() {
     viewModel.networkMonitor { status in
       switch status {
@@ -94,7 +101,6 @@ extension HotelsListViewController: UITableViewDataSource {
 
 // MARK: - UITableViewDelegate
 extension HotelsListViewController: UITableViewDelegate {
-  
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     tableView.deselectRow(at: indexPath, animated: true)
     

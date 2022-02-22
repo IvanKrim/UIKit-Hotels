@@ -20,7 +20,6 @@ protocol HotelCellViewModelProtocol {
 
 class HotelCellViewModel: HotelCellViewModelProtocol {
   var networkService: NetworkServiceSingleHotelProtocol = NetworkService()
-  
   var hotelName: String {
     hotel.name
   }

@@ -11,6 +11,7 @@ import UIKit
 protocol HotelsListViewModelProtocol {
   var hotels: Hotels { get }
   var networkService: NetworkServiceSingleHotelProtocol { get }
+  var errorDescription: String? { get }
   func networkMonitor(completion: (NetworkStatus) -> Void)
   func fetchHotels(completion: @escaping() -> Void)
   func numberOfRows() -> Int
@@ -22,9 +23,9 @@ protocol HotelsListViewModelProtocol {
 
 class HotelsListViewModel: HotelsListViewModelProtocol {
   var networkService: NetworkServiceSingleHotelProtocol = NetworkService()
-  
+  var errorDescription: String?
   var hotels: Hotels = []
-  
+
   func networkMonitor(completion: (NetworkStatus) -> Void) {
     if NetworkMonitor.shared.isConnected {
       completion(.connected)
@@ -41,7 +42,8 @@ class HotelsListViewModel: HotelsListViewModelProtocol {
         self.hotels = data
         completion()
       case .failure(let error):
-        print(error.localizedDescription)
+        self.errorDescription = error.localizedDescription
+        completion()
       }
     }
   }

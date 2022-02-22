@@ -8,6 +8,7 @@
 import UIKit
 
 class HotelDetailsViewController: UIViewController {
+  // MARK: - Properties
   private let activityIndicator = SpinnerView()
   private let hotelImageView = CroppedImage()
   
@@ -58,6 +59,7 @@ class HotelDetailsViewController: UIViewController {
   var viewModel: HotelDetailsViewModelProtocol! {
     didSet {
       viewModel.fetchHotel { imageData in
+        print(imageData)
         self.hotelImageView.convertImage(from: imageData) {
           self.activityIndicator.spinnerViewStopAnimating()
           self.activityIndicator.isHidden = true
@@ -66,6 +68,7 @@ class HotelDetailsViewController: UIViewController {
     }
   }
   
+  // MARK: - Lifecycle
   override func viewDidLoad() {
     super.viewDidLoad()
     view.backgroundColor = .systemBackground
@@ -73,6 +76,7 @@ class HotelDetailsViewController: UIViewController {
     setupUI()
   }
   
+  // MARK: - Private Methods
   private func setupUI() {
     setupConstraints(with: viewModel.stars)
     navigationItem.title = viewModel.hotelName
